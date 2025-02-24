@@ -1,0 +1,31 @@
+import express, {Request, Response} from "express";
+import JSONDatabase from "./db";
+
+const app = express();
+const db = new JSONDatabase();
+app.use(express.json());
+
+app.post("/store/:key", (req: Request, res: Response) => {
+    const data = db.get(req.params.key);
+    data ? res.json(data) : res.status(404).json({error: "Key not found"});
+})
+
+app.get("/store/:key", (req: Request, res: Response) => {
+    const data = db.get(req.params.key);
+    data ? res.json(data) : res.status(404).json({error: "Key not found"});
+});
+
+app.post("/query", (req: Request, res: Response) => {
+    const result = db.find(req.body);
+    res.json(result);
+});
+
+app.delete("/store/:key", (req: Request, res: Response) => {
+    db.delete(req.params.key);
+    res.json({message: "Data deleted successfully!"});
+});
+
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port http://localhost:${port}`);
+});
