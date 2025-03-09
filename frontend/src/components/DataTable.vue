@@ -1,6 +1,6 @@
 <template>
   <div class="data-table overflow-x-auto">
-    <EditModal :row="selectedRow"/>
+    <EditModal @close-modal="handleCloseModal()" :show="showModal" :row="selectedRow"/>
     <table class="min-w-full table-auto bg-white shadow-lg rounded-lg">
       <thead class="bg-gray-200">
       <th v-for="(value, key) in tableData[0]" :key="key"
@@ -44,9 +44,16 @@ defineProps<{
 }>()
 
 const selectedRow = ref<Record<any, any>>({});
+const showModal = ref<boolean>(false);
+
+const handleCloseModal = () => {
+  console.log('closeModal');
+  showModal.value = false;
+}
 
 const handleEdit = (row: Record<any, any>) => {
   selectedRow.value = row;
+  showModal.value = true;
 }
 
 </script>
