@@ -1,0 +1,196 @@
+{
+  "songs": [
+    {
+      "id": 1,
+      "title": "Summer",
+      "Artist": "Calvin Harris",
+      "Genre": "Electronic",
+      "Year": 2014,
+      "Duration": "3:44",
+      "Album": "Motion"
+    },
+    {
+      "id": 2,
+      "title": "Blinding Lights",
+      "Artist": "The Weeknd",
+      "Genre": "Synthwave",
+      "Year": 2019,
+      "Duration": "3:22",
+      "Album": "After Hours"
+    },
+    {
+      "id": 3,
+      "title": "Shape of You",
+      "Artist": "Ed Sheeran",
+      "Genre": "Pop",
+      "Year": 2017,
+      "Duration": "3:53",
+      "Album": "÷"
+    },
+    {
+      "id": 4,
+      "title": "Levitating",
+      "Artist": "Dua Lipa",
+      "Genre": "Pop",
+      "Year": 2020,
+      "Duration": "3:23",
+      "Album": "Future Nostalgia"
+    },
+    {
+      "id": 5,
+      "title": "Bad Guy",
+      "Artist": "Billie Eilish",
+      "Genre": "Pop",
+      "Year": 2019,
+      "Duration": "3:14",
+      "Album": "When We All Fall Asleep, Where Do We Go?"
+    },
+    {
+      "id": 6,
+      "title": "Wake Me Up",
+      "Artist": "Avicii",
+      "Genre": "Electronic",
+      "Year": 2013,
+      "Duration": "4:07",
+      "Album": "True"
+    },
+    {
+      "id": 7,
+      "title": "Uptown Funk",
+      "Artist": "Mark Ronson ft. Bruno Mars",
+      "Genre": "Funk",
+      "Year": 2014,
+      "Duration": "4:30",
+      "Album": "Uptown Special"
+    },
+    {
+      "id": 8,
+      "title": "Happier",
+      "Artist": "Marshmello ft. Bastille",
+      "Genre": "Pop",
+      "Year": 2018,
+      "Duration": "3:34",
+      "Album": "Happier"
+    },
+    {
+      "id": 9,
+      "title": "Rolling in the Deep",
+      "Artist": "Adele",
+      "Genre": "Pop Soul",
+      "Year": 2010,
+      "Duration": "3:48",
+      "Album": "21"
+    },
+    {
+      "id": 10,
+      "title": "Someone Like You",
+      "Artist": "Adele",
+      "Genre": "Pop Soul",
+      "Year": 2011,
+      "Duration": "4:45",
+      "Album": "21"
+    },
+    {
+      "id": 11,
+      "title": "Sunflower",
+      "Artist": "Post Malone & Swae Lee",
+      "Genre": "Hip-Hop",
+      "Year": 2018,
+      "Duration": "2:38",
+      "Album": "Spider-Man: Into the Spider-Verse Soundtrack"
+    },
+    {
+      "id": 12,
+      "title": "Old Town Road",
+      "Artist": "Lil Nas X",
+      "Genre": "Country Rap",
+      "Year": 2019,
+      "Duration": "1:53",
+      "Album": "7 EP"
+    },
+    {
+      "id": 13,
+      "title": "Rolling Stone",
+      "Artist": "The Rolling Stones",
+      "Genre": "Rock",
+      "Year": 1965,
+      "Duration": "3:45",
+      "Album": "Out of Our Heads"
+    },
+    {
+      "id": 14,
+      "title": "All of Me",
+      "Artist": "John Legend",
+      "Genre": "R&B",
+      "Year": 2013,
+      "Duration": "4:30",
+      "Album": "Love in the Future"
+    },
+    {
+      "id": 15,
+      "title": "Dance Monkey",
+      "Artist": "Tones and I",
+      "Genre": "Pop",
+      "Year": 2019,
+      "Duration": "3:29",
+      "Album": "The Kids Are Coming"
+    },
+    {
+      "id": 16,
+      "title": "Don't Start Now",
+      "Artist": "Dua Lipa",
+      "Genre": "Pop Disco",
+      "Year": 2019,
+      "Duration": "3:03",
+      "Album": "Future Nostalgia"
+    },
+    {
+      "id": 17,
+      "title": "Bad Habits",
+      "Artist": "Ed Sheeran",
+      "Genre": "Pop",
+      "Year": 2021,
+      "Duration": "4:00",
+      "Album": "="
+    },
+    {
+      "id": 18,
+      "title": "God's Plan",
+      "Artist": "Drake",
+      "Genre": "Hip-Hop",
+      "Year": 2018,
+      "Duration": "3:19",
+      "Album": "Scary Hours"
+    },
+    {
+      "id": 19,
+      "title": "Roar",
+      "Artist": "Katy Perry",
+      "Genre": "Pop",
+      "Year": 2013,
+      "Duration": "3:42",
+      "Album": "Prism"
+    },
+    {
+      "id": 20,
+      "title": "Take Me to Church",
+      "Artist": "Hozier",
+      "Genre": "Indie Rock",
+      "Year": 2013,
+      "Duration": "4:01",
+      "Album": "Hozier"
+    }
+  ],
+  "animals": [
+    {
+      "id": 1,
+      "Name": "Lion",
+      "Class": "Mammalia"
+    },
+    {
+      "id": 2,
+      "Name": "Aligator",
+      "Class": "Reptile"
+    }
+  ]
+}
