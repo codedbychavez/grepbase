@@ -34,6 +34,10 @@ class JSONDatabase {
         return this.data[key] || null;
     }
 
+    getKeys(): Array<string> | null {
+        return Object.keys(this.data);
+    }
+
     find(filter: Record<string, any>): any[] {
         return Object.values(this.data).filter((obj: any) =>
             Object.keys((filter).every((key: any) => obj[key] === filter[key])))
