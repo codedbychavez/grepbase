@@ -1,0 +1,26 @@
+{
+  "songs": [
+    {
+      "id": 1,
+      "title": "Summer",
+      "Artist": "Calvin Harris"
+    },
+    {
+      "id": 2,
+      "title": "Holiday",
+      "Arist": "Greenday"
+    }
+  ],
+  "animals": [
+    {
+      "id": 1,
+      "Name": "Lion",
+      "Class": "Mammalia"
+    },
+    {
+      "id": 2,
+      "Name": "Aligator",
+      "Class": "Reptile"
+    }
+  ]
+}

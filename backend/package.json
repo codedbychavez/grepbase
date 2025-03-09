@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "node_modules/.bin/tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon --exec ts-node server.ts",
+    "dev": "node_modules/.bin/nodemon --exec ts-node server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +29,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2"
   }
 }
