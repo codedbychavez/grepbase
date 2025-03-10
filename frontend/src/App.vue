@@ -5,7 +5,7 @@
       </div>
     </header>
 
-  <div class="container">
+  <div class="container p-4">
     <RouterView/>
   </div>
 </template>
