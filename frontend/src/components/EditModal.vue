@@ -1,7 +1,7 @@
 <template>
-  <div v-if="show" class="fixed inset-0 flex items-center justify-center z-50">
-    <div class="modal fade bg-white max-w-3xl" id="editModal" role="dialog">
-      <div class="modal-dialog border border-gray-200 p-8 rounded-lg" role="document">
+  <div v-if="show" class="fixed bg-black/50 inset-0 flex items-center justify-center z-50">
+    <div class="modal fade" id="editModal" role="dialog">
+      <div class="modal-dialog bg-white border border-gray-200 p-8 rounded-lg" role="document">
         <div class="modal-content">
           <div class="modal-header flex">
             <h5 class="modal-title text-2xl ml-auto">Edit Entry</h5>
@@ -58,8 +58,8 @@ const submitForm = () => {
 
 <style scoped>
 
-.modal-dialog {
-
+.modal {
+  width: 40rem;
 }
 
 </style>
