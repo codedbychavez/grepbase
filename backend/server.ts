@@ -12,8 +12,15 @@ app.get("/store/keys", (req: Request, res: Response) => {
     data ? res.json(data) : res.status(404).json({ error: "Not Found" });
 })
 
-app.post("/store/:key", (req: Request, res: Response) => {
+app.patch("/store/:key/:id", (req: Request, res: Response) => {
+    const { key, id } = req.params;
     const data = db.get(req.params.key);
+    const item = data.find((item: { id: string; }) => item.id == id);
+    if (item) {
+        const indexOfItem = data.indexOf(item);
+        data[indexOfItem] = req.body;
+        db.set(key, data);
+    }
     data ? res.json(data) : res.status(404).json({error: "Key not found"});
 })
 
