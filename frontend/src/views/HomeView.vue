@@ -14,21 +14,32 @@
 <script setup lang="ts">
 
 import {useFetch} from '@vueuse/core';
-import { onMounted, ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
+import {useAppStore} from '@/stores/appStore';
 import DataTable from "@/components/DataTable.vue";
+import {storeToRefs} from "pinia";
 
 const storeData = ref<Array<Record<string, any>>>([]);
-const selectedKey = ref<string>('songs');
+const selectedKey = ref<string>('');
 const storeKeys = ref<Array<string>>([]);
 const baseUrl = "http://localhost:3000/store";
 
+const appStore = useAppStore();
+const {selectedStore} = storeToRefs(appStore);
+
 onMounted(async () => {
+
+  // Fetch store keys
+  const {data: keys, error: keyError} = await useFetch<Array<string[]> | null>(`${baseUrl}/keys`).json();
+  storeKeys.value = keys.value;
+  selectedKey.value = keys.value[0];
+
+  // Fetch data for the first key
   const {data, error} = await useFetch(`${baseUrl}/${selectedKey.value}`).json();
   storeData.value = data.value;
 
-  // Fetch store keys
-  const {data: keys, error: keyError} = await useFetch(`${baseUrl}/keys`).json();
-  storeKeys.value = keys.value;
+  selectedStore.value = selectedKey.value;
+
 })
 
 watch(selectedKey, async (newKey) => {

@@ -3,10 +3,12 @@
     <EditModal @close-modal="handleCloseModal()" :show="showModal" :row="selectedRow"/>
     <table class="min-w-full table-auto bg-white shadow-lg rounded-lg">
       <thead class="bg-gray-200">
+      <tr>
       <th v-for="(value, key) in tableData[0]" :key="key"
           class="px-6 py-3 text-left font-medium text-stone-800 capitalize tracking-wider">{{ key }}
       </th>
       <th class="px-6 py-3 text-left font-medium text-stone-800 capitalize tracking-wider">Actions</th>
+      </tr>
       </thead>
       <tbody>
       <tr v-for="row in tableData" :key="row.id" class="transition-all hover:bg-indigo-50">
@@ -47,7 +49,6 @@ const selectedRow = ref<Record<any, any>>({});
 const showModal = ref<boolean>(false);
 
 const handleCloseModal = () => {
-  console.log('closeModal');
   showModal.value = false;
 }
 
