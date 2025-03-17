@@ -1,15 +1,6 @@
 {
   "songs": [
     {
-      "id": 1,
-      "title": "Summer",
-      "Artist": "Calvin Harris",
-      "Genre": "Electronic",
-      "Year": "2014",
-      "Duration": "3:44",
-      "Album": "Motion"
-    },
-    {
       "id": 2,
       "title": "Blinding Lights",
       "Artist": "The Weeknd",
