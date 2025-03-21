@@ -1,4 +1,5 @@
 <template>
+    <notifications position="bottom right" />
     <header class="bg-emerald-500">
       <div class="container">
       <Navigation/>
@@ -12,6 +13,7 @@
 
 <script setup lang="ts">
 import Navigation from "@/components/Shared/Navigation.vue";
+import {Notifications} from "@kyvg/vue3-notification";
 </script>
 
 <style scoped>

@@ -43,8 +43,10 @@ onMounted(async () => {
 })
 
 watch(selectedKey, async (newKey) => {
-  const {data, error} = await useFetch(`${baseUrl}/${selectedKey.value}`).json();
+  const {data, error} = await useFetch(`${baseUrl}/${newKey}`).json();
   storeData.value = data.value;
+
+  selectedStore.value = newKey;
 })
 
 

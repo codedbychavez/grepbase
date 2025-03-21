@@ -24,7 +24,9 @@
                 />
               </div>
               <div class="text-right">
-                <button type="submit" class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50">Save Changes</button>
+                <button :disabled="isSaving" type="submit" class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
+                  {{ isSaving ? 'Saving...' : 'Save Changes' }}
+                </button>
               </div>
             </form>
           </div>
@@ -40,6 +42,7 @@ import Close from "@/components/Icons/Close.vue";
 import {useFetch} from "@vueuse/core";
 import { useAppStore } from '@/stores/appStore.ts';
 import {storeToRefs} from "pinia";
+import { notify } from "@kyvg/vue3-notification";
 
 const appStore = useAppStore();
 
@@ -53,6 +56,7 @@ const props = defineProps<{
 const emits = defineEmits(['closeModal']);
 
 const formData = ref({...props.row});
+const isSaving = ref(false);
 
 // Watch for changes to `row` and update `formData` accordingly
 watch(() => props.row, (newRow) => {
@@ -60,25 +64,36 @@ watch(() => props.row, (newRow) => {
 }, {deep: true});
 
 const submitForm = () => {
+  isSaving.value = true;
   const itemId = props.row['id'];
   const data = formData.value;
   const apiBaseUrl = appConfigs.value.apiBaseUrl;
   const store = selectedStore.value;
-  const { data: response, error, onFetchResponse } = useFetch(`${apiBaseUrl}/${store}/${itemId}`).patch(data)
+  console.log(selectedStore.value)
+  // const { data: response, error, onFetchResponse } = useFetch(`${apiBaseUrl}/${store}/${itemId}`).patch(data)
 
-  if (error.value) {
-    alert(error.value);
-    return;
-  }
+  // if (error.value) {
+  //   notify({
+  //     type: "error",
+  //     title: "Error",
+  //     text: error.value,
+  //   })
+  //   return;
+  // }
 
-  onFetchResponse((response) => {
-    if (response.status === 200) {
-      alert(response.status);
-    }
-  })
+  // onFetchResponse((response) => {
+  //   if (response.status === 200) {
+  //     notify({
+  //       type: 'success',
+  //       title: "Success",
+  //       text: "Saved successfully",
+  //     })
+  //   }
+  // })
 
   setTimeout(() => {
     emits('closeModal');
+    isSaving.value = false;
   }, 2000)
 }
 </script>

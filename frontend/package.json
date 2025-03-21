@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^3.4.1",
     "@tailwindcss/vite": "^4.0.12",
     "@vueuse/core": "^12.8.2",
     "pinia": "^3.0.1",
