@@ -70,6 +70,8 @@ const submitForm = () => {
   const apiBaseUrl = appConfigs.value.apiBaseUrl;
   const store = selectedStore.value;
   console.log(selectedStore.value)
+
+  // TODO: Move this to the dataStore.
   // const { data: response, error, onFetchResponse } = useFetch(`${apiBaseUrl}/${store}/${itemId}`).patch(data)
 
   // if (error.value) {

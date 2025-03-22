@@ -25,16 +25,16 @@ class JSONDatabase {
         fs.writeFileSync(this.filename, JSON.stringify(this.data, null, 2));
     }
 
-    set(key: string, value: any): void {
-        this.data[key] = value;
+    set(store: string, value: any): void {
+        this.data[store] = value;
         this.saveData();
     }
 
-    get(key: string): any | null {
-        return this.data[key] || null;
+    get(store: string): any | null {
+        return this.data[store] || null;
     }
 
-    getKeys(): Array<string> | null {
+    getStores(): Array<string> | null {
         return Object.keys(this.data);
     }
 
@@ -43,8 +43,8 @@ class JSONDatabase {
             Object.keys((filter).every((key: any) => obj[key] === filter[key])))
     }
 
-    delete(key: string): void {
-        delete this.data[key];
+    delete(store: string): void {
+        delete this.data[store];
         this.saveData();
     }
 }

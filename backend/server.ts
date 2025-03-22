@@ -7,26 +7,26 @@ const db = new JSONDatabase();
 app.use(express.json());
 app.use(cors());
 
-app.get("/store/keys", (req: Request, res: Response) => {
-    const data = db.getKeys();
+app.get("/stores", (req: Request, res: Response) => {
+    const data = db.getStores();
     data ? res.json(data) : res.status(404).json({ error: "Not Found" });
 })
 
-app.patch("/store/:key/:id", (req: Request, res: Response) => {
-    const { key, id } = req.params;
-    const data = db.get(req.params.key);
+app.patch("/stores/:store/:id", (req: Request, res: Response) => {
+    const { store, id } = req.params;
+    const data = db.get(req.params.store);
     const item = data.find((item: { id: string; }) => item.id == id);
     if (item) {
         const indexOfItem = data.indexOf(item);
         data[indexOfItem] = req.body;
-        db.set(key, data);
+        db.set(store, data);
     }
-    data ? res.json(data) : res.status(404).json({error: "Key not found"});
+    data ? res.json(data) : res.status(404).json({error: "Store not found"});
 })
 
-app.get("/store/:key", (req: Request, res: Response) => {
-    const data = db.get(req.params.key);
-    data ? res.json(data) : res.status(404).json({error: "Key not found"});
+app.get("/stores/:store", (req: Request, res: Response) => {
+    const data = db.get(req.params.store);
+    data ? res.json(data) : res.status(404).json({error: "Store not found"});
 });
 
 app.post("/query", (req: Request, res: Response) => {
@@ -34,8 +34,8 @@ app.post("/query", (req: Request, res: Response) => {
     res.json(result);
 });
 
-app.delete("/store/:key", (req: Request, res: Response) => {
-    db.delete(req.params.key);
+app.delete("/stores/:store", (req: Request, res: Response) => {
+    db.delete(req.params.store);
     res.json({message: "Data deleted successfully!"});
 });
 
