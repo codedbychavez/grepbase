@@ -5,26 +5,23 @@
         <div class="modal-content">
           <div class="modal-header flex">
             <h5 class="modal-title text-2xl ml-auto">Edit Entry</h5>
-            <button @click="$emit('closeModal')" type="button" class="ml-auto close p-3 bg-gray-200 cursor-pointer rounded-full" data-dismiss="modal"
-                    aria-label="Close">
-              <Close/>
+            <button @click="$emit('closeModal')" type="button"
+              class="ml-auto close p-3 bg-gray-200 cursor-pointer rounded-full" data-dismiss="modal" aria-label="Close">
+              <Close />
             </button>
           </div>
           <div class="modal-body">
             <form @submit.prevent="submitForm">
               <div v-for="(value, key) in row" :key="key" class="mb-3">
-                <label v-if="key != 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key }}</label>
-                <input
-                    :id="key"
-                    v-model="formData[key]"
-                    type="text"
-                    class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
-                    :placeholder="'Enter ' + key"
-                    :hidden="key == 'id'"
-                />
+                <label v-if="key != 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
+                  }}</label>
+                <input :id="key" v-model="formData[key]" type="text"
+                  class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
+                  :placeholder="'Enter ' + key" :hidden="key == 'id'" />
               </div>
               <div class="text-right">
-                <button :disabled="isSaving" type="submit" class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
+                <button :disabled="isSaving" type="submit"
+                  class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
                   {{ isSaving ? 'Saving...' : 'Save Changes' }}
                 </button>
               </div>
@@ -37,16 +34,13 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch, defineProps} from "vue";
+import { ref, watch, defineProps } from "vue";
 import Close from "@/components/Icons/Close.vue";
-import {useFetch} from "@vueuse/core";
-import { useAppStore } from '@/stores/appStore.ts';
-import {storeToRefs} from "pinia";
+
 import { notify } from "@kyvg/vue3-notification";
+import { useDataStore } from "@/stores/dataStore";
 
-const appStore = useAppStore();
-
-const { appConfigs, selectedStore } = storeToRefs(appStore);
+const dataStore = useDataStore();
 
 const props = defineProps<{
   row: Record<string, any>;
@@ -55,53 +49,47 @@ const props = defineProps<{
 
 const emits = defineEmits(['closeModal']);
 
-const formData = ref({...props.row});
+const formData = ref({ ...props.row });
 const isSaving = ref(false);
 
 // Watch for changes to `row` and update `formData` accordingly
 watch(() => props.row, (newRow) => {
-  formData.value = {...newRow};
-}, {deep: true});
+  formData.value = { ...newRow };
+}, { deep: true });
 
-const submitForm = () => {
+const submitForm = async () => {
   isSaving.value = true;
   const itemId = props.row['id'];
   const data = formData.value;
-  const apiBaseUrl = appConfigs.value.apiBaseUrl;
-  const store = selectedStore.value;
-  console.log(selectedStore.value)
-  // const { data: response, error, onFetchResponse } = useFetch(`${apiBaseUrl}/${store}/${itemId}`).patch(data)
 
-  // if (error.value) {
-  //   notify({
-  //     type: "error",
-  //     title: "Error",
-  //     text: error.value,
-  //   })
-  //   return;
-  // }
+  const didUpdate = await dataStore.editStoreItem(itemId, data);
 
-  // onFetchResponse((response) => {
-  //   if (response.status === 200) {
-  //     notify({
-  //       type: 'success',
-  //       title: "Success",
-  //       text: "Saved successfully",
-  //     })
-  //   }
-  // })
+  console.log('didUpdate', didUpdate);
+
+  if (didUpdate === true) {
+    notify({
+      type: 'success',
+      title: 'Item updated',
+      text: 'Item was updated successfully.'
+    })
+  } else {
+    notify({
+      type: 'error',
+      title: 'Update failed',
+      text: 'There was an error.'
+    })
+  }
 
   setTimeout(() => {
     emits('closeModal');
     isSaving.value = false;
   }, 2000)
+
 }
 </script>
 
 <style scoped>
-
 .modal {
   width: 40rem;
 }
-
 </style>

@@ -3,10 +3,8 @@ import { defineStore } from "pinia";
 
 export const useAppStore = defineStore('app', () => {
     const appConfigs = ref({
-        apiBaseUrl: 'http://localhost:3000/store',
+        apiBaseUrl: 'http://localhost:3000',
     })
 
-    const selectedStore = ref('');
-
-    return { appConfigs, selectedStore };
+    return { appConfigs };
 })
