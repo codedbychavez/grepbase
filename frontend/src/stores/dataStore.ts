@@ -46,5 +46,19 @@ export const useDataStore = defineStore("dataStore", () => {
 
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem }
+    async function deleteStoreItem(itemId: string): Promise<boolean> {
+        const url = `${appConfigs.value.apiBaseUrl}/stores/${selectedStore.value}/${itemId}`
+
+        const { error } = await useFetch(url).delete(itemId);
+
+        if (error.value) {
+            return false;
+        }
+
+        await fetchStoreData(selectedStore.value);
+
+        return true;
+    }
+
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem }
 })
