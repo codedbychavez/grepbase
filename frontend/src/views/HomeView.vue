@@ -12,34 +12,23 @@
 </template>
 <script setup lang="ts">
 
-import { useFetch } from '@vueuse/core';
-import { onMounted, ref, watch } from "vue";
-import { useAppStore } from '@/stores/appStore';
+import { onMounted, watch } from "vue";
 import { useDataStore } from '@/stores/dataStore';
 import DataTable from "@/components/DataTable.vue";
 import { storeToRefs } from "pinia";
 
-const baseUrl = "http://localhost:3000/store";
-
-const appStore = useAppStore();
 const dataStore = useDataStore();
 const { selectedStore, storeData, stores } = storeToRefs(dataStore);
 
 onMounted(async () => {
-
   // Fetch all data stores
   await dataStore.fetchStores();
-
   // Fetch data for selected store
   await dataStore.fetchStoreData(selectedStore.value);
-
-
-
 })
 
 watch(selectedStore, async (newSelectedStore) => {
   await dataStore.fetchStoreData(newSelectedStore);
-
   // Set the selected store
   selectedStore.value = newSelectedStore;
 })

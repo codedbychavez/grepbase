@@ -13,6 +13,7 @@ app.get("/stores", (req: Request, res: Response) => {
 })
 
 app.patch("/stores/:store/:id", (req: Request, res: Response) => {
+    let didUpdate = false;
     const { store, id } = req.params;
     const data = db.get(req.params.store);
     const item = data.find((item: { id: string; }) => item.id == id);
@@ -20,8 +21,9 @@ app.patch("/stores/:store/:id", (req: Request, res: Response) => {
         const indexOfItem = data.indexOf(item);
         data[indexOfItem] = req.body;
         db.set(store, data);
+        didUpdate = true;
     }
-    data ? res.json(data) : res.status(404).json({error: "Store not found"});
+    didUpdate ? res.json(didUpdate) : res.status(404).json({error: "Failed to update"});
 })
 
 app.get("/stores/:store", (req: Request, res: Response) => {

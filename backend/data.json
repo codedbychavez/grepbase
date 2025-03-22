@@ -5,7 +5,7 @@
       "title": "Blinding Lights",
       "Artist": "The Weeknd",
       "Genre": "Synthwave",
-      "Year": 2025,
+      "Year": "2017",
       "Duration": "3:22",
       "Album": "After Hours"
     },
@@ -175,7 +175,7 @@
   "animals": [
     {
       "id": 1,
-      "Name": "Lion",
+      "Name": "Lions",
       "Class": "Mammalia"
     },
     {
