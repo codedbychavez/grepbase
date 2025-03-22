@@ -1,15 +1,6 @@
 {
   "songs": [
     {
-      "id": 2,
-      "title": "Blinding Lights",
-      "Artist": "The Weeknd",
-      "Genre": "Synthwave",
-      "Year": "2017",
-      "Duration": "3:22",
-      "Album": "After Hours"
-    },
-    {
       "id": 3,
       "title": "Shape of You",
       "Artist": "Ed Sheeran",
@@ -17,15 +8,6 @@
       "Year": 2017,
       "Duration": "3:53",
       "Album": "÷"
-    },
-    {
-      "id": 4,
-      "title": "Levitating",
-      "Artist": "Dua Lipa",
-      "Genre": "Pop",
-      "Year": 2020,
-      "Duration": "3:23",
-      "Album": "Future Nostalgia"
     },
     {
       "id": 5,

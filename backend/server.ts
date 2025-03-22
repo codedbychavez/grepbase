@@ -26,6 +26,20 @@ app.patch("/stores/:store/:id", (req: Request, res: Response) => {
     didUpdate ? res.json(didUpdate) : res.status(404).json({error: "Failed to update"});
 })
 
+app.delete("/stores/:store/:id", (req: Request, res: Response) => {
+    let didDelete = false;
+    const { store, id } = req.params;
+    const data = db.get(req.params.store);
+    const item = data.find((item: { id: string; }) => item.id == id);
+    if (item) {
+        const indexOfItem = data.indexOf(item);
+        data.splice(indexOfItem, 1)
+        db.set(store, data);
+        didDelete = true;
+    }
+    didDelete ? res.json(didDelete) : res.status(404).json({error: "Failed to delete"});
+})
+
 app.get("/stores/:store", (req: Request, res: Response) => {
     const data = db.get(req.params.store);
     data ? res.json(data) : res.status(404).json({error: "Store not found"});
