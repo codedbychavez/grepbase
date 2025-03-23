@@ -2,7 +2,7 @@
   "songs": [
     {
       "id": 6,
-      "title": "Wake Me Up",
+      "title": "Wake Me",
       "Artist": "Avicii",
       "Genre": "Electronic",
       "Year": 2013,
@@ -174,19 +174,8 @@
   ],
   "animals": [
     {
-      "id": 1,
-      "Name": "Lions",
-      "Class": "Mammalia"
-    },
-    {
-      "id": 2,
-      "Name": "Aligator",
-      "Class": "Reptile"
-    },
-    {
-      "id": "ec67d88b-f943-498d-8ad9-13a193d3f301",
-      "Name": "Bear",
-      "Class": "Mammalia"
+      "id": "123",
+      "name": "Smo"
     }
   ]
 }

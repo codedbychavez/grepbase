@@ -75,5 +75,20 @@ export const useDataStore = defineStore("dataStore", () => {
         return true;
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem }
+    async function editStoreData(store: string, storeData: any): Promise<boolean> {
+        const url = `${appConfigs.value.apiBaseUrl}/stores/${store}`
+
+        const { error } = await useFetch(url).patch(storeData);
+
+        if (error.value) {
+            return false;
+        }
+
+        await fetchStoreData(selectedStore.value);
+
+        return true;
+
+    }
+
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, editStoreData }
 })

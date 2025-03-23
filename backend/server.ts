@@ -39,6 +39,18 @@ app.post("/stores/:store/create", (req: Request, res: Response) => {
     didCreate ? res.json(didCreate) : res.status(404).json({error: "Failed to create"});
 })
 
+app.patch("/stores/:store", (req: Request, res: Response) => {
+    let didUpdate = false;
+    const { store } = req.params;
+    const storeData = req.body;
+    console.log(req.body)
+    if (storeData) {
+        db.set(store, storeData);
+        didUpdate = true;
+    }
+    didUpdate ? res.json(didUpdate) : res.status(404).json({error: "Failed to create"});
+})
+
 app.delete("/stores/:store/:id", (req: Request, res: Response) => {
     let didDelete = false;
     const { store, id } = req.params;
