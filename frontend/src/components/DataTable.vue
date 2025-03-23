@@ -1,7 +1,9 @@
 <template>
   <div class="data-table overflow-x-auto">
-    <EditModal @close-modal="handleCloseEditModal()" :show="showEditModal" :row="selectedRow" />
-    <DeleteModal title="Delete Item" @close-delete-modal="handleCloseDeleteModal()" :show="showConfirmModal"
+    <EditModal @close-edit-modal="handleCloseEditModal()" :show="showEditModal" :row="selectedRow" />
+    <DeleteModal @close-delete-modal="handleCloseDeleteModal()" :show="showConfirmModal"
+      :row="selectedRow" />
+    <CreateModal @close-create-modal="handleCloseCreateModal()" :show="showCreateModal"
       :row="selectedRow" />
     <table class="min-w-full table-auto bg-white shadow-lg rounded-lg">
       <thead class="bg-gray-200">
@@ -19,7 +21,7 @@
             }}
           </td>
           <td class="flex gap-2 px-6 py-4 text-gray-700 border-t border-gray-200">
-            <button class="cursor-pointer bg-gray-100 hover:bg-gray-300 text-sm px-2 py-1 rounded">
+            <button @click="handleCreate(row)" class="cursor-pointer bg-gray-100 hover:bg-gray-300 text-sm px-2 py-1 rounded">
               <Plus />
             </button>
             <button @click="handleEdit(row)"
@@ -44,6 +46,7 @@ import Plus from "@/components/Icons/Plus.vue";
 import Pencil from "@/components/Icons/Pencil.vue";
 import EditModal from "@/components/EditModal.vue";
 import DeleteModal from "@/components/DeleteModal.vue";
+import CreateModal from "@/components/CreateModal.vue";
 import { ref } from "vue";
 
 defineProps<{
@@ -53,10 +56,11 @@ defineProps<{
 const selectedRow = ref<Record<any, any>>({});
 const showEditModal = ref<boolean>(false);
 const showConfirmModal = ref<boolean>(false);
+const showCreateModal = ref<boolean>(false);
 
 const handleCloseEditModal = () => showEditModal.value = false;
-
 const handleCloseDeleteModal = () => showConfirmModal.value = false;
+const handleCloseCreateModal = () => showCreateModal.value = false;
 
 const handleEdit = (row: Record<any, any>) => {
   selectedRow.value = row;
@@ -66,6 +70,11 @@ const handleEdit = (row: Record<any, any>) => {
 const handleDelete = (row: Record<any, any>) => {
   selectedRow.value = row;
   showConfirmModal.value = true;
+}
+
+const handleCreate = (row: Record<any, any>) => {
+  selectedRow.value = row;
+  showCreateModal.value = true;
 }
 
 </script>
