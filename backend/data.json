@@ -1,15 +1,6 @@
 {
   "songs": [
     {
-      "id": 5,
-      "title": "Bad Guy",
-      "Artist": "Billie Eilish",
-      "Genre": "Pop",
-      "Year": 2019,
-      "Duration": "3:14",
-      "Album": "When We All Fall Asleep, Where Do We Go?"
-    },
-    {
       "id": 6,
       "title": "Wake Me Up",
       "Artist": "Avicii",
@@ -170,6 +161,15 @@
       "Year": "2010",
       "Duration": "3:12",
       "Album": "Sparksfly"
+    },
+    {
+      "id": "567bdec8-1375-4c4a-b0c0-696b672c1d32",
+      "title": "Summer",
+      "Artist": "Calvin Harris",
+      "Genre": "EDM",
+      "Year": "2013",
+      "Duration": "4:24",
+      "Album": "Vibe"
     }
   ],
   "animals": [
