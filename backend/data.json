@@ -1,15 +1,6 @@
 {
   "songs": [
     {
-      "id": 3,
-      "title": "Shape of You",
-      "Artist": "Ed Sheeran",
-      "Genre": "Pop",
-      "Year": 2017,
-      "Duration": "3:53",
-      "Album": "÷"
-    },
-    {
       "id": 5,
       "title": "Bad Guy",
       "Artist": "Billie Eilish",
@@ -152,6 +143,33 @@
       "Year": 2013,
       "Duration": "4:01",
       "Album": "Hozier"
+    },
+    {
+      "id": "721d17b1-b0d1-4694-a56b-33db3a3911f2",
+      "title": "Another Life",
+      "Artist": "Flowerface",
+      "Genre": "pop",
+      "Year": "2019",
+      "Duration": "4:21",
+      "Album": "Love"
+    },
+    {
+      "id": "1834301c-0954-4cfe-b45b-1dbc32461710",
+      "title": "Red Lights",
+      "Artist": "Tiesto",
+      "Genre": "EDM",
+      "Year": "2013",
+      "Duration": "3:12",
+      "Album": "Tiesto"
+    },
+    {
+      "id": "de116097-7d47-414e-806e-196c4b834029",
+      "title": "Fearless",
+      "Artist": "Taylor Swift",
+      "Genre": "Pop",
+      "Year": "2010",
+      "Duration": "3:12",
+      "Album": "Sparksfly"
     }
   ],
   "animals": [
@@ -164,6 +182,11 @@
       "id": 2,
       "Name": "Aligator",
       "Class": "Reptile"
+    },
+    {
+      "id": "ec67d88b-f943-498d-8ad9-13a193d3f301",
+      "Name": "Bear",
+      "Class": "Mammalia"
     }
   ]
 }
