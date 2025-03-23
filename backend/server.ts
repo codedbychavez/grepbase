@@ -43,7 +43,6 @@ app.patch("/stores/:store", (req: Request, res: Response) => {
     let didUpdate = false;
     const { store } = req.params;
     const storeData = req.body;
-    console.log(req.body)
     if (storeData) {
         db.set(store, storeData);
         didUpdate = true;

@@ -175,7 +175,13 @@
   "animals": [
     {
       "id": "123",
-      "name": "Smo"
+      "name": "Smo",
+      "breed": "Tame"
+    },
+    {
+      "id": "f948e5c0-f5c1-4c9b-91bd-e761f9fdbe62",
+      "name": "Elephant",
+      "breed": "Zues"
     }
   ]
 }

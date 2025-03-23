@@ -47,7 +47,6 @@ watch(selectedStore, async (newSelectedStore) => {
 
 async function handleSaveStoreData() {
   originalStoreData.value = storeData.value;
-  console.log(storeData.value)
   const didUpdate = await dataStore.editStoreData(selectedStore.value, storeData.value);
 
   if (didUpdate === true) {
