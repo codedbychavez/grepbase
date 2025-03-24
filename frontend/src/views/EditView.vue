@@ -1,5 +1,6 @@
 <template>
   <main class="py-16">
+    <CreateStoreModal @close-create-store-modal="handleCloseCreateStoreModal" :show="showCreateStoreModal" />
     <h1 class="text-3xl">Store Editor</h1>
     <div class="my-8 flex gap-8 items-end">
       <div class="select-wrapper">
@@ -8,13 +9,16 @@
           <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
         </select>
       </div>
-      <div class="quick-actions">
+      <div class="quick-actions flex gap-4">
         <button type="button" @click="handleSaveStoreData()" :disabled="isStoreModified"
           class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Save</button>
+        <button type="button" @click="handleCreateStore()"
+          class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Create
+          Store</button>
       </div>
     </div>
 
-    <JsonEditorVue :stringified="false" v-model="storeData" mode="text" :main-menu-bar="false"/>
+    <JsonEditorVue :stringified="false" v-model="storeData" mode="text" :main-menu-bar="false" />
   </main>
 </template>
 <script setup lang="ts">
@@ -25,10 +29,12 @@ import { storeToRefs } from "pinia";
 import { notify } from "@kyvg/vue3-notification";
 import JsonEditorVue from 'json-editor-vue'
 import { isEqual, sortBy } from "lodash";
+import CreateStoreModal from "@/components/CreateStoreModal.vue";
 
 const dataStore = useDataStore();
 const { selectedStore, storeData, stores } = storeToRefs(dataStore);
 const originalStoreData = ref<Record<string, any>>([]);
+const showCreateStoreModal = ref<boolean>(false);
 
 onMounted(async () => {
   // Fetch all data stores
@@ -64,14 +70,26 @@ async function handleSaveStoreData() {
   }
 }
 
+async function handleCreateStore() {
+  showCreateStoreModal.value = true;
+
+  await dataStore.fetchStores();
+}
+
+function handleCloseCreateStoreModal() {
+  showCreateStoreModal.value = false;
+}
+
 const isStoreModified = computed(() => {
-  if (originalStoreData.value.length !== storeData.value.length) return false;
+  if (storeData.value && originalStoreData.value) {
+    if (originalStoreData.value.length !== storeData.value.length) return false;
 
-  // Sort both arrays by 'id' before comparison
-  const sortedOriginalStoreData = sortBy(originalStoreData.value, "id");
-  const sortedStoreData = sortBy(storeData.value, "id");
+    // Sort both arrays by 'id' before comparison
+    const sortedOriginalStoreData = sortBy(originalStoreData.value, "id");
+    const sortedStoreData = sortBy(storeData.value, "id");
 
-  return isEqual(sortedOriginalStoreData, sortedStoreData);
+    return isEqual(sortedOriginalStoreData, sortedStoreData);
+  }
 })
 
 </script>

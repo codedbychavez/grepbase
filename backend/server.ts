@@ -26,6 +26,16 @@ app.patch("/stores/:store/:id", (req: Request, res: Response) => {
     didUpdate ? res.json(didUpdate) : res.status(404).json({error: "Failed to update"});
 })
 
+app.post("/stores/create", (req: Request, res: Response) => {
+    let didCreate = false;
+    const { name } = req.body;
+    if (name) {
+        db.set(name, []);
+        didCreate = true;
+    }
+    didCreate ? res.json(didCreate) : res.status(404).json({error: "Failed to create"});
+})
+
 app.post("/stores/:store/create", (req: Request, res: Response) => {
     let didCreate = false;
     const { store } = req.params;

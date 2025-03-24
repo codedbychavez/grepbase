@@ -75,6 +75,21 @@ export const useDataStore = defineStore("dataStore", () => {
         return true;
     }
 
+    async function createStore(storeName: any): Promise<boolean> {
+        const url = `${appConfigs.value.apiBaseUrl}/stores/create`
+
+        const { error } = await useFetch(url).post(storeName);
+
+        if (error.value) {
+            return false;
+        }
+
+        await fetchStores();
+
+        return true;
+
+    }
+
     async function editStoreData(store: string, storeData: any): Promise<boolean> {
         const url = `${appConfigs.value.apiBaseUrl}/stores/${store}`
 
@@ -90,5 +105,5 @@ export const useDataStore = defineStore("dataStore", () => {
 
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, editStoreData }
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData }
 })
