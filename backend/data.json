@@ -190,5 +190,14 @@
       "Color": "green",
       "Style": "lace"
     }
+  ],
+  "booklist": [],
+  "phones": [
+    {
+      "id": 1,
+      "name": "Iphone 13",
+      "year": "2024",
+      "manufacturer": "Apple"
+    }
   ]
 }

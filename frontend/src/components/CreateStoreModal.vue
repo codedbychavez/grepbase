@@ -63,8 +63,8 @@ const submitForm = async () => {
     if (didCreate === true) {
         notify({
             type: 'success',
-            title: 'Item created',
-            text: 'Item was created successfully.'
+            title: 'Store created',
+            text: 'Store was created successfully.'
         })
     } else {
         notify({
