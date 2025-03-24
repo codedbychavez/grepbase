@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express, { Request, Response } from "express";
 let cors = require("cors");
 import JSONDatabase from "./db";
 
@@ -23,7 +23,7 @@ app.patch("/stores/:store/:id", (req: Request, res: Response) => {
         db.set(store, data);
         didUpdate = true;
     }
-    didUpdate ? res.json(didUpdate) : res.status(404).json({error: "Failed to update"});
+    didUpdate ? res.json(didUpdate) : res.status(404).json({ error: "Failed to update" });
 })
 
 app.post("/stores/create", (req: Request, res: Response) => {
@@ -33,7 +33,17 @@ app.post("/stores/create", (req: Request, res: Response) => {
         db.set(name, []);
         didCreate = true;
     }
-    didCreate ? res.json(didCreate) : res.status(404).json({error: "Failed to create"});
+    didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
+})
+
+app.post("/stores/delete", (req: Request, res: Response) => {
+    let didDelete = false;
+    const { name } = req.body;
+    if (name) {
+        db.delete(name);
+        didDelete = true;
+    }
+    didDelete ? res.json(didDelete) : res.status(404).json({ error: "Failed to delete" });
 })
 
 app.post("/stores/:store/create", (req: Request, res: Response) => {
@@ -46,7 +56,7 @@ app.post("/stores/:store/create", (req: Request, res: Response) => {
         db.set(store, data);
         didCreate = true;
     }
-    didCreate ? res.json(didCreate) : res.status(404).json({error: "Failed to create"});
+    didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
 })
 
 app.patch("/stores/:store", (req: Request, res: Response) => {
@@ -57,7 +67,7 @@ app.patch("/stores/:store", (req: Request, res: Response) => {
         db.set(store, storeData);
         didUpdate = true;
     }
-    didUpdate ? res.json(didUpdate) : res.status(404).json({error: "Failed to create"});
+    didUpdate ? res.json(didUpdate) : res.status(404).json({ error: "Failed to create" });
 })
 
 app.delete("/stores/:store/:id", (req: Request, res: Response) => {
@@ -71,12 +81,12 @@ app.delete("/stores/:store/:id", (req: Request, res: Response) => {
         db.set(store, data);
         didDelete = true;
     }
-    didDelete ? res.json(didDelete) : res.status(404).json({error: "Failed to delete"});
+    didDelete ? res.json(didDelete) : res.status(404).json({ error: "Failed to delete" });
 })
 
 app.get("/stores/:store", (req: Request, res: Response) => {
     const data = db.get(req.params.store);
-    data ? res.json(data) : res.status(404).json({error: "Store not found"});
+    data ? res.json(data) : res.status(404).json({ error: "Store not found" });
 });
 
 app.post("/query", (req: Request, res: Response) => {
@@ -86,7 +96,7 @@ app.post("/query", (req: Request, res: Response) => {
 
 app.delete("/stores/:store", (req: Request, res: Response) => {
     db.delete(req.params.store);
-    res.json({message: "Data deleted successfully!"});
+    res.json({ message: "Data deleted successfully!" });
 });
 
 const port = 3000;

@@ -2,7 +2,7 @@
   "songs": [
     {
       "id": 6,
-      "title": "Wake Me",
+      "title": "Wake Me Ups",
       "Artist": "Avicii",
       "Genre": "Electronic",
       "Year": 2013,
@@ -186,18 +186,26 @@
   ],
   "shoes": [
     {
+      "id": "1",
       "Name": "test",
       "Color": "green",
       "Style": "lace"
+    },
+    {
+      "id": "2",
+      "Name": "Running Shoes",
+      "Color": "Yellow",
+      "Style": "Semi-lace"
     }
   ],
-  "booklist": [],
   "phones": [
     {
       "id": 1,
-      "name": "Iphone 13",
-      "year": "2024",
-      "manufacturer": "Apple"
+      "name": "iPhone 13 ProMax"
+    },
+    {
+      "id": "66b2a529-a320-4269-a412-0df352671b96",
+      "name": "Galaxy Ultra 2"
     }
   ]
 }
