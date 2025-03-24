@@ -81,7 +81,7 @@ function handleCloseCreateStoreModal() {
 }
 
 const isStoreModified = computed(() => {
-  if (storeData.value && originalStoreData.value) {
+
     if (originalStoreData.value.length !== storeData.value.length) return false;
 
     // Sort both arrays by 'id' before comparison
@@ -89,7 +89,7 @@ const isStoreModified = computed(() => {
     const sortedStoreData = sortBy(storeData.value, "id");
 
     return isEqual(sortedOriginalStoreData, sortedStoreData);
-  }
+
 })
 
 </script>

@@ -186,13 +186,9 @@
   ],
   "shoes": [
     {
-      "id": "1",
-      "name": "Sketchers - GoRun",
-      "material": "Nylon, Cloth",
-      "Origin Country": "Vietnam",
-      "Size": "8",
-      "Color": "Dark Navy",
-      "Has Lace": "Yes"
+      "Name": "test",
+      "Color": "green",
+      "Style": "lace"
     }
   ]
 }
