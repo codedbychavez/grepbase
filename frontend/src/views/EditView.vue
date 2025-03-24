@@ -5,7 +5,7 @@
     <h1 class="text-3xl">Store Editor</h1>
     <div class="my-8 flex gap-8 items-end">
       <div class="select-wrapper">
-        <label for="key" class="block">Select your store key</label>
+        <label for="key" class="block">Select your store</label>
         <select name="key" v-model="selectedStore" class="mt-2 bg-gray-200 px-4 py-2 rounded-md">
           <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
         </select>
