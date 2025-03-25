@@ -90,8 +90,23 @@ export const useDataStore = defineStore("dataStore", () => {
 
     }
 
+    async function renameStore(storeName: any): Promise<boolean> {
+        const url = `${appConfigs.value.apiBaseUrl}/stores/rename`;
+
+        const { error } = await useFetch(url).patch(storeName);
+
+        if (error.value) {
+            return false;
+        }
+
+        await fetchStores();
+
+        return true;
+
+    }
+
     async function deleteStore(storeName: any): Promise<boolean> {
-        const url = `${appConfigs.value.apiBaseUrl}/stores/delete`
+        const url = `${appConfigs.value.apiBaseUrl}/stores/delete`;
 
         const { error } = await useFetch(url).post(storeName);
 
@@ -120,5 +135,5 @@ export const useDataStore = defineStore("dataStore", () => {
 
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore }
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore }
 })

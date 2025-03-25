@@ -47,6 +47,21 @@ class JSONDatabase {
         delete this.data[store];
         this.saveData();
     }
+
+    renameStore(oldName: string, newName: string): boolean {
+        if (!this.data[oldName]) {
+            console.error(`Store "${oldName}" does not exist.`);
+            return false;
+        }
+        if (this.data[newName]) {
+            console.error(`Store "${newName}" already exists.`);
+            return false;
+        }
+        this.data[newName] = this.data[oldName];
+        delete this.data[oldName];
+        this.saveData();
+        return true;
+    }
 }
 
 export default JSONDatabase;
