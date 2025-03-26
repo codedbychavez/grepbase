@@ -25,9 +25,14 @@ class JSONDatabase {
         fs.writeFileSync(this.filename, JSON.stringify(this.data, null, 2));
     }
 
-    set(store: string, value: any): void {
+    set(store: string, value: any): boolean {
+        if (this.data[store]) {
+            console.error(`Store "${store}" already exists.`);
+            return false;
+        }
         this.data[store] = value;
         this.saveData();
+        return true;
     }
 
     get(store: string): any | null {
@@ -46,6 +51,21 @@ class JSONDatabase {
     delete(store: string): void {
         delete this.data[store];
         this.saveData();
+    }
+
+    renameStore(oldName: string, newName: string): boolean {
+        if (!this.data[oldName]) {
+            console.error(`Store "${oldName}" does not exist.`);
+            return false;
+        }
+        if (this.data[newName]) {
+            console.error(`Store "${newName}" already exists.`);
+            return false;
+        }
+        this.data[newName] = this.data[oldName];
+        delete this.data[oldName];
+        this.saveData();
+        return true;
     }
 }
 

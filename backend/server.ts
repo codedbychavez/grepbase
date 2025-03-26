@@ -30,10 +30,19 @@ app.post("/stores/create", (req: Request, res: Response) => {
     let didCreate = false;
     const { name } = req.body;
     if (name) {
-        db.set(name, []);
-        didCreate = true;
+        didCreate = db.set(name, []);
     }
     didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
+})
+
+app.patch("/stores/rename", (req: Request, res: Response) => {
+    let didRename = false;
+    const { oldName, newName } = req.body;
+    if (oldName && newName) {
+        db.renameStore(oldName, newName);
+        didRename = true;
+    }
+    didRename ? res.json(didRename) : res.status(404).json({ error: "Failed to rename" });
 })
 
 app.post("/stores/delete", (req: Request, res: Response) => {

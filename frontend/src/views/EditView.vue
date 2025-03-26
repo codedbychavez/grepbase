@@ -2,6 +2,7 @@
   <main class="py-16">
     <CreateStoreModal @close-create-store-modal="handleCloseCreateStoreModal" :show="showCreateStoreModal" />
     <DeleteStoreModal @close-delete-store-modal="handleCloseDeleteStoreModal" :show="showDeleteStoreModal" />
+    <RenameStoreModal @close-rename-store-modal="handleCloseRenameStoreModal" :show="showRenameStoreModal" />
     <h1 class="text-3xl">Store Editor</h1>
     <div class="my-8 flex gap-8 items-end">
       <div class="select-wrapper">
@@ -19,6 +20,9 @@
         <button type="button" @click="handleDeleteStore()"
           class="mt-4 bg-red-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Delete
           Store</button>
+        <button type="button" @click="handleRenameStore()"
+          class="mt-4 bg-blue-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Rename
+          Store</button>
       </div>
     </div>
 
@@ -35,12 +39,14 @@ import JsonEditorVue from 'json-editor-vue'
 import { isEqual, sortBy } from "lodash";
 import CreateStoreModal from "@/components/CreateStoreModal.vue";
 import DeleteStoreModal from "@/components/DeleteStoreModal.vue";
+import RenameStoreModal from "@/components/RenameStoreModal.vue";
 
 const dataStore = useDataStore();
 const { selectedStore, storeData, stores } = storeToRefs(dataStore);
 const originalStoreData = ref<Record<string, any>>([]);
 const showCreateStoreModal = ref<boolean>(false);
 const showDeleteStoreModal = ref<boolean>(false);
+const showRenameStoreModal = ref<boolean>(false);
 
 onMounted(async () => {
   // Fetch all data stores
@@ -84,6 +90,10 @@ async function handleDeleteStore() {
   showDeleteStoreModal.value = true;
 }
 
+async function handleRenameStore() {
+  showRenameStoreModal.value = true;
+}
+
 function handleCloseCreateStoreModal() {
   showCreateStoreModal.value = false;
 }
@@ -92,17 +102,21 @@ function handleCloseDeleteStoreModal() {
   showDeleteStoreModal.value = false;
 }
 
+function handleCloseRenameStoreModal() {
+  showRenameStoreModal.value = false;
+}
+
 const isStoreModified = computed(() => {
 
-    if (originalStoreData.value && storeData.value) {
-      if (originalStoreData.value.length !== storeData.value.length) return false;
-    }
+  if (originalStoreData.value && storeData.value) {
+    if (originalStoreData.value.length !== storeData.value.length) return false;
+  }
 
-    // Sort both arrays by 'id' before comparison
-    const sortedOriginalStoreData = sortBy(originalStoreData.value, "id");
-    const sortedStoreData = sortBy(storeData.value, "id");
+  // Sort both arrays by 'id' before comparison
+  const sortedOriginalStoreData = sortBy(originalStoreData.value, "id");
+  const sortedStoreData = sortBy(storeData.value, "id");
 
-    return isEqual(sortedOriginalStoreData, sortedStoreData);
+  return isEqual(sortedOriginalStoreData, sortedStoreData);
 
 })
 

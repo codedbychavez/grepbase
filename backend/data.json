@@ -1,5 +1,41 @@
 {
-  "songs": [
+  "shoes": [
+    {
+      "id": "1",
+      "Name": "test",
+      "Color": "green",
+      "Style": "lace"
+    },
+    {
+      "id": "2",
+      "Name": "Running Shoes",
+      "Color": "Yellow",
+      "Style": "Semi-lace"
+    }
+  ],
+  "phones": [
+    {
+      "id": 1,
+      "name": "iPhone 13 ProMax"
+    },
+    {
+      "id": "66b2a529-a320-4269-a412-0df352671b96",
+      "name": "Galaxy Ultra 2"
+    }
+  ],
+  "creatures": [
+    {
+      "id": "123",
+      "name": "Smo",
+      "breed": "Tame"
+    },
+    {
+      "id": "f948e5c0-f5c1-4c9b-91bd-e761f9fdbe62",
+      "name": "Elephant",
+      "breed": "Zues"
+    }
+  ],
+  "playlist": [
     {
       "id": 6,
       "title": "Wake Me Ups",
@@ -170,42 +206,6 @@
       "Year": "2013",
       "Duration": "4:24",
       "Album": "Vibe"
-    }
-  ],
-  "animals": [
-    {
-      "id": "123",
-      "name": "Smo",
-      "breed": "Tame"
-    },
-    {
-      "id": "f948e5c0-f5c1-4c9b-91bd-e761f9fdbe62",
-      "name": "Elephant",
-      "breed": "Zues"
-    }
-  ],
-  "shoes": [
-    {
-      "id": "1",
-      "Name": "test",
-      "Color": "green",
-      "Style": "lace"
-    },
-    {
-      "id": "2",
-      "Name": "Running Shoes",
-      "Color": "Yellow",
-      "Style": "Semi-lace"
-    }
-  ],
-  "phones": [
-    {
-      "id": 1,
-      "name": "iPhone 13 ProMax"
-    },
-    {
-      "id": "66b2a529-a320-4269-a412-0df352671b96",
-      "name": "Galaxy Ultra 2"
     }
   ]
 }
