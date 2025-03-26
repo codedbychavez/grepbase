@@ -30,8 +30,7 @@ app.post("/stores/create", (req: Request, res: Response) => {
     let didCreate = false;
     const { name } = req.body;
     if (name) {
-        db.set(name, []);
-        didCreate = true;
+        didCreate = db.set(name, []);
     }
     didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
 })

@@ -20,7 +20,7 @@
                   placeholder="Enter store name" maxlength="30" />
               </div>
               <div class="text-right">
-                <button :disabled="isRenaming" type="submit"
+                <button :disabled="isRenaming || formData.oldName === formData.newName" type="submit"
                   class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
                   {{ isRenaming ? 'Renaming...' : 'Rename Store' }}
                 </button>

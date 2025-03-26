@@ -25,9 +25,14 @@ class JSONDatabase {
         fs.writeFileSync(this.filename, JSON.stringify(this.data, null, 2));
     }
 
-    set(store: string, value: any): void {
+    set(store: string, value: any): boolean {
+        if (this.data[store]) {
+            console.error(`Store "${store}" already exists.`);
+            return false;
+        }
         this.data[store] = value;
         this.saveData();
+        return true;
     }
 
     get(store: string): any | null {

@@ -16,7 +16,7 @@ export const useDataStore = defineStore("dataStore", () => {
 
         if (error.value) { return };
 
-        stores.value = data.value;
+        stores.value = data.value.sort((a: string, b: string) => a.localeCompare(b));
         selectedStore.value = stores.value[0];
     }
 
@@ -81,6 +81,7 @@ export const useDataStore = defineStore("dataStore", () => {
         const { error } = await useFetch(url).post(storeName);
 
         if (error.value) {
+            console.log(error.value);
             return false;
         }
 
