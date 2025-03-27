@@ -1,8 +1,8 @@
 <template>
   <main class="py-16 flex justify-center">
     <div>
-      <h1 class="text-3xl text-center">Authenticate</h1>
-      <form class="mt-12 w-xl border border-gray-100 shadow p-4" @submit.prevent="submitForm">
+      <h1 class="text-3xl text-center">My Account</h1>
+      <form class="mt-12 w-96 border border-gray-100 shadow p-4" @submit.prevent="submitForm">
         <h2 class="text-2xl text-center">Login</h2>
         <div class="form-group mt-8">
           <label for="key" class="form-label text-sm text-stone-700 block capitalize">Username</label>
@@ -27,6 +27,12 @@
 <script setup lang="ts">
 
 import { reactive } from 'vue';
+import { useAuthStore } from '@/stores/authStore';
+import { storeToRefs } from 'pinia';
+
+const authStore = useAuthStore();
+
+const { isUserLoggedIn } = storeToRefs(authStore);
 
 const formData = reactive({
   username: "",
@@ -35,7 +41,10 @@ const formData = reactive({
 
 async function submitForm() {
   // TODO: Implement
-  console.log('Login', formData)
+  
+  await authStore.login(formData);
 }
+
+// https://www.freecodecamp.org/news/how-to-authenticate-users-and-implement-cors-in-nodejs-applications/
 
 </script>

@@ -7,6 +7,12 @@ const db = new JSONDatabase();
 app.use(express.json());
 app.use(cors());
 
+// Authentication
+app.post("/auth/login", (req: Request, res: Response) => {
+
+})
+
+
 app.get("/stores", (req: Request, res: Response) => {
     const data = db.getStores();
     data ? res.json(data) : res.status(404).json({ error: "Not Found" });
