@@ -1,17 +1,17 @@
 <template>
-  <div class="navigation bg-emerald-500 p-4">
+  <div class="navigation">
     <RouterLink to="/">
-      <div class="logo text-white font-bold text-lg">grepbase</div>
+      <div class="logo text-emerald-500 font-bold text-2xl">grepbase</div>
     </RouterLink>
     <div class="navigation-links-wrapper">
       <ul class="navigation-links flex items-center gap-8">
         <li>
-          <RouterLink to="/"class="text-gray-100 underline">
+          <RouterLink to="/" active-class="font-semibold" class="p-1">
             Store Viewer
           </RouterLink>
         </li>
         <li>
-          <RouterLink to="/edit" class="text-gray-100 underline">
+          <RouterLink to="/edit" active-class="font-semibold" class="p-1">
             Store Editor (JSON)
           </RouterLink>
         </li>
