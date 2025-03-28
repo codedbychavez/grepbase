@@ -1,15 +1,48 @@
 import express, { Request, Response } from "express";
+let crypto = require('crypto');
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
 let cors = require("cors");
+
 import JSONDatabase from "./db";
+import JSONAuthDatabase from "./auth/authdb";
 
 const app = express();
 const db = new JSONDatabase();
+const authdb = new JSONAuthDatabase();
 app.use(express.json());
 app.use(cors());
 
 // Authentication
-app.post("/auth/login", (req: Request, res: Response) => {
 
+passport.use(new LocalStrategy(function verify(username: string, password: string, cb: (error: any, user?: any, info?: any) => void) {
+    const user = authdb.find(username);
+
+    if (!user) {
+        return cb(null, false, { message: "Incorrect username or password." })
+    }
+
+    crypto.pbkdf2(password, user.salt, 310000, 32, 'sha256', function (err: any, hashedPassword: string) {
+
+        if (err) { return cb(err); }
+
+        const storedPassword = Buffer.from(user.hashedPassword, "hex");
+
+        if (!crypto.timingSafeEqual(storedPassword, hashedPassword)) {
+            return cb(null, false, { message: "Incorrect username or password." });
+        }
+
+        return cb(null, user);
+    })
+}))
+
+app.post("/auth/login", (req: Request, res: Response) => {
+    let didLogin = false;
+    const { username, password } = req.body;
+
+    passport.authenticate('local', ()=> {
+        
+    })
 })
 
 

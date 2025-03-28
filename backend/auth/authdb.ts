@@ -25,9 +25,9 @@ class JSONAuthDatabase {
     fs.writeFileSync(this.filename, JSON.stringify(this.authData, null, 2));
   }
 
-  find(filter: Record<string, any>): any[] {
-    return Object.values(this.authData).filter((obj: any) =>
-      Object.keys((filter).every((key: any) => obj[key] === filter[key])))
+  find(username: string): any | null {
+    if (!Array.isArray(this.authData.auth)) return null;
+    return this.authData.auth.find((user: any) => user.username === username) || null;
   }
 
 }
