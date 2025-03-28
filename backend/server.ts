@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 let crypto = require('crypto');
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
@@ -15,34 +15,42 @@ app.use(cors());
 
 // Authentication
 
-passport.use(new LocalStrategy(function verify(username: string, password: string, cb: (error: any, user?: any, info?: any) => void) {
+passport.use(new LocalStrategy(
+    function verify(username: string, password: string, done: (error: any, user?: any, info?: any) => void) {
+
     const user = authdb.find(username);
 
     if (!user) {
-        return cb(null, false, { message: "Incorrect username or password." })
+        return done(null, false, { message: "Incorrect username or password." })
     }
 
     crypto.pbkdf2(password, user.salt, 310000, 32, 'sha256', function (err: any, hashedPassword: string) {
 
-        if (err) { return cb(err); }
+        if (err) { return done(err); }
 
         const storedPassword = Buffer.from(user.hashedPassword, "hex");
 
         if (!crypto.timingSafeEqual(storedPassword, hashedPassword)) {
-            return cb(null, false, { message: "Incorrect username or password." });
+            return done(null, false, { message: "Incorrect username or password." });
         }
 
-        return cb(null, user);
+        return done(null, user);
     })
 }))
 
-app.post("/auth/login", (req: Request, res: Response) => {
-    let didLogin = false;
-    const { username, password } = req.body;
+app.post("/auth/login", (req: Request, res: Response, next: NextFunction) => {
 
-    passport.authenticate('local', ()=> {
-        
-    })
+    passport.authenticate('local', (err: any, user: any, info: { message: any; }) => {
+
+        if (err) return next(err); // Handle server errors
+        if (!user) return res.status(401).json({ message: info.message }); // Handle invalid login
+
+        // If authentication is successful, log in the user
+        req.login(user, (loginErr) => {
+            if (loginErr) return next(loginErr);
+            return res.json({ message: "Login successful", user });
+        });
+    })(req, res, next);
 })
 
 
