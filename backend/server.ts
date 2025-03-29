@@ -3,6 +3,9 @@ let crypto = require('crypto');
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 let cors = require("cors");
+import session from 'express-session';
+
+let SQLiteStore = require('connect-sqlite3')(session);
 
 import JSONDatabase from "./db";
 import JSONAuthDatabase from "./auth/authdb";
@@ -11,9 +14,25 @@ const app = express();
 const db = new JSONDatabase();
 const authdb = new JSONAuthDatabase();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
 
 // Authentication
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    store: new SQLiteStore({ db: 'sessions.db', dir: './auth' }),
+    cookie: {
+        httpOnly: true,
+        secure: false, // Change to true in production
+        sameSite: "lax"
+    }
+}));
+
+app.use(passport.session());
 
 passport.use(new LocalStrategy(
     function verify(username: string, password: string, done: (error: any, user?: any, info?: any) => void) {
@@ -39,6 +58,26 @@ passport.use(new LocalStrategy(
             return done(null, user);
         })
     }))
+
+passport.serializeUser(function (user: any, cb) {
+    process.nextTick(function () {
+        cb(null, { id: user.id, username: user.username })
+    })
+});
+
+passport.deserializeUser(function (user: any, cb) {
+    process.nextTick(function () {
+        return cb(null, user);
+    });
+});
+
+app.get("/auth/check-session", (req: Request, res: Response) => {
+    if (req.isAuthenticated()) {
+        res.json({ user: req.user });
+    } else {
+        res.status(401).json({ error: "Not authenticated" });
+    }
+})
 
 app.post("/auth/login", (req: Request, res: Response, next: NextFunction) => {
 
