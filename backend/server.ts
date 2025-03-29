@@ -1,11 +1,83 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
+let crypto = require('crypto');
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
 let cors = require("cors");
+
 import JSONDatabase from "./db";
+import JSONAuthDatabase from "./auth/authdb";
 
 const app = express();
 const db = new JSONDatabase();
+const authdb = new JSONAuthDatabase();
 app.use(express.json());
 app.use(cors());
+
+// Authentication
+
+passport.use(new LocalStrategy(
+    function verify(username: string, password: string, done: (error: any, user?: any, info?: any) => void) {
+
+        const user = authdb.find(username);
+
+        if (!user) {
+            return done(null, false, { message: "Incorrect username or password." })
+        }
+
+        const storedSalt = Buffer.from(user.salt);
+
+        crypto.pbkdf2(password, storedSalt, 310000, 32, 'sha256', function (err: any, hashedPassword: string) {
+
+            if (err) { return done(err); }
+
+            const storedPassword = Buffer.from(user.hashedPassword, "hex");
+
+            if (!crypto.timingSafeEqual(storedPassword, hashedPassword)) {
+                return done(null, false, { message: "Incorrect username or password." });
+            }
+
+            return done(null, user);
+        })
+    }))
+
+app.post("/auth/login", (req: Request, res: Response, next: NextFunction) => {
+
+    passport.authenticate('local', (err: any, user: any, info: { message: any; }) => {
+
+        if (err) return next(err); // Handle server errors
+        if (!user) return res.status(401).json({ message: info.message }); // Handle invalid login
+
+        // If authentication is successful, log in the user
+        req.login(user, (loginErr) => {
+            if (loginErr) return next(loginErr);
+            return res.json({ message: "Login successful", user });
+        });
+    })(req, res, next);
+})
+
+app.post("/auth/signup", (req: Request, res: Response, next: NextFunction) => {
+    let didCreate = false;
+    let { username, password } = req.body;
+
+    let salt = crypto.randomBytes(16);
+
+    crypto.pbkdf2(password, salt, 310000, 32, 'sha256', function (err: any, hashedPassword: any) {
+        if (err) { return next(err); }
+
+        const data = authdb.get();
+        const item = {
+            username: username,
+            hashedPassword: hashedPassword,
+            salt: salt,
+        };
+
+        data.push(item);
+        authdb.set(data);
+
+        didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
+    })
+
+})
 
 app.get("/stores", (req: Request, res: Response) => {
     const data = db.getStores();
