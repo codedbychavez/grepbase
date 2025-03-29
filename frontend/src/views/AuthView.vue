@@ -29,10 +29,11 @@
 import { reactive } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import { storeToRefs } from 'pinia';
+import { notify } from '@kyvg/vue3-notification';
 
 const authStore = useAuthStore();
 
-const { isUserLoggedIn } = storeToRefs(authStore);
+const { user } = storeToRefs(authStore);
 
 const formData = reactive({
   username: "",
@@ -40,11 +41,24 @@ const formData = reactive({
 })
 
 async function submitForm() {
-  // TODO: Implement
   
   await authStore.login(formData);
-}
 
-// https://www.freecodecamp.org/news/how-to-authenticate-users-and-implement-cors-in-nodejs-applications/
+  setTimeout(() => {
+    if (user.value) {
+      notify({
+        type: 'success',
+        title: "Login Successful",
+        text: "Welcome to grepbase"
+      })
+    } else {
+      notify({
+        type: 'error',
+        title: 'Login Failed',
+        text: 'Incorrect username or password'
+      })
+    }
+  }, 2000)
+}
 
 </script>
