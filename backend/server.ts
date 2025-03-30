@@ -94,6 +94,15 @@ app.post("/auth/login", (req: Request, res: Response, next: NextFunction) => {
     })(req, res, next);
 })
 
+app.get("/auth/logout", (req: Request, res: Response, next: NextFunction) => {
+    req.logOut(function (err) {
+        if (err) {
+            return res.json({ message: "Logout successful" })
+        }
+        return res.json({ message: "Logout successful" })
+    })
+})
+
 app.post("/auth/signup", (req: Request, res: Response, next: NextFunction) => {
     let didCreate = false;
     let { username, password } = req.body;
