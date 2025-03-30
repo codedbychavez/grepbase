@@ -18,7 +18,7 @@
       </ul>
       <div class="user-buttons ml-auto">
         <RouterLink to="/auth" class="bg-blue-500 px-3 py-2 rounded text-green-50">
-          Login
+          My Account
         </RouterLink>
       </div>
     </div>

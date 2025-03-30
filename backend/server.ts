@@ -97,20 +97,22 @@ app.post("/auth/login", (req: Request, res: Response, next: NextFunction) => {
 app.get("/auth/logout", (req: Request, res: Response, next: NextFunction) => {
     req.logOut(function (err) {
         if (err) {
-            return res.json({ message: "Logout successful" })
+            return res.status(401).json({ message: "Logout failed" })
         }
         return res.json({ message: "Logout successful" })
     })
 })
 
 app.post("/auth/signup", (req: Request, res: Response, next: NextFunction) => {
-    let didCreate = false;
     let { username, password } = req.body;
 
     let salt = crypto.randomBytes(16);
 
     crypto.pbkdf2(password, salt, 310000, 32, 'sha256', function (err: any, hashedPassword: any) {
-        if (err) { return next(err); }
+        if (err) {
+            res.status(401).json({ error: "Failed to create" });
+            return next(err); 
+        }
 
         const data = authdb.get();
         const item = {
@@ -121,8 +123,7 @@ app.post("/auth/signup", (req: Request, res: Response, next: NextFunction) => {
 
         data.push(item);
         authdb.set(data);
-
-        didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
+        res.status(200).json({ error: "Create successful" });
     })
 
 })
