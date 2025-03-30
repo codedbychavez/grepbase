@@ -17,12 +17,11 @@ export const useAuthStore = defineStore('authStore', () => {
     if (error.value) {
       return false;
     }
-  
+
     return true;
   };
-  
 
-  async function login(userCredentials: Record<string, string>) {
+  async function signin(userCredentials: Record<string, string>) {
 
     const { data, error } = await useFetch<Record<string, string>>(`${appConfigs.value.apiBaseUrl}/auth/login`, {
       credentials: 'include'
@@ -37,5 +36,18 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
-  return { user, login, checkSession };
+  async function signup(userCredentials: Record<string, string>): Promise<boolean> {
+
+    const { data, error } = await useFetch<Record<string, string>>(`${appConfigs.value.apiBaseUrl}/auth/signup`, {
+      credentials: 'include'
+    }).post(userCredentials).json();
+
+    if (error.value) {
+      return false;
+    } 
+
+    return true;
+  }
+
+  return { user, signin, checkSession, signup };
 })

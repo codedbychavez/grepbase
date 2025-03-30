@@ -32,9 +32,8 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-    const authStore = useAuthStore();
-        const isAuthenticated = await authStore.checkSession();
-
+  const authStore = useAuthStore();
+  const isAuthenticated = await authStore.checkSession();
 
   if (to.name !== 'auth' && !isAuthenticated) next({ name: 'auth' })
   else next()
