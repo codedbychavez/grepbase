@@ -47,7 +47,7 @@ async function handleLogout() {
       notify({
         type: 'success',
         title: "Signout Successful",
-        text: "Welcome to grepbase"
+        text: "Thanks for using grepbase"
       })
     } else {
       notify({

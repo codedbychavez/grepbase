@@ -1,13 +1,13 @@
 import { ref } from "vue";
 import { defineStore, storeToRefs } from "pinia";
-import { useFetch } from "@vueuse/core";
+import { useFetch, useStorage } from "@vueuse/core";
 import { useAppStore } from "./appStore";
 
 export const useAuthStore = defineStore('authStore', () => {
   const appStore = useAppStore();
   const { appConfigs } = storeToRefs(appStore);
 
-  const user = ref<Record<string, any> | null>(null);
+  const user = useStorage('user',  null);
 
   async function checkSession(): Promise<boolean> {
     const { data, error } = await useFetch(`${appConfigs.value.apiBaseUrl}/auth/check-session`, {
