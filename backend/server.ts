@@ -94,12 +94,12 @@ app.post("/auth/login", (req: Request, res: Response, next: NextFunction) => {
     })(req, res, next);
 })
 
-app.get("/auth/logout", (req: Request, res: Response, next: NextFunction) => {
+app.get("/auth/signout", (req: Request, res: Response, next: NextFunction) => {
     req.logOut(function (err) {
         if (err) {
-            return res.status(401).json({ message: "Logout failed" })
+            return res.status(401).json({ message: "Signout failed" })
         }
-        return res.json({ message: "Logout successful" })
+        return res.json({ message: "Signout successful" })
     })
 })
 

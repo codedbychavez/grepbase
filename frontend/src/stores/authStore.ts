@@ -49,5 +49,19 @@ export const useAuthStore = defineStore('authStore', () => {
     return true;
   }
 
-  return { user, signin, checkSession, signup };
+  async function signout(): Promise<boolean> {
+
+    const { data, error } = await useFetch<Record<string, string>>(`${appConfigs.value.apiBaseUrl}/auth/signout`, {
+      credentials: 'include'
+    }).json();
+
+    if (error.value) {
+      return false;
+    } 
+
+    user.value = null;
+    return true;
+  }
+
+  return { user, signin, checkSession, signup, signout };
 })
