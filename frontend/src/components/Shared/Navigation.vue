@@ -17,8 +17,7 @@
         </li>
       </ul>
       <div class="user-buttons ml-auto">
-        <button v-if="user" @click="handleLogout" class="cursor-pointer bg-blue-500 px-3 py-2 rounded text-gray-50">Logout</button>
-        <RouterLink v-else to="/auth" class="bg-blue-500 px-3 py-2 rounded text-gray-50">
+        <RouterLink to="/auth" class="bg-blue-500 px-3 py-2 rounded text-gray-50">
           My Account
         </RouterLink>
       </div>
@@ -28,38 +27,6 @@
 
 <script setup type="ts">
 import { RouterLink } from 'vue-router';
-import { useAuthStore } from '@/stores/authStore';
-import { storeToRefs } from 'pinia';
-import { notify } from '@kyvg/vue3-notification';
-import { useRouter } from 'vue-router';
-
-const authStore = useAuthStore();
-const router = useRouter();
-
-const { user } = storeToRefs(authStore);
-
-async function handleLogout() {
-
-  await authStore.signout();
-
-  setTimeout(() => {
-    if (user.value == null) {
-      notify({
-        type: 'success',
-        title: "Signout Successful",
-        text: "Thanks for using grepbase"
-      })
-    } else {
-      notify({
-        type: 'error',
-        title: 'Signout Failed',
-        text: 'Signout failed, please try again'
-      })
-    }
-    router.push('/auth');
-  }, 2000)
-}
-
 </script>
 
 <style scoped>

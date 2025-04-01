@@ -1,4 +1,3 @@
-import { ref } from "vue";
 import { defineStore, storeToRefs } from "pinia";
 import { useFetch, useStorage } from "@vueuse/core";
 import { useAppStore } from "./appStore";

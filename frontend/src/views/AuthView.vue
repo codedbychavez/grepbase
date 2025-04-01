@@ -43,7 +43,7 @@
         </div>
       </form>
 
-      <div class="mt-4">
+      <div v-if="!user" class="mt-4">
         Account? <button type="button" @click="() => {
           switch (authState) {
             case 'signin':
@@ -58,13 +58,16 @@
           {{ authState === 'signin' ? 'Sign Up' : 'Sign In' }}
         </button>
       </div>
+      <div v-else class="mt-8">
+        <button @click="handleSignout" class="cursor-pointer bg-blue-500 px-3 py-2 rounded text-gray-50">Logout</button>
+      </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
 
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import { storeToRefs } from 'pinia';
 import { notify } from '@kyvg/vue3-notification';
@@ -75,12 +78,22 @@ const router = useRouter();
 
 const { user } = storeToRefs(authStore);
 
+console.log(user)
+
 const formData = reactive({
   username: "",
   password: "",
 })
 
-const authState = ref<string>('signin');
+const authState = computed(() => {
+  if (user.value) {
+    return 'signout'
+  } else if (user.value == null) {
+    return 'signin'
+  } else {
+    return 'signup'
+  }
+})
 
 async function handleSignin() {
 
@@ -127,5 +140,28 @@ async function handleSignup() {
     router.push('/');
   }, 2000)
 }
+
+async function handleSignout() {
+
+await authStore.signout();
+
+setTimeout(() => {
+  if (user.value == null) {
+    notify({
+      type: 'success',
+      title: "Signout Successful",
+      text: "Thanks for using grepbase"
+    })
+  } else {
+    notify({
+      type: 'error',
+      title: 'Signout Failed',
+      text: 'Signout failed, please try again'
+    })
+  }
+  router.push('/auth');
+}, 2000)
+}
+
 
 </script>
