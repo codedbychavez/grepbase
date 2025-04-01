@@ -17,9 +17,9 @@
         </li>
       </ul>
       <div class="user-buttons ml-auto">
-        <RouterLink to="/auth" class="bg-blue-500 px-3 py-2 rounded text-gray-50">
-          My Account
-        </RouterLink>
+        <button v-if="user" @click="handleSignout" class="bg-blue-500 px-3 py-2 rounded text-gray-50 cursor-pointer">
+          Logout
+        </button>
       </div>
     </div>
   </div>
@@ -27,6 +27,23 @@
 
 <script setup type="ts">
 import { RouterLink } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const { user } = storeToRefs(authStore);
+
+async function handleSignout() {
+  await authStore.signout();
+
+  if (!user.value) {
+    router.push('/signin');
+  }
+}
+
 </script>
 
 <style scoped>
