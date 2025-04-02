@@ -29,15 +29,12 @@
 
 import { reactive } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
-import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { notify } from '@kyvg/vue3-notification';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 
 const router = useRouter();
 const authStore = useAuthStore();
-
-const { user } = storeToRefs(authStore);
 
 const formData = reactive({
   username: "",
@@ -64,24 +61,22 @@ async function handleSignup() {
 
   const didSignup = await authStore.signup(formData);
 
-  setTimeout(() => {
-    if (didSignup) {
-      notify({
-        type: 'success',
-        title: "Signup Successful",
-        text: "Welcome to grepbase"
-      })
-    } else {
-      notify({
-        type: 'error',
-        title: 'Signup Failed',
-        text: 'Failed to signup user'
-      })
-    }
+  if (didSignup) {
+    notify({
+      type: 'success',
+      title: "Signup Successful",
+      text: "Welcome to grepbase"
+    })
+  } else {
+    notify({
+      type: 'error',
+      title: 'Signup Failed',
+      text: 'Failed to signup user'
+    })
+  }
 
-    router.push('/');
+  router.push('/');
 
-  }, 2000)
 }
 
 </script>
