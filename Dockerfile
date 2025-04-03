@@ -1,28 +1,29 @@
-# syntax=docker/dockerfile:1
-
-# Use the latest Node.js image
-FROM node:latest
+# Use an official Node.js image as the build environment
+FROM node:latest AS build
 
 # Set the working directory inside the container
-WORKDIR /backend
+WORKDIR /frontend
 
-# copy the package.json and the package-lock.json fro better caching
-COPY backend/package*.json ./
+# Copy package.json and package-lock.json first (for efficient caching)
+COPY frontend/package*.json ./
 
-# Install the dependencies
-RUN npm install
+# Install dependencies
+RUN npm install --force
 
-# Copy the rest of the backend file
-COPY backend/ .
+# Copy the rest of the frontend files
+COPY frontend/ .
 
-# Build TypeScript
+# Build the Vue app
 RUN npm run build
 
-# Expos the port (change is needed)
-EXPOSE 3000
+# Use a lightweight Nginx image to serve the built frontend
+FROM nginx:alpine
 
-# Command to start the backend
-CMD ["npm", "start"]
+# Copy built files to the Nginx default web root
+COPY --from=build /frontend/dist /usr/share/nginx/html
 
+# Expose port 80 for serving the app
+EXPOSE 80
 
-
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

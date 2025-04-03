@@ -4,4 +4,23 @@ Grepbase is a a simple JSON file database that runs and exposes its on express a
 
 ## Setup via Docker
 
-- 
+### Frontend
+
+```bash
+docker build -t grepbase-frontend -f Dockerfile .
+```
+
+```bash
+docker run -p 8080:80 grepbase-frontend
+```
+
+### Backend
+
+```bash
+docker build --no-cache -t grepbase-backend .
+```
+
+```bash
+docker run -p 3000:3000 grepbase-backend
+```
+

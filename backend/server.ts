@@ -15,7 +15,7 @@ const db = new JSONDatabase();
 const authdb = new JSONAuthDatabase();
 app.use(express.json());
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:8080",
     credentials: true,
 }));
 
