@@ -25,8 +25,7 @@
           Store</button>
       </div>
     </div>
-
-    <JsonEditorVue :stringified="false" v-model="storeData" mode="text" :main-menu-bar="false" />
+    <JsonEditorVue :stringified="true" v-model="storeData" :main-menu-bar="false" :mode="( 'text' as any )" />
   </main>
 </template>
 <script setup lang="ts">
@@ -35,7 +34,7 @@ import { onMounted, watch, ref, computed } from "vue";
 import { useDataStore } from '@/stores/dataStore';
 import { storeToRefs } from "pinia";
 import { notify } from "@kyvg/vue3-notification";
-import JsonEditorVue from 'json-editor-vue'
+import JsonEditorVue from 'json-editor-vue';
 import { isEqual, sortBy } from "lodash";
 import CreateStoreModal from "@/components/CreateStoreModal.vue";
 import DeleteStoreModal from "@/components/DeleteStoreModal.vue";
