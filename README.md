@@ -38,7 +38,7 @@ The `backend/data.json` looks like this:
 
 This is where all your data will live. Data is this file is organize by **stores**. Each store has a key, with a value array containing items (objects) that belongs to the store.
 
-## Defining a store
+#### Defining a store
 
 The data you defined in a store must be strings/texts. Each item added to a store must have an id. Usually the frontend auto creates ids for subsequent items you add.
 
@@ -80,7 +80,7 @@ To define a store:
 }
 ```
 
-### View your store
+#### View your store
 
 1. [Build and run the backend](#running-docker) using Docker.
 
@@ -102,11 +102,11 @@ To define a store:
 ]
 ```
 
-### Adding data to your store
+#### Adding data to your store
 
 An easy way to add data to your store is to use the frontend. Store items could be added using an item HTML form or using the JSON editor.
 
-#### Adding data via the HTML form
+##### Adding data via the HTML form
 
 1. [Build and run the frontend](#running-docker) using Docker.
 
