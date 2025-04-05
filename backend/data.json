@@ -11,5 +11,15 @@
       "Date Ended": "-",
       "Employee Score": "78/100"
     }
+  ],
+  "songs": [
+    {
+      "title": "summer",
+      "aristist": "Calvin Harris"
+    },
+    {
+      "title": "joe",
+      "aristist": "smo"
+    }
   ]
 }

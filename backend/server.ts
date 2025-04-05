@@ -111,7 +111,7 @@ app.post("/auth/signup", (req: Request, res: Response, next: NextFunction) => {
     crypto.pbkdf2(password, salt, 310000, 32, 'sha256', function (err: any, hashedPassword: any) {
         if (err) {
             res.status(401).json({ error: "Failed to create" });
-            return next(err); 
+            return next(err);
         }
 
         const data = authdb.get();
@@ -149,9 +149,9 @@ app.patch("/stores/:store/:id", (req: Request, res: Response) => {
 
 app.post("/stores/create", (req: Request, res: Response) => {
     let didCreate = false;
-    const { name } = req.body;
-    if (name) {
-        didCreate = db.set(name, []);
+    const { storeName, initialItem } = req.body;
+    if (storeName) {
+        didCreate = db.set(storeName, [initialItem]);
     }
     didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
 })
@@ -189,17 +189,20 @@ app.post("/stores/:store/create", (req: Request, res: Response) => {
     didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
 })
 
+// Update a store data
 app.patch("/stores/:store", (req: Request, res: Response) => {
     let didUpdate = false;
     const { store } = req.params;
     const storeData = req.body;
+    console.log(storeData)
     if (storeData) {
         db.set(store, storeData);
         didUpdate = true;
     }
-    didUpdate ? res.json(didUpdate) : res.status(404).json({ error: "Failed to create" });
+    didUpdate ? res.json(didUpdate) : res.status(404).json({ error: "Failed to Update" });
 })
 
+// Delete an item from a store
 app.delete("/stores/:store/:id", (req: Request, res: Response) => {
     let didDelete = false;
     const { store, id } = req.params;
@@ -214,16 +217,19 @@ app.delete("/stores/:store/:id", (req: Request, res: Response) => {
     didDelete ? res.json(didDelete) : res.status(404).json({ error: "Failed to delete" });
 })
 
+// Get store and its data
 app.get("/stores/:store", (req: Request, res: Response) => {
     const data = db.get(req.params.store);
     data ? res.json(data) : res.status(404).json({ error: "Store not found" });
 });
 
+// Query a store item
 app.post("/query", (req: Request, res: Response) => {
     const result = db.find(req.body);
     res.json(result);
 });
 
+// Delete a store
 app.delete("/stores/:store", (req: Request, res: Response) => {
     db.delete(req.params.store);
     res.json({ message: "Data deleted successfully!" });

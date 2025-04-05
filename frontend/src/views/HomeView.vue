@@ -1,11 +1,30 @@
 <template>
   <main class="py-16">
-    <h1 class="text-3xl">Data Table</h1>
+    <CreateStoreModal @close-create-store-modal="handleCloseCreateStoreModal" :show="showCreateStoreModal" />
+    <DeleteStoreModal @close-delete-store-modal="handleCloseDeleteStoreModal" :show="showDeleteStoreModal" />
+    <RenameStoreModal @close-rename-store-modal="handleCloseRenameStoreModal" :show="showRenameStoreModal" />
+    <h1 class="text-3xl">Your Data</h1>
     <div class="my-8">
-      <label for="key" class="block">Select your store</label>
-      <select name="key" v-model="selectedStore" class="mt-2 bg-gray-200 px-4 py-2 rounded-md">
-        <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
-      </select>
+      <div class="my-8 flex gap-8 items-end">
+        <div class="select-wrapper">
+          <label for="key" class="block">Select your store</label>
+          <select name="key" v-model="selectedStore" class="mt-2 bg-gray-200 px-4 py-2 rounded-md">
+            <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
+          </select>
+        </div>
+
+        <div class="quick-actions flex gap-2 ml-auto">
+          <button type="button" @click="handleCreateStore()"
+            class="cursor-pointer bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Create
+            Store</button>
+          <button type="button" @click="handleDeleteStore()"
+            class="cursor-pointer px-2 py-1 bg-blue-500 hover:bg-blue-600 rounded-md text-gray-50 disabled:bg-gray-200">Delete
+            Store</button>
+          <button type="button" @click="handleRenameStore()"
+            class="cursor-pointer bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Rename
+            Store</button>
+        </div>
+      </div>
     </div>
     <DataTable :table-data="storeData" />
   </main>
@@ -14,13 +33,20 @@
 
 
 
-import { onMounted, watch } from "vue";
+import { onMounted, watch, ref } from "vue";
 import { useDataStore } from '@/stores/dataStore';
 import DataTable from "@/components/DataTable.vue";
+import CreateStoreModal from "@/components/CreateStoreModal.vue";
+import DeleteStoreModal from "@/components/DeleteStoreModal.vue";
+import RenameStoreModal from "@/components/RenameStoreModal.vue";
 import { storeToRefs } from "pinia";
 
 const dataStore = useDataStore();
 const { selectedStore, storeData, stores } = storeToRefs(dataStore);
+
+const showCreateStoreModal = ref<boolean>(false);
+const showDeleteStoreModal = ref<boolean>(false);
+const showRenameStoreModal = ref<boolean>(false);
 
 onMounted(async () => {
   // Fetch all data stores
@@ -34,6 +60,30 @@ watch(selectedStore, async (newSelectedStore) => {
   // Set the selected store
   selectedStore.value = newSelectedStore;
 })
+
+async function handleCreateStore() {
+  showCreateStoreModal.value = true;
+}
+
+async function handleDeleteStore() {
+  showDeleteStoreModal.value = true;
+}
+
+async function handleRenameStore() {
+  showRenameStoreModal.value = true;
+}
+
+function handleCloseCreateStoreModal() {
+  showCreateStoreModal.value = false;
+}
+
+function handleCloseDeleteStoreModal() {
+  showDeleteStoreModal.value = false;
+}
+
+function handleCloseRenameStoreModal() {
+  showRenameStoreModal.value = false;
+}
 
 
 </script>
