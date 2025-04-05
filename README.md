@@ -114,8 +114,6 @@ An easy way to add data to your store is to use the front end.
 
 4. On the dashboard, select the store, then click the "+" button to open the form for adding a new item.
 
-![Adding item using HTML form](/img/add-item-using-html-form.png)
-
 ### Managing Data
 
 In addition to adding new items to your store, the UI is capable of updating and deleting items.
