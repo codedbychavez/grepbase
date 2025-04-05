@@ -26,7 +26,10 @@
         </div>
       </div>
     </div>
-    <DataTable :table-data="storeData" />
+    <DataTable v-if="storeData.length > 0" :table-data="storeData" />
+    <p v-else  class="text-center bg-gray-100 p-4 text-red-500">
+      No store data. Delete and recreate store.
+    </p>
   </main>
 </template>
 <script setup lang="ts">

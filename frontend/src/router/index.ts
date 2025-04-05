@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from "@/views/AboutView.vue";
-import EditView from '@/views/EditView.vue';
 import { useAuthStore } from '@/stores/authStore';
 import SigninView from '@/views/SigninView.vue';
 import SignupView from '@/views/SignupView.vue';
@@ -23,14 +22,6 @@ const router = createRouter({
       component: AboutView,
       meta: {
         requiresAuth: false,
-      }
-    },
-    {
-      path: '/edit',
-      name: 'edit',
-      component: EditView,
-      meta: {
-        requiresAuth: true,
       }
     },
     {
