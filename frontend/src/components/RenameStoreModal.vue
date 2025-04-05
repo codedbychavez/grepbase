@@ -82,10 +82,8 @@ const submitForm = async () => {
     })
   }
 
-  setTimeout(() => {
-    emits('closeRenameStoreModal');
-    isRenaming.value = false;
-  }, 2000)
+  emits('closeRenameStoreModal');
+  isRenaming.value = false;
 
 }
 </script>

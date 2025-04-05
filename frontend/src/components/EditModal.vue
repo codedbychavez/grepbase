@@ -13,11 +13,11 @@
           <div class="modal-body">
             <form @submit.prevent="submitForm">
               <div v-for="(value, key) in row" :key="key" class="mb-3">
-                <label v-if="key != 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
-                  }}</label>
-                <input :id="key" v-model="formData[key]" type="text"
+                <label v-if="key !== 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
+                }}</label>
+                <input v-if="key !== 'id'" :id="key" v-model="formData[key]" type="text"
                   class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
-                  :placeholder="'Enter ' + key" :hidden="key == 'id'" />
+                  :placeholder="'Enter ' + key" />
               </div>
               <div class="text-right">
                 <button :disabled="isSaving" type="submit"
@@ -78,10 +78,8 @@ const submitForm = async () => {
     })
   }
 
-  setTimeout(() => {
-    emits('closeEditModal');
-    isSaving.value = false;
-  }, 2000)
+  emits('closeEditModal');
+  isSaving.value = false;
 
 }
 </script>

@@ -31,7 +31,8 @@
                                         <input v-model="pair.value" type="text"
                                             class="w-1/2 p-2 border border-gray-200 rounded-md" placeholder="Value" />
                                         <button type="button" @click="removePair(index)"
-                                            class="text-red-500 hover:text-red-700 cursor-pointer p-2 bg-gray-100 rounded-full" title="Remove">
+                                            class="text-red-500 hover:text-red-700 cursor-pointer p-2 bg-gray-100 rounded-full"
+                                            title="Remove">
                                             <Close />
                                         </button>
                                     </div>
@@ -114,11 +115,9 @@ const submitForm = async () => {
             text: 'There was an error.'
         })
     }
-
-    setTimeout(() => {
-        emits('closeCreateStoreModal');
-        isCreating.value = false;
-    }, 2000)
+    
+    emits('closeCreateStoreModal');
+    isCreating.value = false;
 
 }
 </script>
