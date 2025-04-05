@@ -1,5 +1,5 @@
 {
-  "staff": [
+  "employee": [
     {
       "id": "1",
       "First Name": "Joe",
@@ -10,18 +10,6 @@
       "Date Started": "April 03 2023",
       "Date Ended": "-",
       "Employee Score": "78/100"
-    }
-  ],
-  "songs": [
-    {
-      "Title": "Summer",
-      "Ariste": "Calvin Harris",
-      "id": 1743881393327
-    },
-    {
-      "Title": "8 Letters",
-      "Ariste": "Why Don't We",
-      "id": 1743881840412
     }
   ]
 }

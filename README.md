@@ -40,11 +40,9 @@ This is where all your data will live. Data in this file is organized by **store
 
 #### Defining a store
 
-The data you defined in a store must be strings/texts. Each item added to a store must have an ID. Usually, the frontend auto creates IDs for subsequent items you add.
+The data you defined in a store must be strings/texts. Each item added to a store is auto assigned a unique ID.
 
-To define a store:
-
-1. Plan the first item object you want to add. Future items you add to your store will follow this automatically in the front end as you'll see soon.
+1. Plan the first item object you want to add.
 
 ```json
 {
@@ -104,7 +102,7 @@ To define a store:
 
 #### Adding data to your store
 
-An easy way to add data to your store is to use the front end. Store items could be added using an item HTML form or using the JSON editor.
+An easy way to add data to your store is to use the front end.
 
 ##### Adding data via the HTML form
 
@@ -114,16 +112,14 @@ An easy way to add data to your store is to use the front end. Store items could
 
 3. Sign up as a new user then log in using your credentials.
 
-4. In the data viewer, select the store, them click the "Add" button to open the form for adding a new item.
+4. On the dashboard, select the store, then click the "+" button to open the form for adding a new item.
 
 ![Adding item using HTML form](/img/add-item-using-html-form.png)
-
-5. After submitting the form, the data will be added to the table.
 
 ### Managing Data
 
 In addition to adding new items to your store, the UI is capable of updating and deleting items.
-The UI also allows you to create stores, delete stores, and rename stores (accessible on the `/edit` page).
+The UI also allows you to create stores, delete stores, and rename stores.
 
 ## Running Docker
 

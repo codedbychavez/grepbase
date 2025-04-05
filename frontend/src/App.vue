@@ -11,12 +11,12 @@
             <ul class="navigation-links flex items-center gap-8">
               <li>
                 <RouterLink to="/" active-class="font-semibold" class="p-1">
-                  Store Viewer
+                  Dashboard
                 </RouterLink>
               </li>
               <li>
-                <RouterLink to="/edit" active-class="font-semibold" class="p-1">
-                  Store Editor (JSON)
+                <RouterLink to="/about" active-class="font-semibold" class="p-1">
+                  About
                 </RouterLink>
               </li>
             </ul>
