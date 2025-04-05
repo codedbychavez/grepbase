@@ -20,23 +20,25 @@
                                     class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
                                     placeholder="Enter store name" maxlength="30" />
 
-                                <label class="form-label text-sm text-stone-700 block capitalize">Define your first
-                                    item</label>
-                                <div v-for="(pair, index) in keyValuePairs" :key="index"
-                                    class="my-1 flex gap-3 items-center">
-                                    <input v-model="pair.key" type="text"
-                                        class="w-1/3 p-2 border border-gray-200 rounded-md" placeholder="Key" />
-                                    <span class="text-gray-500">:</span>
-                                    <input v-model="pair.value" type="text"
-                                        class="w-1/3 p-2 border border-gray-200 rounded-md" placeholder="Value" />
-                                    <button type="button" @click="removePair(index)"
-                                        class="text-red-500 hover:text-red-700 cursor-pointer" title="Remove">
-                                        <Close />
-                                    </button>
+                                <div class="mt-4">
+                                    <label class="form-label text-sm text-stone-700 block capitalize">Define your first
+                                        item</label>
+                                    <div v-for="(pair, index) in keyValuePairs" :key="index"
+                                        class="my-2 flex gap-3 items-center">
+                                        <input v-model="pair.key" type="text"
+                                            class="w-1/2 p-2 border border-gray-200 rounded-md" placeholder="Key" />
+                                        <span class="text-gray-500">:</span>
+                                        <input v-model="pair.value" type="text"
+                                            class="w-1/2 p-2 border border-gray-200 rounded-md" placeholder="Value" />
+                                        <button type="button" @click="removePair(index)"
+                                            class="text-red-500 hover:text-red-700 cursor-pointer p-2 bg-gray-100 rounded-full" title="Remove">
+                                            <Close />
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <button type="button" @click="addPair"
-                                    class="mt-3 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer">
+                                    class="mt-1 px-2 py-1 text-sm bg-blue-500 text-white rounded cursor-pointer">
                                     Add Pair
                                 </button>
 
