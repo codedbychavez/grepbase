@@ -12,8 +12,6 @@
         </select>
       </div>
       <div class="quick-actions flex gap-2 ml-auto">
-        <button type="button" @click="handleSaveStoreData()" :disabled="isStoreModified"
-          class="cursor-pointer bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Save</button>
         <button type="button" @click="handleCreateStore()"
           class="cursor-pointer bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">Create
           Store</button>
@@ -25,24 +23,20 @@
           Store</button>
       </div>
     </div>
-    <JsonEditorVue :stringified="true" v-model="storeData" :main-menu-bar="false" :mode="( 'text' as any )" />
   </main>
 </template>
 <script setup lang="ts">
 
-import { onMounted, watch, ref, computed } from "vue";
+import { onMounted, watch, ref } from "vue";
 import { useDataStore } from '@/stores/dataStore';
 import { storeToRefs } from "pinia";
-import { notify } from "@kyvg/vue3-notification";
 import JsonEditorVue from 'json-editor-vue';
-import { isEqual, sortBy } from "lodash";
 import CreateStoreModal from "@/components/CreateStoreModal.vue";
 import DeleteStoreModal from "@/components/DeleteStoreModal.vue";
 import RenameStoreModal from "@/components/RenameStoreModal.vue";
 
 const dataStore = useDataStore();
 const { selectedStore, storeData, stores } = storeToRefs(dataStore);
-const originalStoreData = ref<Record<string, any>>([]);
 const showCreateStoreModal = ref<boolean>(false);
 const showDeleteStoreModal = ref<boolean>(false);
 const showRenameStoreModal = ref<boolean>(false);
@@ -58,28 +52,7 @@ watch(selectedStore, async (newSelectedStore) => {
   await dataStore.fetchStoreData(newSelectedStore);
   // Set the selected store
   selectedStore.value = newSelectedStore;
-
-  originalStoreData.value = storeData.value;
 })
-
-async function handleSaveStoreData() {
-  originalStoreData.value = storeData.value;
-  const didUpdate = await dataStore.editStoreData(selectedStore.value, storeData.value);
-
-  if (didUpdate === true) {
-    notify({
-      type: 'success',
-      title: 'Store updated',
-      text: 'Store was updated successfully.'
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Update failed',
-      text: 'There was an error.'
-    })
-  }
-}
 
 async function handleCreateStore() {
   showCreateStoreModal.value = true;
@@ -104,19 +77,5 @@ function handleCloseDeleteStoreModal() {
 function handleCloseRenameStoreModal() {
   showRenameStoreModal.value = false;
 }
-
-const isStoreModified = computed(() => {
-
-  if (originalStoreData.value && storeData.value) {
-    if (originalStoreData.value.length !== storeData.value.length) return false;
-  }
-
-  // Sort both arrays by 'id' before comparison
-  const sortedOriginalStoreData = sortBy(originalStoreData.value, "id");
-  const sortedStoreData = sortBy(storeData.value, "id");
-
-  return isEqual(sortedOriginalStoreData, sortedStoreData);
-
-})
 
 </script>

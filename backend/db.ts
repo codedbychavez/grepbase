@@ -26,10 +26,6 @@ class JSONDatabase {
     }
 
     set(store: string, value: any): boolean {
-        if (this.data[store]) {
-            console.error(`Store "${store}" already exists.`);
-            return false;
-        }
         this.data[store] = value;
         this.saveData();
         return true;
