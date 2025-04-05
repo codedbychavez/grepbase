@@ -111,7 +111,7 @@ app.post("/auth/signup", (req: Request, res: Response, next: NextFunction) => {
     crypto.pbkdf2(password, salt, 310000, 32, 'sha256', function (err: any, hashedPassword: any) {
         if (err) {
             res.status(401).json({ error: "Failed to create" });
-            return next(err); 
+            return next(err);
         }
 
         const data = authdb.get();
@@ -149,9 +149,9 @@ app.patch("/stores/:store/:id", (req: Request, res: Response) => {
 
 app.post("/stores/create", (req: Request, res: Response) => {
     let didCreate = false;
-    const { name } = req.body;
-    if (name) {
-        didCreate = db.set(name, []);
+    const { storeName, initialItem } = req.body;
+    if (storeName) {
+        didCreate = db.set(storeName, [initialItem]);
     }
     didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
 })

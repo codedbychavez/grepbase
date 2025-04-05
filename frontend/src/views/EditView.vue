@@ -1,8 +1,5 @@
 <template>
   <main class="py-16">
-    <CreateStoreModal @close-create-store-modal="handleCloseCreateStoreModal" :show="showCreateStoreModal" />
-    <DeleteStoreModal @close-delete-store-modal="handleCloseDeleteStoreModal" :show="showDeleteStoreModal" />
-    <RenameStoreModal @close-rename-store-modal="handleCloseRenameStoreModal" :show="showRenameStoreModal" />
     <h1 class="text-3xl">Store Editor</h1>
     <div class="my-8 flex gap-8 items-end">
       <div class="select-wrapper">
@@ -54,28 +51,6 @@ watch(selectedStore, async (newSelectedStore) => {
   selectedStore.value = newSelectedStore;
 })
 
-async function handleCreateStore() {
-  showCreateStoreModal.value = true;
-}
 
-async function handleDeleteStore() {
-  showDeleteStoreModal.value = true;
-}
-
-async function handleRenameStore() {
-  showRenameStoreModal.value = true;
-}
-
-function handleCloseCreateStoreModal() {
-  showCreateStoreModal.value = false;
-}
-
-function handleCloseDeleteStoreModal() {
-  showDeleteStoreModal.value = false;
-}
-
-function handleCloseRenameStoreModal() {
-  showRenameStoreModal.value = false;
-}
 
 </script>
