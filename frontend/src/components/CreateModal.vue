@@ -13,11 +13,11 @@
           <div class="modal-body">
             <form @submit.prevent="submitForm">
               <div v-for="(value, key) in row" :key="key" class="mb-3">
-                <label :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
-                }}</label>
-                <input :id="key" v-model="formData[key]" type="text"
-                  class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
-                  :placeholder="'Enter ' + key" :disabled="key == 'id'" />
+                <label v-if="key !== 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
+                  }}</label>
+                <input v-if="key !== 'id'" :id="key" v-model="formData[key]" type="text"
+                  class="form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
+                  :placeholder="'Enter ' + key" />
               </div>
               <div class="text-right">
                 <button :disabled="isCreating" type="submit"
@@ -38,7 +38,6 @@ import { ref, watch, defineProps, onMounted } from "vue";
 import Close from "@/components/Icons/Close.vue";
 
 import { notify } from "@kyvg/vue3-notification";
-import { v4 as uuid } from "uuid";
 import { useDataStore } from "@/stores/dataStore";
 
 const dataStore = useDataStore();
@@ -56,7 +55,6 @@ const isCreating = ref(false);
 watch(() => props.show, (newVal) => {
   if (newVal) {
     formData.value = Object.keys(props.row).reduce((acc, key) => {
-      acc[key] = key === "id" ? uuid() : "";
       return acc;
     }, {} as Record<string, any>);
   }
@@ -64,7 +62,6 @@ watch(() => props.show, (newVal) => {
 
 onMounted(() => {
   formData.value = Object.keys(props.row).reduce((acc, key) => {
-    acc[key] = key === "id" ? uuid() : "";
     return acc;
   }, {} as Record<string, any>)
 });
@@ -89,11 +86,8 @@ const submitForm = async () => {
     })
   }
 
-  setTimeout(() => {
-    emits('closeCreateModal');
-    isCreating.value = false;
-  }, 2000)
-
+  emits('closeCreateModal');
+  isCreating.value = false;
 }
 </script>
 

@@ -150,7 +150,8 @@ app.patch("/stores/:store/:id", (req: Request, res: Response) => {
 app.post("/stores/create", (req: Request, res: Response) => {
     let didCreate = false;
     const { storeName, initialItem } = req.body;
-    if (storeName) {
+    if (storeName && initialItem) {
+        initialItem['id'] = Date.now();
         didCreate = db.set(storeName, [initialItem]);
     }
     didCreate ? res.json(didCreate) : res.status(404).json({ error: "Failed to create" });
@@ -182,6 +183,7 @@ app.post("/stores/:store/create", (req: Request, res: Response) => {
     const data = db.get(req.params.store);
     const item = req.body;
     if (item) {
+        item["id"] = Date.now();
         data.push(item);
         db.set(store, data);
         didCreate = true;

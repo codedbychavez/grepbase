@@ -74,10 +74,8 @@ const submitForm = async () => {
     })
   }
 
-  setTimeout(() => {
-    emits('closeDeleteStoreModal');
-    isDeleting.value = false;
-  }, 2000)
+  emits('closeDeleteStoreModal');
+  isDeleting.value = false;
 
 }
 </script>
