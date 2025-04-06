@@ -1,5 +1,5 @@
 {
-  "employee": [
+  "staff": [
     {
       "id": "1",
       "First Name": "Joe",
@@ -10,6 +10,15 @@
       "Date Started": "April 03 2023",
       "Date Ended": "-",
       "Employee Score": "78/100"
+    }
+  ],
+  "photos": [
+    {
+      "alt_text": "alt_text",
+      "image_url": "some_url",
+      "width": "300",
+      "height": "250",
+      "id": 1743885368714
     }
   ]
 }

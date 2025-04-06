@@ -1,6 +1,6 @@
 <template>
-  <div class="signin-view flex flex-col items-center justify-center">
-    <Form class="mt-12 w-96 border border-gray-100 shadow p-4" @submit="handleSignin">
+  <div class="flex h-full items-center justify-center">
+    <Form class="w-96 border border-gray-100 shadow p-4" @submit="handleSignin">
       <h2 class="text-2xl text-center">Sign In</h2>
       <div class="form-group mt-8">
         <label for="key" class="form-label text-sm text-stone-700 block capitalize">Username</label>
@@ -18,10 +18,10 @@
       <div class="form-group mt-8 text-center">
         <button class="px-2 py-1 bg-blue-500 w-max rounded text-gray-50 cursor-pointer" type="submit">Sign In</button>
       </div>
-    </form>
-    <div class="mt-4">
-      New to grepbase? <RouterLink to="/signup" class="text-blue-500 underline">Sign Up</RouterLink>
-    </div>
+      <div class="mt-8">
+        New to grepbase? <RouterLink to="/signup" class="text-blue-500 underline">Sign Up</RouterLink>
+      </div>
+    </Form>
   </div>
 </template>
 
