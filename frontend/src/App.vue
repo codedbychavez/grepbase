@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container h-full flex flex-col">
     <notifications position="bottom right" />
     <header class="bg-white shadow-md p-4">
       <div class="container">
@@ -12,6 +12,11 @@
               <li>
                 <RouterLink to="/" active-class="font-semibold" class="p-1">
                   Dashboard
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/media" active-class="font-semibold" class="p-1">
+                  Media Bucket
                 </RouterLink>
               </li>
               <li>
@@ -30,11 +35,11 @@
         </div>
       </div>
     </header>
+    <div class="container p-4 h-full">
+      <RouterView />
+    </div>
   </div>
 
-  <div class="container p-4">
-    <RouterView />
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -43,8 +48,6 @@ import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
 import { Notifications } from "@kyvg/vue3-notification";
-
-
 
 const router = useRouter();
 const authStore = useAuthStore();

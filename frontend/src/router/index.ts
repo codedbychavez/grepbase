@@ -4,6 +4,7 @@ import AboutView from "@/views/AboutView.vue";
 import { useAuthStore } from '@/stores/authStore';
 import SigninView from '@/views/SigninView.vue';
 import SignupView from '@/views/SignupView.vue';
+import MediaView from '@/views/MediaView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,14 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: '/media',
+      name: 'media',
+      component: MediaView,
       meta: {
         requiresAuth: true,
       }

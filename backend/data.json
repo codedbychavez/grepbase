@@ -14,8 +14,8 @@
   ],
   "photos": [
     {
-      "alt_text": "alttext",
-      "image_url": "someurl",
+      "alt_text": "alt_text",
+      "image_url": "some_url",
       "width": "300",
       "height": "250",
       "id": 1743885368714
