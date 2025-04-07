@@ -1,20 +1,21 @@
 {
   "name": "grepbase",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple JSON database with query and transformation features.",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "build": "node_modules/.bin/tsc",
     "start": "node server.js",
-    "dev": "node_modules/.bin/nodemon --exec ts-node server.ts",
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codedbychavez/grepbase.git"
+    "url": "https://github.com/codedbychavez/grepbase.git"
   },
   "keywords": [
     "grepbase",
+    "json",
     "database"
   ],
   "author": "Chavez Harris",
@@ -24,18 +25,14 @@
   },
   "homepage": "https://github.com/codedbychavez/grepbase#readme",
   "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/express-session": "^1.18.1",
-    "@types/passport": "^1.0.17",
-    "@types/passport-local": "^1.0.38",
-    "nodemon": "^3.1.9",
-    "typescript": "^5.7.3"
+    "nodemon": "^3.1.9"
   },
   "dependencies": {
     "connect-sqlite3": "^0.9.15",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
+    "multer": "^1.4.5-lts.2",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
   }
