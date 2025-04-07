@@ -12,9 +12,12 @@
       <div class="media-types ml-16">
         <label for="key" class="block mb-4">2. Select your media type</label>
         <ul class="flex gap-6">
-          <li class="px-4 py-2 border-2 border-gray-200 cursor-pointer">Images</li>
-          <li class="px-4 py-2 border-2 border-gray-200 cursor-pointer">Video</li>
-          <li class="px-4 py-2 border-2 border-gray-200 cursor-pointer">Audio</li>
+          <li @click="handleSelectMediaType(EMediaType.image)" :class=" selectedMediaType == EMediaType.image ? 'border-blue-500' : 'border-gray-200'"
+            class="px-4 py-2 border-2 bg-gray-50 cursor-pointer">Images</li>
+          <li @click="handleSelectMediaType(EMediaType.video)" :class=" selectedMediaType == EMediaType.video ? 'border-blue-500' : 'border-gray-200'"
+            class="px-4 py-2 border-2 bg-gray-50 cursor-pointer">Video</li>
+          <li @click="handleSelectMediaType(EMediaType.audio)" :class=" selectedMediaType == EMediaType.audio ? 'border-blue-500' : 'border-gray-200'"
+            class="px-4 py-2 border-2 bg-gray-50 cursor-pointer">Audio</li>
         </ul>
       </div>
     </div>
@@ -32,12 +35,24 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import { onMounted, watch, ref } from "vue";
 import { useDataStore } from "@/stores/dataStore";
 import { storeToRefs } from "pinia";
 
 const dataStore = useDataStore();
 const { selectedStore, stores } = storeToRefs(dataStore);
+
+const enum EMediaType {
+  image = 'image',
+  video = 'video',
+  audio = 'audio',
+}
+
+const selectedMediaType = ref<EMediaType>(EMediaType.image);
+
+function handleSelectMediaType(mediaType: EMediaType) {
+  selectedMediaType.value = mediaType;
+}
 
 
 onMounted(async () => {

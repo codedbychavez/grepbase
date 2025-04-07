@@ -51,13 +51,13 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
 app.use("/uploads/", express.static(uploadDir));
 
 const storage = multer.diskStorage({
-    destination: (_, __, cb) => {
-        cb(null, uploadDir)
-    },
-    filename: (_, file, cb) => {
-        const uniqueName = Date.now() + '-' + file.originalname;
-        cb(null, uniqueName);
-    }
+  destination: (_, __, cb) => {
+    cb(null, uploadDir)
+  },
+  filename: (_, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
+  }
 });
 
 const upload = multer({ storage });
@@ -220,14 +220,14 @@ app.post("/query", (req, res) => {
 
 // TODO: Media upload
 
-// app.post('/upload', upload.single('file'), (req, res) => {
-//     if (!req.file) {
-//       return res.status(400).send({ error: 'No file uploaded.' });
-//     }
-  
-//     const fileUrl = `/uploads/${req.file.filename}`;
-//     res.send({ url: fileUrl });
-//   });
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send({ error: 'No file uploaded.' });
+  }
+
+  const fileUrl = `/uploads/${req.file.filename}`;
+  return res.status(200).json({ url: fileUrl });
+});
 
 // Start server
 app.listen(port, () => {
