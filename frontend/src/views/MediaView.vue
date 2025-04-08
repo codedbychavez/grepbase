@@ -21,14 +21,14 @@
         </ul>
       </div>
     </div>
-    <div class="flex mt-16">
+    <div class="flex mt-16 gap-8">
       <!-- TODO: File upload component -->
-      <div class="w-1/2 bg-gray-100">
-        Media Uploader
+      <div class="w-1/2">
+        <MediaUploader :selected-media-type="selectedMediaType" />
       </div>
 
       <!-- TODO: Media viewier -->
-      <div class="w-1/2 bg-gray-200">Media Viewer</div>
+      <div class="w-1/2 bg-gray-200 p-8">Media Viewer</div>
     </div>
 
   </main>
@@ -38,6 +38,7 @@
 import { onMounted, watch, ref } from "vue";
 import { useDataStore } from "@/stores/dataStore";
 import { storeToRefs } from "pinia";
+import MediaUploader from "@/components/MediaUploader.vue";
 
 const dataStore = useDataStore();
 const { selectedStore, stores } = storeToRefs(dataStore);

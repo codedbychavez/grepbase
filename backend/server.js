@@ -220,12 +220,19 @@ app.post("/query", (req, res) => {
 
 // TODO: Media upload
 
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/:store/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).send({ error: 'No file uploaded.' });
   }
 
+  const { store } = req.params;
   const fileUrl = `/uploads/${req.file.filename}`;
+
+  console.log(store, fileUrl)
+
+  // TODO: Check the selected database for a file key
+
+  // if none is found create a file store, the file store will not be shown in the dashboard but it will be shown on '/media/`
   return res.status(200).json({ url: fileUrl });
 });
 
