@@ -137,5 +137,21 @@ export const useDataStore = defineStore("dataStore", () => {
 
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore }
+    async function uploadMedia(store: string, file: File): Promise<boolean> {
+        const url = `${appConfigs.value.apiBaseUrl}/${store}/upload`
+
+        const { error } = await useFetch(url).post(file);
+
+        if (error.value) {
+            return false;
+        }
+
+        // Convert to fetch media for selected store
+        // await fetchStoreData(selectedStore.value);
+
+        return true;
+
+    }
+
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia }
 })
