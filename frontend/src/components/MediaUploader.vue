@@ -33,7 +33,7 @@ const canUpload = computed((): boolean => {
 
 function handleSubmit() {
   if (theFile.value?.files) {
-    const file = theFile.value?.files[0]
+    const file = theFile.value?.files[0];
     dataStore.uploadMedia(selectedStore.value, file);
   }
 }
