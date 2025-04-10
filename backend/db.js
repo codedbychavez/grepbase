@@ -40,6 +40,27 @@ class JSONDatabase {
             Object.keys((filter).every((key) => obj[key] === filter[key])))
     }
 
+    filterStoreByObjectKeyValue(store, objectKey, objectValue) {
+
+        let found = [];
+
+        const data = this.get(store);
+
+        data.forEach(obj => {
+            if (Object.prototype.hasOwnProperty.call(obj, objectKey)) {
+                Object.keys(obj).forEach((key) => {
+                    if (obj[key] === objectValue) {
+                        found.push(obj);
+                    }
+                })
+
+            }
+
+        });
+
+        return found;
+    }
+
     delete(store) {
         delete this.data[store];
         this.saveData();

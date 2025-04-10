@@ -219,8 +219,6 @@ app.post("/query", (req, res) => {
   res.json(result);
 });
 
-// TODO: Media upload
-
 app.post('/:store/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).send({ error: 'No file uploaded.' });
@@ -251,6 +249,18 @@ app.post('/:store/upload', upload.single('file'), (req, res) => {
   db.set(store, data);
 
   return res.status(200).json({ mediaData });
+});
+
+// TODO: Fetch media in store, filtered by mediaType
+
+app.get("/stores/:store/:mediaType", (req, res) => {
+  const { store, mediaType } = req.params;
+
+  console.log(store, mediaType)
+
+  const media = db.filterStoreByObjectKeyValue(store, 'mediaType', mediaType);
+
+  media ? res.json(media) : res.status(404).json({ error: "Media not found" });
 });
 
 // Start server

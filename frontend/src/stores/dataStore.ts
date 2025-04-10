@@ -158,7 +158,7 @@ export const useDataStore = defineStore("dataStore", () => {
     }
 
     async function fetchMedia(store: string, mediaType: string) {
-        const url = `${appConfigs.value.apiBaseUrl}/media/${store}/${mediaType}`;
+        const url = `${appConfigs.value.apiBaseUrl}/stores/${store}/${mediaType}`;
 
         const { data, error } = await useFetch(url).json();
 
