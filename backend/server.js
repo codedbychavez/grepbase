@@ -48,6 +48,7 @@ app.use(passport.session());
 // Serve uploaded files
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
 app.use("/uploads/", express.static(uploadDir));
 
 const storage = multer.diskStorage({
@@ -227,13 +228,29 @@ app.post('/:store/upload', upload.single('file'), (req, res) => {
 
   const { store } = req.params;
   const fileUrl = `/uploads/${req.file.filename}`;
+  const mediaType = req.body['mediaType'];
 
-  console.log(store, fileUrl)
+  // Check if the store exist
+  const data = db.get(store);
 
-  // TODO: Check the selected database for a file key
+  if (data === null) {
+    // Create the store
+    db.set(store, []);
+  }
 
-  // if none is found create a file store, the file store will not be shown in the dashboard but it will be shown on '/media/`
-  return res.status(200).json({ url: fileUrl });
+  const mediaData = {
+    id: fileUrl,
+    path: fileUrl,
+    name: req.file.originalname,
+    mediaType: mediaType,
+    store: store,
+  }
+
+  data.push(mediaData);
+
+  db.set(store, data);
+
+  return res.status(200).json({ mediaData });
 });
 
 // Start server

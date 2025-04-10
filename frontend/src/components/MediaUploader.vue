@@ -4,7 +4,7 @@
       <input accept="image/png, image/jpeg" ref="theFile" type="file" name="fileInput" id="fileInput"
         class="border border-green-500 border-dashed p-8" />
       <button :disabled="canUpload" type="submit"
-        class="mt-4 px-2 py-1 bg-green-500 text-gray-50 rounded">Upload</button>
+        class="mt-4 px-2 py-1 bg-green-500 text-gray-50 rounded cursor-pointer">Upload</button>
     </form>
   </div>
 </template>
@@ -34,7 +34,10 @@ const canUpload = computed((): boolean => {
 function handleSubmit() {
   if (theFile.value?.files) {
     const file = theFile.value?.files[0];
-    dataStore.uploadMedia(selectedStore.value, file);
+    if (file) {
+      dataStore.uploadMedia(selectedStore.value, file, props.selectedMediaType);
+    }
+    else return;
   }
 }
 

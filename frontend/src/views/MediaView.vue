@@ -60,11 +60,11 @@ onMounted(async () => {
   // Fetch all data stores
   await dataStore.fetchStores();
   // Fetch data for selected store
-  await dataStore.fetchStoreData(selectedStore.value);
+  await dataStore.fetchMedia(selectedStore.value, selectedMediaType.value);
 })
 
 watch(selectedStore, async (newSelectedStore) => {
-  await dataStore.fetchStoreData(newSelectedStore);
+  await dataStore.fetchMedia(newSelectedStore, selectedMediaType.value);
   // Set the selected store
   selectedStore.value = newSelectedStore;
 })
