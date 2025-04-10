@@ -28,7 +28,11 @@
       </div>
 
       <!-- TODO: Media viewier -->
-      <div class="w-1/2 bg-gray-200 p-8">Media Viewer</div>
+      <div class="w-1/2 bg-gray-200 p-8">
+        <pre>
+          {{ storeData }}
+        </pre>
+      </div>
     </div>
 
   </main>
@@ -41,7 +45,7 @@ import { storeToRefs } from "pinia";
 import MediaUploader from "@/components/MediaUploader.vue";
 
 const dataStore = useDataStore();
-const { selectedStore, stores } = storeToRefs(dataStore);
+const { selectedStore, stores, storeData } = storeToRefs(dataStore);
 
 const enum EMediaType {
   image = 'image',
