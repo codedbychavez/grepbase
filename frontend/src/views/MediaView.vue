@@ -41,9 +41,16 @@
                 <div @click="toggleFileDetails(item.id)" class="font-semibold cursor-pointer hover:text-blue-500">{{
                   item.name }}</div>
 
-                <div v-if="expandedId === item.id"
-                  class="file-details mt-2 bg-gray-700 p-2 text-white whitespace-pre-wrap">
-                  {{ JSON.stringify(item, null, 2) }}
+                <div v-if="expandedId === item.id">
+
+                  <div class="file-details mt-2 bg-gray-700 p-2 text-white whitespace-pre-wrap">
+                    {{ JSON.stringify(item, null, 2) }}
+                  </div>
+                  <div class="preview mt-2">
+                    <img class="w-2xs" v-if="selectedMediaType === 'image'" :src="appConfigs.apiBaseUrl + item.path" :alt="item.name">
+
+                    <video class="w-2xs" v-if="selectedMediaType === 'video'" :src="appConfigs.apiBaseUrl + item.path" :alt="item.name" />
+                  </div>
                 </div>
 
               </div>
@@ -66,13 +73,16 @@
 <script setup lang="ts">
 import { onMounted, watch, ref } from "vue";
 import { useDataStore } from "@/stores/dataStore";
+import { useAppStore } from "@/stores/appStore";
 import { storeToRefs } from "pinia";
 import MediaUploader from "@/components/MediaUploader.vue";
 import Trash from "@/components/Icons/Trash.vue";
 import { EMediaType } from "@/stores/dataStore";
 
 const dataStore = useDataStore();
+const appStore = useAppStore();
 const { selectedStore, stores, storeData, selectedMediaType } = storeToRefs(dataStore);
+const { appConfigs } = storeToRefs(appStore);
 
 const expandedId = ref<string | null>('');
 
