@@ -3,12 +3,19 @@ import { ref } from "vue";
 import { useFetch } from '@vueuse/core'
 import { useAppStore } from "./appStore";
 
+export const enum EMediaType {
+    image = 'image',
+    video = 'video',
+    audio = 'audio',
+}
+
 export const useDataStore = defineStore("dataStore", () => {
     const appStore = useAppStore();
     const { appConfigs } = storeToRefs(appStore);
 
     const storeData = ref<Array<Record<any, any>>>([]);
     const selectedStore = ref<string>('');
+    const selectedMediaType = ref<EMediaType>(EMediaType.image);
     const stores = ref<string[]>([]);
 
     async function fetchStores() {
@@ -150,8 +157,7 @@ export const useDataStore = defineStore("dataStore", () => {
             return false;
         }
 
-        // TODO: Convert to fetch media for selected store
-        // await fetchMedia(selectedStore.value);
+        // await fetchMedia(selectedStore.value, )
 
         return true;
 
@@ -169,5 +175,5 @@ export const useDataStore = defineStore("dataStore", () => {
         }
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia, fetchMedia }
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia, fetchMedia, selectedMediaType }
 })
