@@ -49,6 +49,13 @@
       "name": "mac-screenshot.png",
       "mediaType": "video",
       "store": "staff"
+    },
+    {
+      "id": "/uploads/1744567178343-mac-screenshot.png",
+      "path": "/uploads/1744567178343-mac-screenshot.png",
+      "name": "mac-screenshot.png",
+      "mediaType": "image",
+      "store": "staff"
     }
   ],
   "photos": [
