@@ -133,7 +133,8 @@ app.get("/stores", (req, res) => {
 });
 
 app.get("/stores/:store", (req, res) => {
-  const data = db.get(req.params.store);
+  const store = req.params.store;
+  const data = db.filterStoreByObjectKey(store, 'mediaType', true)
   data ? res.json(data) : res.status(404).json({ error: "Store not found" });
 });
 

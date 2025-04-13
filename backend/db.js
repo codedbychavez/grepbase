@@ -41,11 +41,8 @@ class JSONDatabase {
     }
 
     filterStoreByObjectKeyValue(store, objectKey, objectValue) {
-
         let found = [];
-
         const data = this.get(store);
-
         data.forEach(obj => {
             if (Object.prototype.hasOwnProperty.call(obj, objectKey)) {
                 Object.keys(obj).forEach((key) => {
@@ -53,11 +50,25 @@ class JSONDatabase {
                         found.push(obj);
                     }
                 })
-
             }
-
         });
+        return found;
+    }
 
+    filterStoreByObjectKey(store, objectKey, isExclude) {
+        let found = [];
+        const data = this.get(store);
+        data.forEach(obj => {
+            if (isExclude) {
+                if (!Object.prototype.hasOwnProperty.call(obj, objectKey)) {
+                    found.push(obj);
+                }
+            } else {
+                if (Object.prototype.hasOwnProperty.call(obj, objectKey)) {
+                    found.push(obj);
+                }
+            }
+        });
         return found;
     }
 
