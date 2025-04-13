@@ -17,6 +17,13 @@
       "name": "mac-screenshot.png",
       "mediaType": "image",
       "store": "staff"
+    },
+    {
+      "id": "/uploads/1744508483982-me-anime.png",
+      "path": "/uploads/1744508483982-me-anime.png",
+      "name": "me-anime.png",
+      "mediaType": "image",
+      "store": "staff"
     }
   ],
   "photos": [
@@ -33,6 +40,13 @@
       "width": "12",
       "height": "13",
       "id": 1743987365405
+    },
+    {
+      "id": "/uploads/1744508544418-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744508544418-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "photos"
     }
   ]
 }
