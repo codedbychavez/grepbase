@@ -12,11 +12,14 @@
       <div class="media-types ml-16">
         <label for="key" class="block mb-4">2. Select your media type</label>
         <ul class="flex gap-6">
-          <li @click="handleSelectMediaType(EMediaType.image)" :class=" selectedMediaType == EMediaType.image ? 'border-blue-500' : 'border-gray-200'"
+          <li @click="handleSelectMediaType(EMediaType.image)"
+            :class="selectedMediaType == EMediaType.image ? 'border-blue-500' : 'border-gray-200'"
             class="px-4 py-2 border-2 bg-gray-50 cursor-pointer">Images</li>
-          <li @click="handleSelectMediaType(EMediaType.video)" :class=" selectedMediaType == EMediaType.video ? 'border-blue-500' : 'border-gray-200'"
+          <li @click="handleSelectMediaType(EMediaType.video)"
+            :class="selectedMediaType == EMediaType.video ? 'border-blue-500' : 'border-gray-200'"
             class="px-4 py-2 border-2 bg-gray-50 cursor-pointer">Video</li>
-          <li @click="handleSelectMediaType(EMediaType.audio)" :class=" selectedMediaType == EMediaType.audio ? 'border-blue-500' : 'border-gray-200'"
+          <li @click="handleSelectMediaType(EMediaType.audio)"
+            :class="selectedMediaType == EMediaType.audio ? 'border-blue-500' : 'border-gray-200'"
             class="px-4 py-2 border-2 bg-gray-50 cursor-pointer">Audio</li>
         </ul>
       </div>
@@ -28,10 +31,26 @@
       </div>
 
       <!-- TODO: Media viewier -->
-      <div class="w-1/2 bg-gray-200 p-8">
-        <pre>
-          {{ storeData }}
-        </pre>
+      <div class="w-1/2">
+        <h1 class="text-gray-700">Media Viewer</h1>
+        <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-full">
+          <div v-for="item in storeData" :key="item.id"
+            class="flex gap-2 items-center px-4 py-2 rounded justify-between bg-gray-200 text-sm not-[last-child]:mb-2">
+            <div>
+              <div @click="toggleFileDetails(item.id)" class="font-semibold cursor-pointer hover:text-blue-500">{{
+                item.name }}</div>
+
+              <div v-if="expandedId === item.id"
+                class="file-details mt-2 bg-gray-700 p-2 text-white whitespace-pre-wrap">
+                {{ JSON.stringify(item, null, 2) }}
+              </div>
+
+            </div>
+            <div class="p-1 self-start mt-1 bg-gray-300 rounded-full text-red-500 cursor-pointer">
+              <Trash />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -43,6 +62,8 @@ import { onMounted, watch, ref } from "vue";
 import { useDataStore } from "@/stores/dataStore";
 import { storeToRefs } from "pinia";
 import MediaUploader from "@/components/MediaUploader.vue";
+import Trash from "@/components/Icons/Trash.vue";
+import ArrowsMove from "@/components/Icons/ArrowsMove.vue";
 
 const dataStore = useDataStore();
 const { selectedStore, stores, storeData } = storeToRefs(dataStore);
@@ -54,11 +75,7 @@ const enum EMediaType {
 }
 
 const selectedMediaType = ref<EMediaType>(EMediaType.image);
-
-function handleSelectMediaType(mediaType: EMediaType) {
-  selectedMediaType.value = mediaType;
-}
-
+const expandedId = ref<string | null>('');
 
 onMounted(async () => {
   // Fetch all data stores
@@ -72,5 +89,13 @@ watch(selectedStore, async (newSelectedStore) => {
   // Set the selected store
   selectedStore.value = newSelectedStore;
 })
+
+function handleSelectMediaType(mediaType: EMediaType) {
+  selectedMediaType.value = mediaType;
+}
+
+function toggleFileDetails(id: string) {
+  expandedId.value = expandedId.value === id ? null : id
+}
 
 </script>
