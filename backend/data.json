@@ -24,6 +24,31 @@
       "name": "me-anime.png",
       "mediaType": "image",
       "store": "staff"
+    },
+    {
+      "id": "/uploads/1744552666115-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744552666115-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "staff"
+    },
+    {
+      "First Name": "John",
+      "Last Name": "Smith",
+      "Date of Birth": "12 May 1979",
+      "Company": "Microsoft",
+      "Salary": "200,000",
+      "Date Started": "15 November 2016",
+      "Date Ended": "13 September 2023",
+      "Employee Score": "90/100",
+      "id": 1744552811579
+    },
+    {
+      "id": "/uploads/1744552870261-mac-screenshot.png",
+      "path": "/uploads/1744552870261-mac-screenshot.png",
+      "name": "mac-screenshot.png",
+      "mediaType": "video",
+      "store": "staff"
     }
   ],
   "photos": [
@@ -54,6 +79,55 @@
       "width": "200",
       "height": "500",
       "id": 1744545824182
+    },
+    {
+      "id": "/uploads/1744546865729-Repetions.png",
+      "path": "/uploads/1744546865729-Repetions.png",
+      "name": "Repetions.png",
+      "mediaType": "image",
+      "store": "photos"
+    },
+    {
+      "id": "/uploads/1744550328264-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744550328264-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "photos"
+    },
+    {
+      "id": "/uploads/1744552083483-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744552083483-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "photos"
+    },
+    {
+      "id": "/uploads/1744552091056-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744552091056-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "photos"
+    },
+    {
+      "id": "/uploads/1744552091998-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744552091998-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "photos"
+    },
+    {
+      "id": "/uploads/1744552094247-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744552094247-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "photos"
+    },
+    {
+      "id": "/uploads/1744552095019-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "path": "/uploads/1744552095019-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "mediaType": "image",
+      "store": "photos"
     }
   ]
 }

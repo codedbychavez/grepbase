@@ -246,21 +246,14 @@ app.post('/:store/upload', upload.single('file'), (req, res) => {
   }
 
   data.push(mediaData);
-
   db.set(store, data);
-
   return res.status(200).json({ mediaData });
+  
 });
-
-// TODO: Fetch media in store, filtered by mediaType
 
 app.get("/stores/:store/:mediaType", (req, res) => {
   const { store, mediaType } = req.params;
-
-  console.log(store, mediaType)
-
   const media = db.filterStoreByObjectKeyValue(store, 'mediaType', mediaType);
-
   media ? res.json(media) : res.status(404).json({ error: "Media not found" });
 });
 
