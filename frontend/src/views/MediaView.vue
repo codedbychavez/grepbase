@@ -49,7 +49,7 @@
                   <div class="preview mt-2">
                     <img class="w-2xs" v-if="selectedMediaType === 'image'" :src="appConfigs.apiBaseUrl + item.path" :alt="item.name">
 
-                    <video class="w-2xs" v-if="selectedMediaType === 'video'" :src="appConfigs.apiBaseUrl + item.path" :alt="item.name" />
+                    <video controls class="w-2xs" v-if="selectedMediaType === 'video'" :src="appConfigs.apiBaseUrl + item.path" :alt="item.name" />
                   </div>
                 </div>
 

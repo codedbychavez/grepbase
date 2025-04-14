@@ -1,7 +1,7 @@
 <template>
   <div class="media-uploader">
     <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-      <input @change="handleFileInputChange" accept="image/png, image/jpeg" ref="theFile" type="file" name="fileInput" id="fileInput"
+      <input @change="handleFileInputChange" accept="image/png, image/jpeg, video/mp4" ref="theFile" type="file" name="fileInput" id="fileInput"
         class="border border-green-500 border-dashed p-8 cursor-pointer" />
       <button :disabled="!canUpload" type="submit"
         class="mt-4 px-2 py-1 bg-green-500 text-gray-50 rounded cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">Upload</button>

@@ -135,6 +135,13 @@
       "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
       "mediaType": "image",
       "store": "photos"
+    },
+    {
+      "id": "/uploads/1744664180511-SampleVideo_1280x720_1mb.mp4",
+      "path": "/uploads/1744664180511-SampleVideo_1280x720_1mb.mp4",
+      "name": "SampleVideo_1280x720_1mb.mp4",
+      "mediaType": "video",
+      "store": "photos"
     }
   ]
 }
