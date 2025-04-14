@@ -142,6 +142,13 @@
       "name": "SampleVideo_1280x720_1mb.mp4",
       "mediaType": "video",
       "store": "photos"
+    },
+    {
+      "id": "/uploads/1744673810754-sample-6s.mp3",
+      "path": "/uploads/1744673810754-sample-6s.mp3",
+      "name": "sample-6s.mp3",
+      "mediaType": "audio",
+      "store": "photos"
     }
   ]
 }

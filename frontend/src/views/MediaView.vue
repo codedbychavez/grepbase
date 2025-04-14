@@ -47,9 +47,14 @@
                     {{ JSON.stringify(item, null, 2) }}
                   </div>
                   <div class="preview mt-2">
-                    <img class="w-2xs" v-if="selectedMediaType === 'image'" :src="appConfigs.apiBaseUrl + item.path" :alt="item.name">
+                    <img class="w-2xs" v-if="selectedMediaType === 'image'" :src="appConfigs.apiBaseUrl + item.path"
+                      :alt="item.name">
 
-                    <video controls class="w-2xs" v-if="selectedMediaType === 'video'" :src="appConfigs.apiBaseUrl + item.path" :alt="item.name" />
+                    <video controls class="w-2xs" v-if="selectedMediaType === 'video'"
+                      :src="appConfigs.apiBaseUrl + item.path" :alt="item.name" />
+
+                    <audio controls class="w-2xs" v-if="selectedMediaType === 'audio'"
+                      :src="appConfigs.apiBaseUrl + item.path" :alt="item.name" />
                   </div>
                 </div>
 
