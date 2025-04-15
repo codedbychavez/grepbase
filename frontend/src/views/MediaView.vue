@@ -36,7 +36,7 @@
         <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-y-scroll">
           <div v-if="storeData.length > 0">
             <div v-for="item in storeData" :key="item.id"
-              class="flex gap-2 items-center px-4 py-2 rounded justify-between bg-gray-200 text-sm not-[last-child]:mb-2">
+              class="flex gap-2 justify-between px-4 py-2 rounded bg-gray-200 text-sm not-[last-child]:mb-2">
               <div>
                 <div @click="toggleFileDetails(item.id)" class="font-semibold cursor-pointer hover:text-blue-500">{{
                   item.name }}</div>
@@ -59,8 +59,13 @@
                 </div>
 
               </div>
-              <div class="p-1 self-start mt-1 bg-gray-300 rounded-full text-red-500 cursor-pointer">
-                <Trash />
+              <div class="flex gap-2">
+                <div @click="handleCopyToClipboard(`${appConfigs.apiBaseUrl}${item.path}`)" class="p-1 mt-1 bg-gray-300 rounded-full text-blue-500 cursor-pointer">
+                  <Copy />
+                </div>
+                <div class="p-1 mt-1 bg-gray-300 rounded-full text-red-500 cursor-pointer">
+                  <Trash />
+                </div>
               </div>
             </div>
 
@@ -82,7 +87,9 @@ import { useAppStore } from "@/stores/appStore";
 import { storeToRefs } from "pinia";
 import MediaUploader from "@/components/MediaUploader.vue";
 import Trash from "@/components/Icons/Trash.vue";
+import Copy from "@/components/Icons/Copy.vue";
 import { EMediaType } from "@/stores/dataStore";
+import { notify } from "@kyvg/vue3-notification";
 
 const dataStore = useDataStore();
 const appStore = useAppStore();
@@ -111,6 +118,15 @@ async function handleSelectMediaType(mediaType: EMediaType) {
 
 function toggleFileDetails(id: string) {
   expandedId.value = expandedId.value === id ? null : id
+}
+
+function handleCopyToClipboard(path: string) {
+  navigator.clipboard.writeText(path).then(() => {
+    notify({
+      type: 'success',
+      title: 'Copied to Clipboard'
+    })
+  })
 }
 
 </script>
