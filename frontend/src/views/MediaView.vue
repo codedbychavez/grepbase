@@ -36,7 +36,7 @@
         <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-y-scroll">
           <div v-if="storeData.length > 0">
             <div v-for="item in storeData" :key="item.id"
-              class="flex gap-2 justify-between px-4 py-2 rounded bg-gray-200 text-sm not-[last-child]:mb-2">
+              class="flex items-start gap-2 justify-between px-4 py-2 rounded bg-gray-200 text-sm not-[last-child]:mb-2">
               <div>
                 <div @click="toggleFileDetails(item.id)" class="font-semibold cursor-pointer hover:text-blue-500">{{
                   item.name }}</div>
@@ -124,7 +124,7 @@ function handleCopyToClipboard(path: string) {
   navigator.clipboard.writeText(path).then(() => {
     notify({
       type: 'success',
-      title: 'Copied to Clipboard'
+      title: 'Copied media path to clipboard'
     })
   })
 }
