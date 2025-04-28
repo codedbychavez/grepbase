@@ -157,8 +157,6 @@ export const useDataStore = defineStore("dataStore", () => {
             return false;
         }
 
-        // await fetchMedia(selectedStore.value, )
-
         return true;
 
     }
@@ -175,5 +173,20 @@ export const useDataStore = defineStore("dataStore", () => {
         }
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia, fetchMedia, selectedMediaType }
+    async function deleteMediaItem(mediaId: string): Promise<boolean> {
+        const modifiedMediaId = mediaId.replace(/\//g, '-');
+        const url = `${appConfigs.value.apiBaseUrl}/stores/${selectedStore.value}/media/${modifiedMediaId}`
+
+        const { error } = await useFetch(url).delete(mediaId);
+
+        if (error.value) {
+            return false;
+        }
+
+        await fetchMedia(selectedStore.value, selectedMediaType.value);
+
+        return true;
+    }
+
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia, fetchMedia, selectedMediaType, deleteMediaItem }
 })
