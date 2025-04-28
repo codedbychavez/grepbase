@@ -12,27 +12,6 @@
       "Employee Score": "78/100"
     },
     {
-      "id": "/uploads/1744296169855-mac-screenshot.png",
-      "path": "/uploads/1744296169855-mac-screenshot.png",
-      "name": "mac-screenshot.png",
-      "mediaType": "image",
-      "store": "staff"
-    },
-    {
-      "id": "/uploads/1744508483982-me-anime.png",
-      "path": "/uploads/1744508483982-me-anime.png",
-      "name": "me-anime.png",
-      "mediaType": "image",
-      "store": "staff"
-    },
-    {
-      "id": "/uploads/1744552666115-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552666115-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "staff"
-    },
-    {
       "First Name": "John",
       "Last Name": "Smith",
       "Date of Birth": "12 May 1979",
@@ -44,111 +23,12 @@
       "id": 1744552811579
     },
     {
-      "id": "/uploads/1744552870261-mac-screenshot.png",
-      "path": "/uploads/1744552870261-mac-screenshot.png",
-      "name": "mac-screenshot.png",
-      "mediaType": "video",
-      "store": "staff"
-    },
-    {
-      "id": "/uploads/1744567178343-mac-screenshot.png",
+      "id": "1744567178343-mac-screenshot.png",
       "path": "/uploads/1744567178343-mac-screenshot.png",
       "name": "mac-screenshot.png",
       "mediaType": "image",
       "store": "staff"
     }
   ],
-  "photos": [
-    {
-      "alt_text": "alt_text",
-      "image_url": "some_url",
-      "width": "300",
-      "height": "250",
-      "id": 1743885368714
-    },
-    {
-      "alt_text": "test",
-      "image_url": "test",
-      "width": "12",
-      "height": "13",
-      "id": 1743987365405
-    },
-    {
-      "id": "/uploads/1744508544418-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744508544418-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "alt_text": "My Test",
-      "image_url": "my_url",
-      "width": "200",
-      "height": "500",
-      "id": 1744545824182
-    },
-    {
-      "id": "/uploads/1744546865729-Repetions.png",
-      "path": "/uploads/1744546865729-Repetions.png",
-      "name": "Repetions.png",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744550328264-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744550328264-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552083483-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552083483-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552091056-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552091056-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552091998-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552091998-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552094247-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552094247-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552095019-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552095019-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744664180511-SampleVideo_1280x720_1mb.mp4",
-      "path": "/uploads/1744664180511-SampleVideo_1280x720_1mb.mp4",
-      "name": "SampleVideo_1280x720_1mb.mp4",
-      "mediaType": "video",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744673810754-sample-6s.mp3",
-      "path": "/uploads/1744673810754-sample-6s.mp3",
-      "name": "sample-6s.mp3",
-      "mediaType": "audio",
-      "store": "photos"
-    }
-  ]
+  "photos": []
 }

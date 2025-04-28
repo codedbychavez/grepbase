@@ -25,12 +25,9 @@
       </div>
     </div>
     <div class="flex mt-16 gap-8">
-      <!-- TODO: File upload component -->
       <div class="w-1/2">
         <MediaUploader :selected-media-type="selectedMediaType" />
       </div>
-
-      <!-- TODO: Media viewier -->
       <div class="w-1/2">
         <h1 class="text-purple-500 text-lg font-semibold">Media Viewer</h1>
         <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-y-scroll">
@@ -60,12 +57,13 @@
 
               </div>
               <div class="flex gap-2">
-                <div @click="handleCopyToClipboard(`${appConfigs.apiBaseUrl}${item.path}`)" class="p-1 mt-1 bg-gray-300 rounded-full text-blue-500 cursor-pointer">
+                <button @click="handleCopyToClipboard(`${appConfigs.apiBaseUrl}${item.path}`)"
+                  class="p-1 mt-1 bg-gray-300 rounded-full text-blue-500 cursor-pointer">
                   <Copy />
-                </div>
-                <div class="p-1 mt-1 bg-gray-300 rounded-full text-red-500 cursor-pointer">
+              </button>
+                <button @click="handleDeleteMedia(item.id)" class="p-1 mt-1 bg-gray-300 rounded-full text-red-500 cursor-pointer">
                   <Trash />
-                </div>
+                </button>
               </div>
             </div>
 
@@ -118,6 +116,24 @@ async function handleSelectMediaType(mediaType: EMediaType) {
 
 function toggleFileDetails(id: string) {
   expandedId.value = expandedId.value === id ? null : id
+}
+
+async function handleDeleteMedia(mediaId: string) {
+   const didDelete = await dataStore.deleteMediaItem(mediaId);
+
+   if (didDelete === true) {
+    notify({
+      type: 'success',
+      title: 'Media item deleted',
+      text: 'Media item was deleted successfully.'
+    })
+  } else {
+    notify({
+      type: 'error',
+      title: 'Delete failed',
+      text: 'There was an error.'
+    })
+  }
 }
 
 function handleCopyToClipboard(path: string) {
