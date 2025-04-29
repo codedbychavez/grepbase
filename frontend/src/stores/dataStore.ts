@@ -82,6 +82,20 @@ export const useDataStore = defineStore("dataStore", () => {
         return true;
     }
 
+    async function createInitialStoreItem(data: any) {
+        const url = `${appConfigs.value.apiBaseUrl}/stores/${selectedStore.value}/createInitial`;
+
+        const { error } = await useFetch(url).post(data);
+
+        if (error.value) {
+            return false;
+        }
+
+        await fetchStoreData(selectedStore.value);
+
+        return true;
+    }
+
     async function createStore(data: any): Promise<boolean> {
         const url = `${appConfigs.value.apiBaseUrl}/stores/create`
 
@@ -188,5 +202,5 @@ export const useDataStore = defineStore("dataStore", () => {
         return true;
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia, fetchMedia, selectedMediaType, deleteMediaItem }
+    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia, fetchMedia, selectedMediaType, deleteMediaItem, createInitialStoreItem }
 })

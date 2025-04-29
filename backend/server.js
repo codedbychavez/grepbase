@@ -161,6 +161,19 @@ app.post("/stores/:store/create", (req, res) => {
   res.status(400).json({ error: "Missing item" });
 });
 
+app.post("/stores/:store/createInitial", (req, res) => {
+  const { store } = req.params;
+  const { item } = req.body;
+  if (item) {
+    item.id = Date.now();
+    const data = db.get(store);
+    data.push(item);
+    db.set(store, data);
+    return res.json(true);
+  }
+  res.status(400).json({ error: "Missing item" });
+});
+
 app.patch("/stores/:store/:id", (req, res) => {
   const { store, id } = req.params;
   const data = db.get(store);

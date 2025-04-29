@@ -98,8 +98,6 @@ const submitForm = async () => {
         initialItem: keyValueObject
     }
 
-    console.log(data)
-
     const didCreate = await dataStore.createStore(data);
 
     if (didCreate === true) {
