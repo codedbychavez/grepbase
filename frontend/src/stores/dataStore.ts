@@ -144,8 +144,6 @@ export const useDataStore = defineStore("dataStore", () => {
     async function editStoreData(store: string, storeData: any): Promise<boolean> {
         const url = `${appConfigs.value.apiBaseUrl}/stores/${store}`
 
-        console.log(storeData)
-
         const { error } = await useFetch(url).patch(storeData);
 
         if (error.value) {
