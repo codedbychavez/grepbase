@@ -60,93 +60,23 @@
   ],
   "photos": [
     {
-      "alt_text": "alt_text",
-      "image_url": "some_url",
-      "width": "300",
-      "height": "250",
-      "id": 1743885368714
-    },
-    {
-      "alt_text": "test",
-      "image_url": "test",
-      "width": "12",
-      "height": "13",
-      "id": 1743987365405
-    },
-    {
-      "id": "/uploads/1744508544418-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744508544418-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
+      "id": "1745801618004-login-bg.jpg",
+      "path": "/uploads/1745801618004-login-bg.jpg",
+      "name": "login-bg.jpg",
       "mediaType": "image",
       "store": "photos"
     },
     {
-      "alt_text": "My Test",
-      "image_url": "my_url",
-      "width": "200",
-      "height": "500",
-      "id": 1744545824182
-    },
-    {
-      "id": "/uploads/1744546865729-Repetions.png",
-      "path": "/uploads/1744546865729-Repetions.png",
-      "name": "Repetions.png",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744550328264-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744550328264-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552083483-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552083483-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552091056-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552091056-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552091998-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552091998-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552094247-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552094247-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744552095019-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "path": "/uploads/1744552095019-1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "name": "1272918-download-free-dj-hd-wallpapers-1080p-1920x1080-for-android-50.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "/uploads/1744664180511-SampleVideo_1280x720_1mb.mp4",
-      "path": "/uploads/1744664180511-SampleVideo_1280x720_1mb.mp4",
-      "name": "SampleVideo_1280x720_1mb.mp4",
+      "id": "1745801749976-1744664180511-SampleVideo_1280x720_1mb.mp4",
+      "path": "/uploads/1745801749976-1744664180511-SampleVideo_1280x720_1mb.mp4",
+      "name": "1744664180511-SampleVideo_1280x720_1mb.mp4",
       "mediaType": "video",
       "store": "photos"
     },
     {
-      "id": "/uploads/1744673810754-sample-6s.mp3",
-      "path": "/uploads/1744673810754-sample-6s.mp3",
-      "name": "sample-6s.mp3",
+      "id": "1745801771990-1744673810754-sample-6s.mp3",
+      "path": "/uploads/1745801771990-1744673810754-sample-6s.mp3",
+      "name": "1744673810754-sample-6s.mp3",
       "mediaType": "audio",
       "store": "photos"
     }
