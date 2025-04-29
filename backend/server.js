@@ -227,6 +227,7 @@ app.post('/:store/upload', upload.single('file'), (req, res) => {
 
   const { store } = req.params;
   const fileUrl = `/uploads/${req.file.filename}`;
+
   const mediaType = req.body['mediaType'];
 
   // Check if the store exist
@@ -238,7 +239,7 @@ app.post('/:store/upload', upload.single('file'), (req, res) => {
   }
 
   const mediaData = {
-    id: fileUrl,
+    id: req.file.filename,
     path: fileUrl,
     name: req.file.originalname,
     mediaType: mediaType,
@@ -248,13 +249,39 @@ app.post('/:store/upload', upload.single('file'), (req, res) => {
   data.push(mediaData);
   db.set(store, data);
   return res.status(200).json({ mediaData });
-  
+
 });
 
 app.get("/stores/:store/:mediaType", (req, res) => {
   const { store, mediaType } = req.params;
   const media = db.filterStoreByObjectKeyValue(store, 'mediaType', mediaType);
   media ? res.json(media) : res.status(404).json({ error: "Media not found" });
+});
+
+app.delete("/stores/:store/media/:mediaId", (req, res) => {
+  const { store, mediaId } = req.params;
+
+  const media = db.filterStoreByObjectKey(store, 'mediaType', false);
+  const mediaItem = media.find(item => item['id'] === mediaId);
+
+  if (!mediaItem) {
+    return res.status(404).json({ error: "Media not found" });
+  }
+
+  const storeData = db.get(store);
+  const updatedStoreData = storeData.filter(item => item.id !== mediaId);
+  db.set(store, updatedStoreData);
+
+  const filePath = path.join(__dirname, mediaItem['path']);
+
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error('Error deleting file:', err);
+      return res.status(500).json({ error: "Error deleting media file" });
+    }
+
+    return res.json({ message: "Media deleted successfully", deletedMedia: mediaItem });
+  });
 });
 
 // Start server
