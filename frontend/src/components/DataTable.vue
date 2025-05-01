@@ -5,13 +5,13 @@
       :row="selectedRow" />
     <CreateModal @close-create-modal="handleCloseCreateModal()" :show="showCreateModal"
       :row="selectedRow" />
-    <table class="min-w-full table-auto bg-white shadow-lg rounded-lg">
+    <table class="min-w-full table-auto bg-white shadow-sm rounded-sm border border-gray-200">
       <thead class="bg-gray-200">
         <tr>
           <th v-for="(value, key) in tableData[0]" :key="key"
-            class="px-6 py-3 text-left font-medium text-stone-800 capitalize tracking-wider">{{ key }}
+            class="px-6 py-3 text-left font-medium text-gray-900 capitalize tracking-wider">{{ key }}
           </th>
-          <th class="px-6 py-3 text-left font-medium text-stone-800 capitalize tracking-wider">Actions</th>
+          <th class="px-6 py-3 text-left font-medium text-gray-900 capitalize tracking-wider">Actions</th>
         </tr>
       </thead>
       <tbody>

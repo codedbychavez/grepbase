@@ -1,8 +1,8 @@
 <template>
   <div class="media-uploader">
-    <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-      <input @change="handleFileInputChange" :accept="acceptFiles" ref="theFile" type="file" name="fileInput" id="fileInput" multiple="false"
-        class="border border-green-500 border-dashed p-8 cursor-pointer" />
+    <form ref="theForm" @submit.prevent="handleSubmit" enctype="multipart/form-data">
+      <input @change="handleFileInputChange" :accept="acceptFiles" ref="theFile" type="file" name="fileInput"
+        id="fileInput" multiple="false" required class="border border-green-500 border-dashed p-8 cursor-pointer" />
       <button :disabled="!canUpload" type="submit"
         class="mt-4 px-2 py-1 bg-green-500 text-gray-50 rounded cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">Upload</button>
     </form>
@@ -20,15 +20,24 @@ const dataStore = useDataStore();
 
 const { selectedStore } = storeToRefs(dataStore);
 
+const theFile = useTemplateRef<HTMLInputElement>('theFile');
+const theForm = useTemplateRef<HTMLFormElement>('theForm');
+const isUploading = ref<boolean>(false);
+const canUpload = ref<boolean>(false);
+
 const props = defineProps<{
   selectedMediaType: string,
 }>()
+
+watch(function () { return props.selectedMediaType }, function (newValue) {
+  theForm.value?.reset();
+})
 
 const acceptFiles = computed(() => {
   switch (props.selectedMediaType) {
     case EMediaType.image:
       return 'image/png, image/jpeg';
-  
+
     case (EMediaType.video):
       return 'video/mp4';
 
@@ -38,14 +47,6 @@ const acceptFiles = computed(() => {
     default:
       break;
   }
-})
-
-const theFile = useTemplateRef('theFile');
-const isUploading = ref<boolean>(false);
-const canUpload = ref<boolean>(false);
-
-watch(function() {return props.selectedMediaType}, function(newValue) {
-  console.log(newValue)
 })
 
 function handleFileInputChange() {

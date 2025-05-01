@@ -1,49 +1,13 @@
 {
-  "staff": [
+  "Products": [
     {
-      "id": "1",
-      "First Name": "Joe",
-      "Last Name": "Fisher",
-      "Date of Birth": "10th June 2001",
-      "Company": "Acme Inc.",
-      "Salary": "75,0000",
-      "Date Started": "April 03 2023",
-      "Date Ended": "-",
-      "Employee Score": "78/100"
-    },
-    {
-      "First Name": "John",
-      "Last Name": "Smith",
-      "Date of Birth": "12 May 1979",
-      "Company": "Microsoft",
-      "Salary": "200,000",
-      "Date Started": "15 November 2016",
-      "Date Ended": "13 September 2023",
-      "Employee Score": "90/100",
-      "id": 1744552811579
-    },
-    {
-      "id": "1744567178343-mac-screenshot.png",
-      "path": "/uploads/1744567178343-mac-screenshot.png",
-      "name": "mac-screenshot.png",
-      "mediaType": "image",
-      "store": "staff"
+      "Name": "Shoes",
+      "Price": "$300",
+      "id": 1746127965989
     }
   ],
-  "photos": [
-    {
-      "id": "1746111318362-auth-bg.jpg",
-      "path": "/uploads/1746111318362-auth-bg.jpg",
-      "name": "auth-bg.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    },
-    {
-      "id": "1746111526774-auth-bg.jpg",
-      "path": "/uploads/1746111526774-auth-bg.jpg",
-      "name": "auth-bg.jpg",
-      "mediaType": "image",
-      "store": "photos"
-    }
-  ]
+  "rename": {
+    "newName": "Product",
+    "oldName": "Products"
+  }
 }
