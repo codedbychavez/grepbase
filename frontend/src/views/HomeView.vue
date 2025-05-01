@@ -3,7 +3,7 @@
     <CreateStoreModal @close-create-store-modal="handleCloseCreateStoreModal" :show="showCreateStoreModal" />
     <DeleteStoreModal @close-delete-store-modal="handleCloseDeleteStoreModal" :show="showDeleteStoreModal" />
     <RenameStoreModal @close-rename-store-modal="handleCloseRenameStoreModal" :show="showRenameStoreModal" />
-    <h1 class="text-3xl">Your Data</h1>
+    <h1 class="text-3xl">Data Stores</h1>
     <div class="my-8">
       <div class="my-8 flex gap-8 items-end">
         <div class="select-wrapper">
@@ -27,7 +27,7 @@
       </div>
     </div>
     <DataTable v-if="storeData.length > 0" :table-data="storeData" />
-    <div v-else class="w-3/4 mt-4 border border-gray-100 p-4 rounded-sm shadow-sm">
+    <div v-else class="w-3/4 mt-4 border border-gray-100 p-4 rounded-sm shadow-sm bg-white">
       <p class="text-sm text-gray-500 w-max">
         No store data. Create your first store item below.
       </p>

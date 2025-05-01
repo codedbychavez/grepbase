@@ -1,66 +1,25 @@
 <template>
-  <div class="app-container h-full flex flex-col">
+  <div class="app-container h-full flex flex-col bg-gray-50">
     <notifications position="bottom right" />
-    <header class="bg-white shadow-md p-4">
-      <div class="container">
-        <div class="navigation">
-          <RouterLink to="/">
-            <div class="logo text-emerald-500 font-bold text-2xl">grepbase</div>
-          </RouterLink>
-          <div class="navigation-links-wrapper w-full flex items-center">
-            <ul class="navigation-links flex items-center gap-8">
-              <li>
-                <RouterLink to="/" active-class="font-semibold" class="p-1">
-                  Dashboard
-                </RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/media" active-class="font-semibold" class="p-1">
-                  Media Bucket
-                </RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/about" active-class="font-semibold" class="p-1">
-                  About
-                </RouterLink>
-              </li>
-            </ul>
-            <div class="user-buttons ml-auto">
-              <button v-if="user" @click="handleSignout"
-                class="bg-blue-500 px-3 py-2 rounded text-gray-50 cursor-pointer">
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="container p-4 h-full">
+    <Header v-if="user" />
+    <div class="container h-full">
       <RouterView />
     </div>
   </div>
 
 </template>
 
-<script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/authStore';
-import { Notifications } from "@kyvg/vue3-notification";
+<script setup>
 
-const router = useRouter();
+import { storeToRefs } from 'pinia';
+
+import Header from './components/Header.vue';
+import { useAuthStore } from './stores/authStore';
+
 const authStore = useAuthStore();
 
 const { user } = storeToRefs(authStore);
 
-async function handleSignout() {
-  await authStore.signout();
-
-  if (!user.value) {
-    router.push('/signin');
-  }
-}
 
 </script>
 
@@ -70,8 +29,5 @@ async function handleSignout() {
   margin: 0 auto;
 }
 
-.navigation {
-  display: flex;
-  gap: 8rem;
-}
+
 </style>

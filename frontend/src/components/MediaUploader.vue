@@ -1,7 +1,7 @@
 <template>
   <div class="media-uploader">
     <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-      <input @change="handleFileInputChange" accept="image/png, image/jpeg, video/mp4, audio/mp3" ref="theFile" type="file" name="fileInput" id="fileInput" multiple="false"
+      <input @change="handleFileInputChange" :accept="acceptFiles" ref="theFile" type="file" name="fileInput" id="fileInput" multiple="false"
         class="border border-green-500 border-dashed p-8 cursor-pointer" />
       <button :disabled="!canUpload" type="submit"
         class="mt-4 px-2 py-1 bg-green-500 text-gray-50 rounded cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">Upload</button>
@@ -10,10 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import { useTemplateRef, ref } from 'vue';
+import { useTemplateRef, ref, computed } from 'vue';
 import { useDataStore } from '@/stores/dataStore';
 import { storeToRefs } from 'pinia';
 import { notify } from '@kyvg/vue3-notification';
+import { EMediaType } from '@/stores/dataStore';
 
 const dataStore = useDataStore();
 
@@ -22,6 +23,22 @@ const { selectedStore, selectedMediaType } = storeToRefs(dataStore);
 const props = defineProps<{
   selectedMediaType: string,
 }>()
+
+const acceptFiles = computed(() => {
+  switch (props.selectedMediaType) {
+    case EMediaType.image:
+      return 'image/png, image/jpeg';
+  
+    case (EMediaType.video):
+      return 'video/mp4';
+
+    case (EMediaType.audio):
+      return 'audio/mp3';
+
+    default:
+      break;
+  }
+})
 
 const theFile = useTemplateRef('theFile');
 const isUploading = ref<boolean>(false);
