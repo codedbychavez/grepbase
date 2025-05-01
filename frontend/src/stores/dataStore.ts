@@ -19,7 +19,8 @@ export const useDataStore = defineStore("dataStore", () => {
     const stores = ref<string[]>([]);
 
     async function fetchStores() {
-        const { data, error } = await useFetch<Array<string[]> | null>(`${appConfigs.value.apiBaseUrl}/stores`).json();
+        const url = `${appConfigs.value.apiBaseUrl}/get-stores`;
+        const { data, error } = await useFetch(url).get().json();
 
         if (error.value) { return };
 
@@ -29,7 +30,7 @@ export const useDataStore = defineStore("dataStore", () => {
 
     async function fetchStoreData(store: string) {
         const url = `${appConfigs.value.apiBaseUrl}/stores/${store}`
-        const { data, error } = await useFetch(url).json();
+        const { data, error } = await useFetch(url).get().json();
 
         if (error.value) {
             return;

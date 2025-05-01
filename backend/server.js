@@ -86,14 +86,14 @@ passport.deserializeUser((user, cb) => {
   process.nextTick(() => cb(null, user));
 });
 
-// Auth Routes
-app.get("/auth/check-session", (req, res) => {
+// AUTH ROUTES
+app.get("/check-session", (req, res) => {
   req.isAuthenticated()
     ? res.json({ user: req.user })
     : res.status(401).json({ error: "Not authenticated" });
 });
 
-app.post("/auth/login", (req, res, next) => {
+app.post("/sign-in", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
     if (!user) return res.status(401).json({ message: info.message });
@@ -105,14 +105,14 @@ app.post("/auth/login", (req, res, next) => {
   })(req, res, next);
 });
 
-app.get("/auth/signout", (req, res) => {
+app.get("/sign-out", (req, res) => {
   req.logOut(err => {
     if (err) return res.status(401).json({ message: "Signout failed" });
     res.json({ message: "Signout successful" });
   });
 });
 
-app.post("/auth/signup", (req, res, next) => {
+app.post("/sign-up", (req, res, next) => {
   const { username, password } = req.body;
   const salt = crypto.randomBytes(16);
 
@@ -126,19 +126,19 @@ app.post("/auth/signup", (req, res, next) => {
   });
 });
 
-// Store Routes
-app.get("/stores", (req, res) => {
+// STORE ROUTES
+app.get("/get-stores", (req, res) => {
   const data = db.getStores();
   data ? res.json(data) : res.status(404).json({ error: "Not Found" });
 });
 
-app.get("/stores/:store", (req, res) => {
+app.get("/get-store-data", (req, res) => {
   const store = req.params.store;
   const data = db.filterStoreByObjectKey(store, 'mediaType', true)
   data ? res.json(data) : res.status(404).json({ error: "Store not found" });
 });
 
-app.post("/stores/create", (req, res) => {
+app.post("create-store", (req, res) => {
   const { storeName, initialItem } = req.body;
   if (storeName && initialItem) {
     initialItem.id = Date.now();
@@ -148,7 +148,8 @@ app.post("/stores/create", (req, res) => {
   res.status(400).json({ error: "Missing data" });
 });
 
-app.post("/stores/:store/create", (req, res) => {
+// STORE ITEMS ROUTES
+app.post("/create-store-item", (req, res) => {
   const { store } = req.params;
   const item = req.body;
   if (item) {
@@ -161,7 +162,7 @@ app.post("/stores/:store/create", (req, res) => {
   res.status(400).json({ error: "Missing item" });
 });
 
-app.post("/stores/:store/createInitial", (req, res) => {
+app.post("/create-initial-store-item", (req, res) => {
   const { store } = req.params;
   const { item } = req.body;
   if (item) {
@@ -174,7 +175,7 @@ app.post("/stores/:store/createInitial", (req, res) => {
   res.status(400).json({ error: "Missing item" });
 });
 
-app.patch("/stores/:store/:id", (req, res) => {
+app.patch("/update-store-item", (req, res) => {
   const { store, id } = req.params;
   const data = db.get(store);
   const index = data.findIndex(item => item.id == id);
@@ -186,7 +187,7 @@ app.patch("/stores/:store/:id", (req, res) => {
   res.status(404).json({ error: "Failed to update" });
 });
 
-app.patch("/stores/:store", (req, res) => {
+app.patch("/update-store", (req, res) => {
   const { store } = req.params;
   const storeData = req.body;
   db.set(store, storeData);
@@ -202,21 +203,21 @@ app.patch("/rename-store", (req, res) => {
   res.status(400).json({ error: "Missing names" });
 });
 
-app.post("/stores/delete", (req, res) => {
-  const { name } = req.body;
-  if (name) {
-    db.delete(name);
-    return res.json(true);
-  }
-  res.status(400).json({ error: "Missing name" });
-});
+// app.post("/delete-store", (req, res) => {
+//   const { name } = req.body;
+//   if (name) {
+//     db.delete(name);
+//     return res.json(true);
+//   }
+//   res.status(400).json({ error: "Missing name" });
+// });
 
-app.delete("/stores/:store", (req, res) => {
+app.delete("/delete-store", (req, res) => {
   db.delete(req.params.store);
   res.json({ message: "Store deleted" });
 });
 
-app.delete("/stores/:store/:id", (req, res) => {
+app.delete("/delete-store-item", (req, res) => {
   const { store, id } = req.params;
   const data = db.get(store);
   const index = data.findIndex(item => item.id == id);
@@ -233,7 +234,7 @@ app.post("/query", (req, res) => {
   res.json(result);
 });
 
-app.post('/:store/upload', upload.single('file'), (req, res) => {
+app.post('/upload-file-to-store', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).send({ error: 'No file uploaded.' });
   }
@@ -265,20 +266,20 @@ app.post('/:store/upload', upload.single('file'), (req, res) => {
 
 });
 
-app.get("/stores/:store/:mediaType", (req, res) => {
+app.get("/get-media-items-by-type", (req, res) => {
   const { store, mediaType } = req.params;
   const media = db.filterStoreByObjectKeyValue(store, 'mediaType', mediaType);
   media ? res.json(media) : res.status(404).json({ error: "Media not found" });
 });
 
-app.delete("/stores/:store/media/:mediaId", (req, res) => {
+app.delete("/delete-media-item", (req, res) => {
   const { store, mediaId } = req.params;
 
   const media = db.filterStoreByObjectKey(store, 'mediaType', false);
   const mediaItem = media.find(item => item['id'] === mediaId);
 
   if (!mediaItem) {
-    return res.status(404).json({ error: "Media not found" });
+    return res.status(404).json({ error: "Media item not found" });
   }
 
   const storeData = db.get(store);
