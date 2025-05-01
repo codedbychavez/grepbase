@@ -33,14 +33,14 @@
                                         <button type="button" @click="removePair(index)"
                                             class="text-red-500 hover:text-red-700 cursor-pointer p-2 bg-gray-100 rounded-full"
                                             title="Remove">
-                                            <Close />
+                                            <Trash />
                                         </button>
                                     </div>
                                 </div>
 
                                 <button type="button" @click="addPair"
                                     class="mt-1 px-2 py-1 text-sm bg-blue-500 text-white rounded cursor-pointer">
-                                    Add Pair
+                                    <Plus />
                                 </button>
 
                             </div>
@@ -64,6 +64,8 @@ import Close from "@/components/Icons/Close.vue";
 
 import { notify } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/stores/dataStore";
+import Plus from "./Icons/Plus.vue";
+import Trash from "./Icons/Trash.vue";
 
 const dataStore = useDataStore();
 
