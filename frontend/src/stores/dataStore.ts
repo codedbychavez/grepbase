@@ -111,10 +111,10 @@ export const useDataStore = defineStore("dataStore", () => {
 
     }
 
-    async function renameStore(storeName: any): Promise<boolean> {
-        const url = `${appConfigs.value.apiBaseUrl}/stores/rename`;
+    async function renameStore(data: any): Promise<boolean> {
+        const url = `${appConfigs.value.apiBaseUrl}/rename-store`;
 
-        const { error } = await useFetch(url).patch(storeName);
+        const { error } = await useFetch(url).patch(data);
 
         if (error.value) {
             return false;

@@ -1,8 +1,8 @@
 <template>
   <div class="media-uploader">
-    <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-      <input @change="handleFileInputChange" accept="image/png, image/jpeg, video/mp4, audio/mp3" ref="theFile" type="file" name="fileInput" id="fileInput" multiple="false"
-        class="border border-green-500 border-dashed p-8 cursor-pointer" />
+    <form ref="theForm" @submit.prevent="handleSubmit" enctype="multipart/form-data">
+      <input @change="handleFileInputChange" :accept="acceptFiles" ref="theFile" type="file" name="fileInput"
+        id="fileInput" multiple="false" required class="border border-green-500 border-dashed p-8 cursor-pointer" />
       <button :disabled="!canUpload" type="submit"
         class="mt-4 px-2 py-1 bg-green-500 text-gray-50 rounded cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400">Upload</button>
     </form>
@@ -10,22 +10,44 @@
 </template>
 
 <script setup lang="ts">
-import { useTemplateRef, ref } from 'vue';
+import { useTemplateRef, ref, computed, watch } from 'vue';
 import { useDataStore } from '@/stores/dataStore';
 import { storeToRefs } from 'pinia';
 import { notify } from '@kyvg/vue3-notification';
+import { EMediaType } from '@/stores/dataStore';
 
 const dataStore = useDataStore();
 
-const { selectedStore, selectedMediaType } = storeToRefs(dataStore);
+const { selectedStore } = storeToRefs(dataStore);
+
+const theFile = useTemplateRef<HTMLInputElement>('theFile');
+const theForm = useTemplateRef<HTMLFormElement>('theForm');
+const isUploading = ref<boolean>(false);
+const canUpload = ref<boolean>(false);
 
 const props = defineProps<{
   selectedMediaType: string,
 }>()
 
-const theFile = useTemplateRef('theFile');
-const isUploading = ref<boolean>(false);
-const canUpload = ref<boolean>(false);
+watch(function () { return props.selectedMediaType }, function (newValue) {
+  theForm.value?.reset();
+})
+
+const acceptFiles = computed(() => {
+  switch (props.selectedMediaType) {
+    case EMediaType.image:
+      return 'image/png, image/jpeg';
+
+    case (EMediaType.video):
+      return 'video/mp4';
+
+    case (EMediaType.audio):
+      return 'audio/mp3';
+
+    default:
+      break;
+  }
+})
 
 function handleFileInputChange() {
   if (theFile.value?.files) {
@@ -62,7 +84,7 @@ async function handleSubmit() {
     }
     else return;
   }
-  await dataStore.fetchMedia(selectedStore.value, selectedMediaType.value);
+  await dataStore.fetchMedia(selectedStore.value, props.selectedMediaType);
 }
 
 </script>

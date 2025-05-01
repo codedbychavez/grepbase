@@ -25,18 +25,19 @@
       </div>
     </div>
     <div class="flex mt-16 gap-8">
-      <div class="w-1/2">
+      <div class="w-1/2 bg-white p-4 rounded-sm">
         <MediaUploader :selected-media-type="selectedMediaType" />
       </div>
-      <div class="w-1/2">
+      <div class="w-1/2 bg-white p-4 rounded-sm">
         <h1 class="text-purple-500 text-lg font-semibold">Media Viewer</h1>
-        <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-y-scroll">
+        <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-auto">
           <div v-if="storeData.length > 0">
             <div v-for="item in storeData" :key="item.id"
-              class="flex items-start gap-2 justify-between px-4 py-2 rounded bg-gray-200 text-sm not-[last-child]:mb-2">
+              class="flex items-center gap-2 justify-between px-4 py-2 rounded border border-gray-200 text-sm not-[last-child]:mb-2">
               <div>
-                <div @click="toggleFileDetails(item.id)" class="font-semibold cursor-pointer hover:text-blue-500">{{
-                  item.name }}</div>
+                <div @click="toggleFileDetails(item.id)"
+                  class="font-semibold cursor-pointer text-blue-500 underline underline-offset-4">{{
+                    item.name }}</div>
 
                 <div v-if="expandedId === item.id">
 
@@ -56,12 +57,13 @@
                 </div>
 
               </div>
-              <div class="flex gap-2">
+              <div class="flex gap-2 self-start">
                 <button @click="handleCopyToClipboard(`${appConfigs.apiBaseUrl}${item.path}`)"
-                  class="p-1 mt-1 bg-gray-300 rounded-full text-blue-500 cursor-pointer">
+                  class="p-2 mt-1 bg-gray-200 rounded-full text-blue-500 cursor-pointer">
                   <Copy />
-              </button>
-                <button @click="handleDeleteMedia(item.id)" class="p-1 mt-1 bg-gray-300 rounded-full text-red-500 cursor-pointer">
+                </button>
+                <button @click="handleDeleteMedia(item.id)"
+                  class="p-2 mt-1 bg-gray-200 rounded-full text-red-500 cursor-pointer">
                   <Trash />
                 </button>
               </div>
@@ -119,9 +121,9 @@ function toggleFileDetails(id: string) {
 }
 
 async function handleDeleteMedia(mediaId: string) {
-   const didDelete = await dataStore.deleteMediaItem(mediaId);
+  const didDelete = await dataStore.deleteMediaItem(mediaId);
 
-   if (didDelete === true) {
+  if (didDelete === true) {
     notify({
       type: 'success',
       title: 'Media item deleted',

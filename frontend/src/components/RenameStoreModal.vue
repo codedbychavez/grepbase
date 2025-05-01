@@ -11,7 +11,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="submitForm">
+            <form @submit.prevent="handleRenameStore">
               <div class="mb-3">
                 <label for="storeName" class="form-label text-sm text-stone-700 block capitalize">Store
                   Name</label>
@@ -62,7 +62,7 @@ const formData = reactive({
 
 const isRenaming = ref(false);
 
-const submitForm = async () => {
+async function handleRenameStore() {
   isRenaming.value = true;
   const data = formData;
 
