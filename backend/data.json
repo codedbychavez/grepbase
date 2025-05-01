@@ -1,13 +1,15 @@
 {
   "Products": [
     {
-      "Name": "Shoes",
+      "Name": "Bags",
       "Price": "$300",
       "id": 1746127965989
     }
   ],
-  "rename": {
-    "newName": "Product",
-    "oldName": "Products"
-  }
+  "booklist": [
+    {
+      "Name": "A book",
+      "id": 1746129714584
+    }
+  ]
 }

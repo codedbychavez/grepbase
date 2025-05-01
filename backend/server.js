@@ -193,7 +193,7 @@ app.patch("/stores/:store", (req, res) => {
   res.json(true);
 });
 
-app.patch("/stores/rename", (req, res) => {
+app.patch("/rename-store", (req, res) => {
   const { oldName, newName } = req.body;
   if (oldName && newName) {
     db.renameStore(oldName, newName);
