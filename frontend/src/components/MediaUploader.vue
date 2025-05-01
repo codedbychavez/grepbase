@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTemplateRef, ref, computed } from 'vue';
+import { useTemplateRef, ref, computed, watch } from 'vue';
 import { useDataStore } from '@/stores/dataStore';
 import { storeToRefs } from 'pinia';
 import { notify } from '@kyvg/vue3-notification';
@@ -18,7 +18,7 @@ import { EMediaType } from '@/stores/dataStore';
 
 const dataStore = useDataStore();
 
-const { selectedStore, selectedMediaType } = storeToRefs(dataStore);
+const { selectedStore } = storeToRefs(dataStore);
 
 const props = defineProps<{
   selectedMediaType: string,
@@ -43,6 +43,10 @@ const acceptFiles = computed(() => {
 const theFile = useTemplateRef('theFile');
 const isUploading = ref<boolean>(false);
 const canUpload = ref<boolean>(false);
+
+watch(function() {return props.selectedMediaType}, function(newValue) {
+  console.log(newValue)
+})
 
 function handleFileInputChange() {
   if (theFile.value?.files) {
@@ -79,7 +83,7 @@ async function handleSubmit() {
     }
     else return;
   }
-  await dataStore.fetchMedia(selectedStore.value, selectedMediaType.value);
+  await dataStore.fetchMedia(selectedStore.value, props.selectedMediaType);
 }
 
 </script>

@@ -44,13 +44,6 @@
       "name": "auth-bg.jpg",
       "mediaType": "image",
       "store": "photos"
-    },
-    {
-      "id": "1746112320270-1744664180511-SampleVideo_1280x720_1mb.mp4",
-      "path": "/uploads/1746112320270-1744664180511-SampleVideo_1280x720_1mb.mp4",
-      "name": "1744664180511-SampleVideo_1280x720_1mb.mp4",
-      "mediaType": "video",
-      "store": "photos"
     }
   ]
 }
