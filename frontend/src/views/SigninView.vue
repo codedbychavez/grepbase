@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 
-import { reactive, ref, useTemplateRef } from 'vue';
+import { reactive, ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
