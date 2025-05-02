@@ -86,7 +86,7 @@ passport.deserializeUser((user, cb) => {
   process.nextTick(() => cb(null, user));
 });
 
-// AUTH ROUTES
+// ## AUTH ROUTES ##
 app.get("/check-session", (req, res) => {
   req.isAuthenticated()
     ? res.json({ user: req.user })
@@ -126,96 +126,113 @@ app.post("/sign-up", (req, res, next) => {
   });
 });
 
-// STORE ROUTES
+// ## STORE ROUTES ##
+
+// Create a store
+app.post("create-store/:store-name", (req, res) => {
+  try {
+    const { storeName } = req.params;
+    db.set(storeName, []);
+    return res.status(200).json({ message: "Store created" });
+  } catch (error) {
+    res.status(404).json({ error: "Could not create store" });
+  }
+});
+
+// Get a list of stores
 app.get("/get-stores", (req, res) => {
-  const data = db.getStores();
-  data ? res.json(data) : res.status(404).json({ error: "Not Found" });
-});
-
-app.get("/get-store-data", (req, res) => {
-  const store = req.params.store;
-  const data = db.filterStoreByObjectKey(store, 'mediaType', true)
-  data ? res.json(data) : res.status(404).json({ error: "Store not found" });
-});
-
-app.post("create-store", (req, res) => {
-  const { storeName, initialItem } = req.body;
-  if (storeName && initialItem) {
-    initialItem.id = Date.now();
-    const success = db.set(storeName, [initialItem]);
-    return success ? res.json(success) : res.status(404).json({ error: "Failed to create" });
+  try {
+    const data = db.getStores();
+    return res.status(200).json(data)
+  } catch (error) {
+    res.status(404).json({ error: "Could not get stores" });
   }
-  res.status(400).json({ error: "Missing data" });
 });
 
-// STORE ITEMS ROUTES
-app.post("/create-store-item", (req, res) => {
-  const { store } = req.params;
-  const item = req.body;
-  if (item) {
-    item.id = Date.now();
-    const data = db.get(store);
-    data.push(item);
-    db.set(store, data);
-    return res.json(true);
-  }
-  res.status(400).json({ error: "Missing item" });
-});
-
-app.post("/create-initial-store-item", (req, res) => {
-  const { store } = req.params;
-  const { item } = req.body;
-  if (item) {
-    item.id = Date.now();
-    const data = db.get(store);
-    data.push(item);
-    db.set(store, data);
-    return res.json(true);
-  }
-  res.status(400).json({ error: "Missing item" });
-});
-
-app.patch("/update-store-item", (req, res) => {
-  const { store, id } = req.params;
-  const data = db.get(store);
-  const index = data.findIndex(item => item.id == id);
-  if (index >= 0) {
-    data[index] = req.body;
-    db.set(store, data);
-    return res.json(true);
-  }
-  res.status(404).json({ error: "Failed to update" });
-});
-
-app.patch("/update-store", (req, res) => {
-  const { store } = req.params;
-  const storeData = req.body;
-  db.set(store, storeData);
-  res.json(true);
-});
-
-app.patch("/rename-store", (req, res) => {
-  const { oldName, newName } = req.body;
-  if (oldName && newName) {
+// Rename a store
+app.patch("/rename-store/:oldStoreName/:newStoreName", (req, res) => {
+  try {
+    const { oldName, newName } = req.params;
     db.renameStore(oldName, newName);
-    return res.json(true);
+    return res.status(200).json({ message: "Store renamed" });
+  } catch (error) {
+    res.status(404).json({ error: "Could not rename store" });
   }
-  res.status(400).json({ error: "Missing names" });
 });
 
-// app.post("/delete-store", (req, res) => {
-//   const { name } = req.body;
-//   if (name) {
-//     db.delete(name);
-//     return res.json(true);
-//   }
-//   res.status(400).json({ error: "Missing name" });
-// });
-
-app.delete("/delete-store", (req, res) => {
-  db.delete(req.params.store);
-  res.json({ message: "Store deleted" });
+// Delete a store
+app.delete("/delete-store/:storeName", (req, res) => {
+  try {
+    const { storeName } = req.params;
+    db.delete(storeName);
+    return res.json({ message: "Store deleted" });
+  } catch (error) {
+    res.status(404).json({ error: "Could not delete store" });
+  }
 });
+
+
+// STORE ITEM MANAGEMENT
+
+// Create store item
+app.post("/create-store-item/:storeName", (req, res) => {
+  try {
+    const { storeName } = req.params;
+    const item = req.body;
+    item.id = Date.now();
+    const data = db.get(storeName);
+    data.push(item);
+    db.set(storeName, data);
+    return res.json({ message: "Item created" });
+  } catch (error) {
+    res.status(404).json({ error: "Could not create item" });
+  }
+});
+
+// Create initial store item
+app.post("/create-initial-store-item/:storeName", (req, res) => {
+  try {
+    const { storeName } = req.params;
+    const { item } = req.body;
+    item.id = Date.now();
+    const data = db.get(storeName);
+    data.push(item);
+    db.set(storeName, data);
+    return res.json({ message: "Item created" });
+  } catch (error) {
+    res.status(404).json({ error: "Could not create item" });
+  }
+});
+
+// Get store items
+app.get("/get-store-items/:storeName", (req, res) => {
+  try {
+    const { storeName } = req.params;
+    const data = db.filterStoreByObjectKey(storeName, 'mediaType', true)
+    return res.status(200).json(data)
+  } catch (error) {
+    res.status(404).json({ error: "Could not get store items" });
+  }
+});
+
+// Edit store item
+app.patch("/edit-store-item/:storeName", (req, res) => {
+  try {
+    const { storeName } = req.params;
+    const { theItem } = req.body;
+    const data = db.get(storeName);
+    const index = data.findIndex(item => item.id == theItem.id);
+    data[index] = theItem;
+    db.set(storeName, data);
+    return res.json({ message: "Item updated" });
+  } catch (error) {
+    res.status(404).json({ error: "Could not update item" });
+  }
+});
+
+// Delete store item
+
+
 
 app.delete("/delete-store-item", (req, res) => {
   const { store, id } = req.params;
