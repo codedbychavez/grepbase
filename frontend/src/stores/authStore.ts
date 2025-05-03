@@ -6,10 +6,11 @@ export const useAuthStore = defineStore('authStore', () => {
   const appStore = useAppStore();
   const { appConfigs } = storeToRefs(appStore);
 
-  const user = useStorage('user',  null);
+  const user = useStorage('user', null);
 
   async function checkSession(): Promise<boolean> {
-    const { data, error } = await useFetch(`${appConfigs.value.apiBaseUrl}/auth/check-session`, {
+    const url = `${appConfigs.value.apiBaseUrl}/check-session`;
+    const { data, error } = await useFetch(url, {
       credentials: 'include'
     })
 
@@ -21,8 +22,8 @@ export const useAuthStore = defineStore('authStore', () => {
   };
 
   async function signin(userCredentials: Record<string, string>) {
-
-    const { data, error } = await useFetch<Record<string, string>>(`${appConfigs.value.apiBaseUrl}/auth/login`, {
+    const url = `${appConfigs.value.apiBaseUrl}/sign-in`;
+    const { data, error } = await useFetch(url, {
       credentials: 'include'
     }).post(userCredentials).json();
 
@@ -36,27 +37,29 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   async function signup(userCredentials: Record<string, string>): Promise<boolean> {
+    const url = `${appConfigs.value.apiBaseUrl}/sign-up`;
 
-    const { data, error } = await useFetch<Record<string, string>>(`${appConfigs.value.apiBaseUrl}/auth/signup`, {
+    const { data, error } = await useFetch(url, {
       credentials: 'include'
     }).post(userCredentials).json();
 
     if (error.value) {
       return false;
-    } 
+    }
 
     return true;
   }
 
   async function signout(): Promise<boolean> {
+    const url = `${appConfigs.value.apiBaseUrl}/sign-out`;
 
-    const { data, error } = await useFetch<Record<string, string>>(`${appConfigs.value.apiBaseUrl}/auth/signout`, {
+    const { data, error } = await useFetch(url, {
       credentials: 'include'
     }).json();
 
     if (error.value) {
       return false;
-    } 
+    }
 
     user.value = null;
     return true;

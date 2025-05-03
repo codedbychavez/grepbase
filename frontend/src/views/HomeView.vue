@@ -68,7 +68,7 @@
 </template>
 <script setup lang="ts">
 
-import { onMounted, watch, ref, useTemplateRef } from "vue";
+import { onMounted, watch, ref } from "vue";
 import { useDataStore } from '@/stores/dataStore';
 import DataTable from "@/components/DataTable.vue";
 import CreateStoreModal from "@/components/CreateStoreModal.vue";
@@ -92,14 +92,14 @@ const isCreating = ref<boolean>(false);
 const keyValuePairs = ref([{ key: '', value: '' }]);
 
 onMounted(async () => {
-  // Fetch all data stores
-  await dataStore.fetchStores();
-  // Fetch data for selected store
-  await dataStore.fetchStoreData(selectedStore.value);
+  // Get all data stores
+  await dataStore.getStores();
+  // Get selected store items
+  await dataStore.getStoreItems(selectedStore.value);
 })
 
 watch(selectedStore, async (newSelectedStore) => {
-  await dataStore.fetchStoreData(newSelectedStore);
+  await dataStore.getStoreItems(newSelectedStore);
   // Set the selected store
   selectedStore.value = newSelectedStore;
 })
@@ -118,16 +118,12 @@ async function handleCreateStore() {
 
 async function handleCreateInitialStoreItem() {
   isCreating.value = true;
-  const keyValueObject = keyValuePairs.value.reduce((obj: Record<string, string>, { key, value }) => {
+  const item = keyValuePairs.value.reduce((obj: Record<string, string>, { key, value }) => {
     obj[key] = value;
     return obj;
   }, {});
 
-  const data = {
-    item: keyValueObject
-  }
-
-  const didCreate = await dataStore.createInitialStoreItem(data);
+  const didCreate = await dataStore.createStoreItem(item);
 
   if (didCreate === true) {
     notify({

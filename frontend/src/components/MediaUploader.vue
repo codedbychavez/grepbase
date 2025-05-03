@@ -64,7 +64,7 @@ async function handleSubmit() {
   if (theFile.value?.files) {
     const file = theFile.value?.files[0];
     if (file) {
-      const isUploaded = await dataStore.uploadMedia(selectedStore.value, file, props.selectedMediaType);
+      const isUploaded = await dataStore.uploadMediaItem(selectedStore.value, file, props.selectedMediaType);
 
       if (isUploaded) {
         notify({
@@ -84,7 +84,7 @@ async function handleSubmit() {
     }
     else return;
   }
-  await dataStore.fetchMedia(selectedStore.value, props.selectedMediaType);
+  await dataStore.getMediaItems(selectedStore.value, props.selectedMediaType);
 }
 
 </script>

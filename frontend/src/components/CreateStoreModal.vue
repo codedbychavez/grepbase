@@ -19,30 +19,6 @@
                                 <input id="storeName" v-model="storeName" type="text"
                                     class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
                                     placeholder="Enter store name" maxlength="30" />
-
-                                <div class="mt-4">
-                                    <label class="form-label text-sm text-stone-700 block capitalize">Define your first
-                                        item</label>
-                                    <div v-for="(pair, index) in keyValuePairs" :key="index"
-                                        class="my-2 flex gap-3 items-center">
-                                        <input v-model="pair.key" type="text"
-                                            class="w-1/2 p-2 border border-gray-200 rounded-md" placeholder="Key" />
-                                        <span class="text-gray-500">:</span>
-                                        <input v-model="pair.value" type="text"
-                                            class="w-1/2 p-2 border border-gray-200 rounded-md" placeholder="Value" />
-                                        <button type="button" @click="removePair(index)"
-                                            class="text-red-500 hover:text-red-700 cursor-pointer p-2 bg-gray-100 rounded-full"
-                                            title="Remove">
-                                            <Trash />
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <button type="button" @click="addPair"
-                                    class="mt-1 px-2 py-1 text-sm bg-blue-500 text-white rounded cursor-pointer">
-                                    <Plus />
-                                </button>
-
                             </div>
                             <div class="text-right">
                                 <button :disabled="isCreating" type="submit"
@@ -64,8 +40,6 @@ import Close from "@/components/Icons/Close.vue";
 
 import { notify } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/stores/dataStore";
-import Plus from "./Icons/Plus.vue";
-import Trash from "./Icons/Trash.vue";
 
 const dataStore = useDataStore();
 
@@ -77,30 +51,11 @@ const emits = defineEmits(['closeCreateStoreModal']);
 
 const storeName = ref("");
 
-const keyValuePairs = ref([{ key: '', value: '' }]);
-
-function addPair() {
-    keyValuePairs.value.push({ key: '', value: '' });
-}
-
-function removePair(index: number) {
-    keyValuePairs.value.splice(index, 1);
-}
-
 const isCreating = ref(false);
 const submitForm = async () => {
     isCreating.value = true;
-    const keyValueObject = keyValuePairs.value.reduce((obj: Record<string, string>, { key, value }) => {
-        obj[key] = value;
-        return obj;
-    }, {});
 
-    const data = {
-        storeName: storeName.value,
-        initialItem: keyValueObject
-    }
-
-    const didCreate = await dataStore.createStore(data);
+    const didCreate = await dataStore.createStore(storeName.value);
 
     if (didCreate === true) {
         notify({
@@ -115,7 +70,7 @@ const submitForm = async () => {
             text: 'There was an error.'
         })
     }
-    
+
     emits('closeCreateStoreModal');
     isCreating.value = false;
 
