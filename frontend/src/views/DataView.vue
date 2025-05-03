@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <DataTable v-if="storeData.length > 0" :table-data="storeData" />
+    <DataTable v-if="storeItems.length > 0" :table-data="storeItems" />
     <div v-else>
       <div v-if="stores.length > 0" class="w-3/4 mt-4 border border-gray-100 p-4 rounded-sm shadow-sm bg-white">
         <p class="text text-gray-700 w-max">
@@ -37,10 +37,10 @@
 
         <Form ref="form" v-slot="{ meta }" @submit="handleCreateInitialStoreItem" class="my-6">
           <div v-for="(pair, index) in keyValuePairs" :key="index" class="my-2 flex gap-3 items-center">
-            <Field :name="`key+${index}`" v-model="pair.key" :rules="validateKeyValue" type="text"
+            <Field :name="`key+${index}`" v-model="pair.key" :rules="validateRequired" type="text"
               class="w-1/2 p-2 border border-gray-200 rounded-sm" placeholder="Key" required />
             <span class="text-gray-500">:</span>
-            <Field :name="`value+${index}`" v-model="pair.value" :rules="validateKeyValue" type="text"
+            <Field :name="`value+${index}`" v-model="pair.value" :rules="validateRequired" type="text"
               class="w-1/2 p-2 border border-gray-200 rounded-sm" placeholder="Value" required />
             <button type="button" @click="removePair(index)" :disabled="keyValuePairs.length === 1"
               class="text-red-500 hover:text-red-700 cursor-pointer p-2 bg-gray-100 rounded-full disabled:cursor-not-allowed disabled:text-gray-300">
@@ -56,7 +56,7 @@
           <div class="text-right">
             <button :disabled="!meta.valid" type="submit"
               class="mt-6 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
-              {{ isCreating ? 'Creating...' : 'Create Item' }}
+              Create Item
             </button>
           </div>
         </Form>
@@ -74,73 +74,40 @@ import CreateStoreModal from "@/components/CreateStoreModal.vue";
 import DeleteStoreModal from "@/components/DeleteStoreModal.vue";
 import RenameStoreModal from "@/components/RenameStoreModal.vue";
 import { storeToRefs } from "pinia";
-import { notify } from "@kyvg/vue3-notification";
 import { Form, Field } from 'vee-validate';
-import Plus from "@/components/Icons/Plus.vue";
 import Trash from "@/components/Icons/Trash.vue";
+import { validateRequired } from "@/utils/formValidations.ts";
 
 const dataStore = useDataStore();
-const { selectedStore, storeData, stores } = storeToRefs(dataStore);
+const { selectedStore, storeItems, stores } = storeToRefs(dataStore);
 
 const showCreateStoreModal = ref<boolean>(false);
 const showDeleteStoreModal = ref<boolean>(false);
 const showRenameStoreModal = ref<boolean>(false);
 
-const isCreating = ref<boolean>(false);
-
 const keyValuePairs = ref([{ key: '', value: '' }]);
 
 onMounted(async () => {
-  // Get all data stores
+  // Get stores
   await dataStore.getStores();
-  // Get selected store items
-  await dataStore.getStoreItems(selectedStore.value);
 })
 
 watch(selectedStore, async (newSelectedStore) => {
-  await dataStore.getStoreItems(newSelectedStore);
-  // Set the selected store
   selectedStore.value = newSelectedStore;
 })
-
-function validateKeyValue(value: any) {
-  if (!value) {
-    return 'This field is required'
-  }
-
-  return true;
-}
 
 async function handleCreateStore() {
   showCreateStoreModal.value = true;
 }
 
 async function handleCreateInitialStoreItem() {
-  isCreating.value = true;
   const item = keyValuePairs.value.reduce((obj: Record<string, string>, { key, value }) => {
     obj[key] = value;
     return obj;
   }, {});
 
-  const didCreate = await dataStore.createStoreItem(item);
-
-  if (didCreate === true) {
-    notify({
-      type: 'success',
-      title: 'Store created',
-      text: 'Store was created successfully.'
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Create failed',
-      text: 'There was an error.'
-    })
-  }
-
-  isCreating.value = false;
+  await dataStore.createStoreItem(item);
   keyValuePairs.value = [{ key: '', value: '' }];
-
 }
 
 function addPair() {
@@ -173,6 +140,5 @@ function handleCloseDeleteStoreModal() {
 function handleCloseRenameStoreModal() {
   showRenameStoreModal.value = false;
 }
-
 
 </script>

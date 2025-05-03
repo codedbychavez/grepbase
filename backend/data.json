@@ -1,5 +1,15 @@
 {
-  "bookshelf": [
+  "Jayss": [
+    {
+      "Name": "Big Kites",
+      "id": 1746232758816
+    },
+    {
+      "Name": "Small Kite",
+      "id": 1746232769875
+    }
+  ],
+  "booklist": [
     {
       "Name": "A single book",
       "id": 1746129714584
@@ -13,25 +23,16 @@
       "id": 1746268142811
     },
     {
-      "Name": "A work of artistic expression",
+      "Name": "A work of art",
       "id": 1746268160571
     }
   ],
-  "Products": [
+  "Things to buy": [
     {
-      "Name": "Bags",
-      "Price": "$500",
-      "id": 1746127965989
+      "Name": "Mouse",
+      "Price": "$400",
+      "id": 1746300259283
     }
   ],
-  "Jays": [
-    {
-      "Name": "Big Kite",
-      "id": 1746232758816
-    },
-    {
-      "Name": "Small Kite",
-      "id": 1746232769875
-    }
-  ]
+  "joes": []
 }

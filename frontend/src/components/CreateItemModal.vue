@@ -5,7 +5,7 @@
         <div class="modal-content">
           <div class="modal-header flex">
             <h5 class="modal-title text-2xl ml-auto">Create Item</h5>
-            <button @click="$emit('closeCreateModal')" type="button"
+            <button @click="$emit('closeCreateItemModal')" type="button"
               class="ml-auto close p-3 bg-gray-200 cursor-pointer rounded-full" data-dismiss="modal" aria-label="Close">
               <Close />
             </button>
@@ -14,15 +14,15 @@
             <Form v-slot="{ meta }" @submit="handleCreateItem">
               <div v-for="(value, key) in row" :key="key" class="mb-3">
                 <label v-if="key !== 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
-                }}</label>
-                <Field :rules="validateValue" v-if="key !== 'id'" name="key" v-model="formData[key]" type="text"
+                  }}</label>
+                <Field :rules="validateRequired" v-if="key !== 'id'" :name="key" v-model="formData[key]" type="text"
                   class="form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
                   :placeholder="'Enter ' + key" />
               </div>
               <div class="text-right">
                 <button :disabled="!meta.valid" type="submit"
                   class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
-                  {{ isCreating ? 'Creating...' : 'Create Item' }}
+                  Create Item
                 </button>
               </div>
             </Form>
@@ -34,12 +34,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, onMounted } from "vue";
+import { ref, watch, defineProps } from "vue";
 import Close from "@/components/Icons/Close.vue";
 import { Form, Field } from "vee-validate";
 
-import { notify } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/stores/dataStore";
+import { validateRequired } from "@/utils/formValidations.ts";
 
 const dataStore = useDataStore();
 
@@ -48,10 +48,9 @@ const props = defineProps<{
   show: boolean;
 }>();
 
-const emits = defineEmits(['closeCreateModal']);
+const emits = defineEmits(['closeCreateItemModal']);
 
 const formData = ref<Record<string, any>>({});
-const isCreating = ref(false);
 
 watch(() => props.show, (newVal) => {
   if (newVal) {
@@ -61,47 +60,9 @@ watch(() => props.show, (newVal) => {
   }
 });
 
-onMounted(() => {
-  formData.value = Object.keys(props.row).reduce((acc, key) => {
-    return acc;
-  }, {} as Record<string, any>)
-});
-
-function validateValue(value: any) {
-  if (!value) {
-    return 'This field is required'
-  }
-
-  return true;
-}
-
 const handleCreateItem = async () => {
-  isCreating.value = true;
   const data = { ...formData.value }
-
-  const didCreate = await dataStore.createStoreItem(data);
-
-  if (didCreate === true) {
-    notify({
-      type: 'success',
-      title: 'Item created',
-      text: 'Item was created successfully.'
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Create failed',
-      text: 'There was an error.'
-    })
-  }
-
-  emits('closeCreateModal');
-  isCreating.value = false;
+  await dataStore.createStoreItem(data);
+  emits('closeCreateItemModal');
 }
 </script>
-
-<style scoped>
-.modal {
-  width: 40rem;
-}
-</style>

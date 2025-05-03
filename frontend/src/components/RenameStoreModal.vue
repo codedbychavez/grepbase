@@ -15,14 +15,14 @@
               <div class="mb-3">
                 <label for="storeName" class="form-label text-sm text-stone-700 block capitalize">Store
                   Name</label>
-                <Field name="storeName" v-model="newStoreName" type="text" :rules="validateName"
+                <Field name="storeName" v-model="newStoreName" type="text" :rules="validateRequired"
                   class="form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
                   placeholder="Enter store name" maxlength="30" />
               </div>
               <div class="text-right">
                 <button :disabled="!meta.valid" type="submit"
                   class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
-                  {{ isRenaming ? 'Renaming...' : 'Rename Store' }}
+                  Rename Store
                 </button>
               </div>
             </Form>
@@ -38,13 +38,12 @@ import { ref, defineProps, watch } from "vue";
 import { storeToRefs } from "pinia";
 import Close from "@/components/Icons/Close.vue";
 import { Form, Field } from "vee-validate";
-
-import { notify } from "@kyvg/vue3-notification";
+import { validateRequired } from "@/utils/formValidations.ts";
 import { useDataStore } from "@/stores/dataStore";
+
 
 const dataStore = useDataStore();
 const { selectedStore } = storeToRefs(dataStore);
-const isRenaming = ref(false);
 
 const emits = defineEmits(['closeRenameStoreModal']);
 
@@ -60,41 +59,8 @@ watch(function () { return props.show }, function (show) {
   }
 })
 
-function validateName(value: any) {
-  if (!value) {
-    return 'This field is required'
-  }
-
-  return true;
-}
-
 async function handleRenameStore() {
-  isRenaming.value = true;
-
-  const didRename = await dataStore.renameStore(selectedStore.value, newStoreName.value);
-
-  if (didRename === true) {
-    notify({
-      type: 'success',
-      title: 'Store renamed',
-      text: 'Store was renamed successfully.'
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Rename failed',
-      text: 'There was an error.'
-    })
-  }
-
+  await dataStore.renameStore(selectedStore.value, newStoreName.value);
   emits('closeRenameStoreModal');
-  isRenaming.value = false;
-
 }
 </script>
-
-<style scoped>
-.modal {
-  width: 40rem;
-}
-</style>

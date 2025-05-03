@@ -5,27 +5,28 @@
         <div class="modal-content">
           <div class="modal-header flex">
             <h5 class="modal-title text-2xl ml-auto">Delete Item</h5>
-            <button @click="$emit('closeDeleteModal')" type="button"
+            <button @click="$emit('closeDeleteItemModal')" type="button"
               class="ml-auto close p-3 bg-gray-200 cursor-pointer rounded-full" data-dismiss="modal" aria-label="Close">
               <Close />
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="submitForm">
+            <Form @submit="handleDeleteItem">
               <div v-for="(value, key) in row" :key="key" class="mb-3">
                 <label v-if="key !== 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
-                }}</label>
-                <input v-if="key !== 'id'" :id="key" v-model="formData[key]" type="text"
+                  }}</label>
+                <Field v-if="key !== 'id'" :id="key" v-model="formData[key]" :name="key" type="text"
+                  :rules="validateRequired"
                   class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
                   :placeholder="'Enter ' + key" disabled />
               </div>
               <div class="text-right">
                 <button :disabled="isDeleting" type="submit"
                   class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
-                  {{ isDeleting ? 'Deleting...' : 'Delete Item' }}
+                  Delete Item
                 </button>
               </div>
-            </form>
+            </Form>
           </div>
         </div>
       </div>
@@ -36,9 +37,10 @@
 <script setup lang="ts">
 import { ref, watch, defineProps } from "vue";
 import Close from "@/components/Icons/Close.vue";
+import { Form, Field } from "vee-validate";
 
-import { notify } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/stores/dataStore";
+import { validateRequired } from "@/utils/formValidations.ts";
 
 const dataStore = useDataStore();
 
@@ -47,7 +49,7 @@ const props = defineProps<{
   show: boolean;
 }>();
 
-const emits = defineEmits(['closeDeleteModal']);
+const emits = defineEmits(['closeDeleteItemModal']);
 
 const formData = ref({ ...props.row });
 const isDeleting = ref(false);
@@ -57,35 +59,9 @@ watch(() => props.row, (newRow) => {
   formData.value = { ...newRow };
 }, { deep: true });
 
-const submitForm = async () => {
-  isDeleting.value = true;
+const handleDeleteItem = async () => {
   const itemId = props.row['id'];
-
-  const didDelete = await dataStore.deleteStoreItem(itemId);
-
-  if (didDelete === true) {
-    notify({
-      type: 'success',
-      title: 'Item deleted',
-      text: 'Item was deleted successfully.'
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Delete failed',
-      text: 'There was an error.'
-    })
-  }
-
-  emits('closeDeleteModal');
-  isDeleting.value = false;
-
-
+  await dataStore.deleteStoreItem(itemId);
+  emits('closeDeleteItemModal');
 }
 </script>
-
-<style scoped>
-.modal {
-  width: 40rem;
-}
-</style>
