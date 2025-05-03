@@ -16,12 +16,12 @@
                 <label for="storeName" class="form-label text-sm text-stone-700 block capitalize">Store
                   Name</label>
                 <input id="storeName" :value="selectedStore" type="text"
-                  class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
+                  class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
                   disabled readonly />
               </div>
               <div class="text-right">
                 <button :disabled="isDeleting" type="submit"
-                  class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
+                  class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
                   {{ isDeleting ? 'Deleting...' : 'Delete Store' }}
                 </button>
               </div>
