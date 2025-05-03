@@ -1,21 +1,4 @@
 {
-  "booklist": [
-    {
-      "Name": "A single book",
-      "id": 1746129714584
-    },
-    {
-      "Name": "Birds",
-      "id": 1746229935705
-    }
-  ],
-  "Productz": [
-    {
-      "Name": "Bags",
-      "Price": "$300",
-      "id": 1746127965989
-    }
-  ],
   "Kites": [
     {
       "Name": "Big Kite",
@@ -24,6 +7,31 @@
     {
       "Name": "Small Kite",
       "id": 1746232769875
+    }
+  ],
+  "bookshelf": [
+    {
+      "Name": "A single book",
+      "id": 1746129714584
+    },
+    {
+      "Name": "Birds",
+      "id": 1746229935705
+    },
+    {
+      "Name": "Another book",
+      "id": 1746268142811
+    },
+    {
+      "Name": "A work of artistic expression",
+      "id": 1746268160571
+    }
+  ],
+  "Products": [
+    {
+      "Name": "Bags",
+      "Price": "$500",
+      "id": 1746127965989
     }
   ]
 }

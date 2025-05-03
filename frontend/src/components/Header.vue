@@ -1,35 +1,33 @@
 <template>
   <header class="bg-white shadow-md p-4">
-    <div class="container">
-      <div class="navigation flex gap-8">
+      <div class="navigation flex justify-between items-center gap-4">
         <Logo />
-        <div class="navigation-links-wrapper w-full flex items-center">
-          <ul class="navigation-links flex items-center gap-8">
-            <li>
-              <RouterLink to="/" active-class="font-semibold" class="p-1">
-                Dashboard
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/media" active-class="font-semibold" class="p-1">
-                Media Bucket
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/about" active-class="font-semibold" class="p-1">
-                About
-              </RouterLink>
-            </li>
-          </ul>
-          <div class="user-buttons ml-auto">
-            <button v-if="user" @click="handleSignout"
-              class="bg-blue-500 px-3 py-2 rounded text-gray-50 cursor-pointer">
-              Logout
-            </button>
-          </div>
+
+        <ul class="navigation-links flex items-center gap-8">
+          <li>
+            <RouterLink to="/" active-class="font-semibold" class="p-1">
+              Data
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/media" active-class="font-semibold" class="p-1">
+              Media
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/about" active-class="font-semibold" class="p-1">
+              About
+            </RouterLink>
+          </li>
+        </ul>
+
+        <div class="user-buttons">
+          <button v-if="user" @click="handleSignout" class="border border-gray-500 px-2 py-1 rounded text-gray-700 text-sm cursor-pointer hover:border-gray-700">
+            Logout
+          </button>
         </div>
       </div>
-    </div>
+
   </header>
 </template>
 

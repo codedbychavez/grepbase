@@ -2,7 +2,7 @@
   <div class="app-container h-full flex flex-col bg-gray-50">
     <notifications position="bottom right" />
     <Header v-if="user" />
-    <div class="container h-full">
+    <div class="container h-full p-4">
       <RouterView />
     </div>
   </div>
