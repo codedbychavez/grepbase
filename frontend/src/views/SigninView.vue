@@ -6,7 +6,7 @@
         <div class="form-group mt-8">
           <label for="key" class="form-label text-sm text-stone-700 block capitalize">Username</label>
           <Field name="username" v-model="formData.username" :rules="validateUsername" type="text"
-            class="my-1 bg-white w-full p-2 border border-gray-200 rounded-md" placeholder="Enter Username" />
+            class="my-1 bg-white w-full p-2 border border-gray-200 rounded-sm" placeholder="Enter Username" />
           <ErrorMessage name="username" class="text-sm text-red-500" />
         </div>
         <div class="form-group mt-4">
@@ -14,7 +14,7 @@
           <div class="flex gap-2 items-center">
             <Field ref="passwordInput" name="password" v-model="formData.password" :rules="validatePassword"
               :type="hidePassword ? 'password' : 'text'"
-              class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
+              class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
               placeholder="Enter Password" />
             <component @click="togglePasswordVisibility" class="cursor-pointer" :is="hidePassword ? EyeClosed : Eye" />
           </div>

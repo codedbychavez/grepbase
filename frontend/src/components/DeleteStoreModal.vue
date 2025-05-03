@@ -11,21 +11,21 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="handleDeleteStore">
+            <Form v-slot="{ meta }" @submit="handleDeleteStore">
               <div class="mb-3">
                 <label for="storeName" class="form-label text-sm text-stone-700 block capitalize">Store
                   Name</label>
-                <input id="storeName" :value="selectedStore" type="text"
-                  class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
+                <Field name="storeName" :value="selectedStore" :rules="validateName" type="text"
+                  class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
                   disabled readonly />
               </div>
               <div class="text-right">
-                <button :disabled="isDeleting" type="submit"
-                  class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
+                <button :disabled="!meta.valid" type="submit"
+                  class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
                   {{ isDeleting ? 'Deleting...' : 'Delete Store' }}
                 </button>
               </div>
-            </form>
+            </Form>
           </div>
         </div>
       </div>
@@ -36,6 +36,7 @@
 <script setup lang="ts">
 import { ref, defineProps } from "vue";
 import Close from "@/components/Icons/Close.vue";
+import { Form, Field } from "vee-validate";
 
 import { notify } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/stores/dataStore";
@@ -51,6 +52,14 @@ const props = defineProps<{
 
 const emits = defineEmits(['closeDeleteStoreModal']);
 const isDeleting = ref(false);
+
+function validateName(value: any) {
+  if (!value) {
+    return 'This field is required'
+  }
+
+  return true;
+}
 
 const handleDeleteStore = async () => {
   isDeleting.value = true;

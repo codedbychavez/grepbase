@@ -11,21 +11,21 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="handleRenameStore">
+            <Form v-slot="{ meta }" @submit="handleRenameStore">
               <div class="mb-3">
                 <label for="storeName" class="form-label text-sm text-stone-700 block capitalize">Store
                   Name</label>
-                <input name="storeName" v-model="newStoreName" type="text"
-                  class="form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
+                <Field name="storeName" v-model="newStoreName" type="text" :rules="validateName"
+                  class="form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
                   placeholder="Enter store name" maxlength="30" />
               </div>
               <div class="text-right">
-                <button :disabled="isRenaming" type="submit"
-                  class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
+                <button :disabled="!meta.valid" type="submit"
+                  class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
                   {{ isRenaming ? 'Renaming...' : 'Rename Store' }}
                 </button>
               </div>
-            </form>
+            </Form>
           </div>
         </div>
       </div>
@@ -34,9 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, reactive, watch, onMounted } from "vue";
+import { ref, defineProps, watch } from "vue";
 import { storeToRefs } from "pinia";
 import Close from "@/components/Icons/Close.vue";
+import { Form, Field } from "vee-validate";
 
 import { notify } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/stores/dataStore";
@@ -58,6 +59,14 @@ watch(function () { return props.show }, function (show) {
     newStoreName.value = selectedStore.value;
   }
 })
+
+function validateName(value: any) {
+  if (!value) {
+    return 'This field is required'
+  }
+
+  return true;
+}
 
 async function handleRenameStore() {
   isRenaming.value = true;

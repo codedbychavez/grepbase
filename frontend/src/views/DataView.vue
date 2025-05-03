@@ -8,7 +8,7 @@
       <div class="my-8 flex gap-8 items-end">
         <div v-if="stores.length > 0" class="select-wrapper">
           <label for="key" class="block">Select your store</label>
-          <select name="key" v-model="selectedStore" class="mt-2 bg-gray-200 px-4 py-2 rounded-md">
+          <select name="key" v-model="selectedStore" class="mt-2 bg-gray-200 px-4 py-2 rounded-sm">
             <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
           </select>
         </div>
@@ -31,18 +31,17 @@
     <DataTable v-if="storeData.length > 0" :table-data="storeData" />
     <div v-else>
       <div v-if="stores.length > 0" class="w-3/4 mt-4 border border-gray-100 p-4 rounded-sm shadow-sm bg-white">
-        <p class="text-sm text-gray-500 w-max">
+        <p class="text text-gray-700 w-max">
           Create your first store item
         </p>
 
-        <h5 class="modal-title text-2xl mt-4">Create Item</h5>
         <Form ref="form" v-slot="{ meta }" @submit="handleCreateInitialStoreItem" class="my-6">
           <div v-for="(pair, index) in keyValuePairs" :key="index" class="my-2 flex gap-3 items-center">
             <Field :name="`key+${index}`" v-model="pair.key" :rules="validateKeyValue" type="text"
-              class="w-1/2 p-2 border border-gray-200 rounded-md" placeholder="Key" required />
+              class="w-1/2 p-2 border border-gray-200 rounded-sm" placeholder="Key" required />
             <span class="text-gray-500">:</span>
             <Field :name="`value+${index}`" v-model="pair.value" :rules="validateKeyValue" type="text"
-              class="w-1/2 p-2 border border-gray-200 rounded-md" placeholder="Value" required />
+              class="w-1/2 p-2 border border-gray-200 rounded-sm" placeholder="Value" required />
             <button type="button" @click="removePair(index)" :disabled="keyValuePairs.length === 1"
               class="text-red-500 hover:text-red-700 cursor-pointer p-2 bg-gray-100 rounded-full disabled:cursor-not-allowed disabled:text-gray-300">
               <Trash />
@@ -50,14 +49,14 @@
           </div>
 
           <button type="button" @click="addPair"
-            class="mt-1 px-2 py-1 text-sm bg-blue-500 text-white rounded cursor-pointer flex items-center">
-            <Plus />
+            class="mt-2 px-2 py-1 text-sm border border-gray-500 hover:border-gray-700 text-gray-700 rounded-sm cursor-pointer flex items-center">
+            Add pair
           </button>
 
           <div class="text-right">
             <button :disabled="!meta.valid" type="submit"
-              class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
-              {{ isCreating ? 'Creating...' : 'Create Initial Item' }}
+              class="mt-6 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
+              {{ isCreating ? 'Creating...' : 'Create Item' }}
             </button>
           </div>
         </Form>

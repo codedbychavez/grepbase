@@ -5,7 +5,7 @@
     <div class="flex items-center mt-8">
       <div class="select-wrapper">
         <label for="key" class="block mb-5">1. Select your store</label>
-        <select name="key" v-model="selectedStore" class="bg-gray-200 px-4 py-2 rounded-md">
+        <select name="key" v-model="selectedStore" class="bg-gray-200 px-4 py-2 rounded-sm">
           <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
         </select>
       </div>
