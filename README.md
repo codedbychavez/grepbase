@@ -1,10 +1,8 @@
-# grepbase
+# GrepBase
 
 grepbase is a simple JSON file database with an express backend and a Vue.js frontend. It is handy for adding dummy data to test your apps during development.
 
-## Understanding grepbase
-
-The `backend/data.json` looks like this:
+Here is an example of the database file (`backend/data.json`) with data added:
 
 ```json
 {
@@ -34,49 +32,7 @@ The `backend/data.json` looks like this:
 }
 ```
 
-### Stores
-
-This is where all your data will live. Data in this file is organized by **stores**. Each store has a key, with a value array containing items (objects) that belong to the store.
-
-#### Defining a store
-
-The data you defined in a store must be strings/texts. Each item added to a store is auto assigned a unique ID.
-
-1. Plan the first item object you want to add.
-
-```json
-{
-  "id": "1",
-  "First Name": "Joe",
-  "Last Name": "Fisher",
-  "Date of Birth": "10th June 2001",
-  "Company": "Acme Inc.",
-  "Salary": "75,0000",
-  "Date Started": "April 03 2023",
-  "Date Ended": "-",
-  "Employee Score": "78/100"
-}
-```
-
-2. Add it to `backend/data.json`:
-
-```json
-{
-  "staff": [
- {
-      "id": "1",
-      "First Name": "Joe",
-      "Last Name": "Fisher",
-      "Date of Birth": "10th June 2001",
-      "Company": "Acme Inc.",
-      "Salary": "75,0000",
-      "Date Started": "April 03 2023",
-      "Date Ended": "-",
-      "Employee Score": "78/100"
- }
- ],
-}
-```
+Each key represents a **store**. Every store has a value array containing items (objects). Items added to a store via the API/ Frontend UI is auto assigned a unique ID.
 
 ## GrepBase API
 
@@ -207,7 +163,21 @@ Delete a store by name.
 `POST /create-store-item/:storeName`
 
 Add an item to a store.
-Request body: JSON object with arbitrary fields
+Request body: JSON object with arbitrary fields. For example:
+
+```json
+{
+  "id": "1",
+  "First Name": "Joe",
+  "Last Name": "Fisher",
+  "Date of Birth": "10th June 2001",
+  "Company": "Acme Inc.",
+  "Salary": "75,0000",
+  "Date Started": "April 03 2023",
+  "Date Ended": "-",
+  "Employee Score": "78/100"
+}
+```
 
 *Response*:
 
