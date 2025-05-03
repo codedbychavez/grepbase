@@ -1,14 +1,4 @@
 {
-  "Kites": [
-    {
-      "Name": "Big Kite",
-      "id": 1746232758816
-    },
-    {
-      "Name": "Small Kite",
-      "id": 1746232769875
-    }
-  ],
   "bookshelf": [
     {
       "Name": "A single book",
@@ -34,5 +24,14 @@
       "id": 1746127965989
     }
   ],
-  "Hardware tools to get": []
+  "Jays": [
+    {
+      "Name": "Big Kite",
+      "id": 1746232758816
+    },
+    {
+      "Name": "Small Kite",
+      "id": 1746232769875
+    }
+  ]
 }

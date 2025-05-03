@@ -11,21 +11,21 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="submitForm">
+            <Form v-slot="{ meta }" @submit="handleCreateItem">
               <div v-for="(value, key) in row" :key="key" class="mb-3">
                 <label v-if="key !== 'id'" :for="key" class="form-label text-sm text-stone-700 block capitalize">{{ key
-                  }}</label>
-                <input v-if="key !== 'id'" :id="key" v-model="formData[key]" type="text"
+                }}</label>
+                <Field :rules="validateValue" v-if="key !== 'id'" name="key" v-model="formData[key]" type="text"
                   class="form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
                   :placeholder="'Enter ' + key" />
               </div>
               <div class="text-right">
-                <button :disabled="isCreating" type="submit"
+                <button :disabled="!meta.valid" type="submit"
                   class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-sm text-gray-50 disabled:bg-gray-200 disabled:cursor-not-allowed">
                   {{ isCreating ? 'Creating...' : 'Create Item' }}
                 </button>
               </div>
-            </form>
+            </Form>
           </div>
         </div>
       </div>
@@ -36,6 +36,7 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted } from "vue";
 import Close from "@/components/Icons/Close.vue";
+import { Form, Field } from "vee-validate";
 
 import { notify } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/stores/dataStore";
@@ -66,7 +67,15 @@ onMounted(() => {
   }, {} as Record<string, any>)
 });
 
-const submitForm = async () => {
+function validateValue(value: any) {
+  if (!value) {
+    return 'This field is required'
+  }
+
+  return true;
+}
+
+const handleCreateItem = async () => {
   isCreating.value = true;
   const data = { ...formData.value }
 
