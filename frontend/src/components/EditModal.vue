@@ -20,9 +20,9 @@
                   :placeholder="'Enter ' + key" />
               </div>
               <div class="text-right">
-                <button :disabled="isSaving" type="submit"
+                <button :disabled="isUpdating" type="submit"
                   class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
-                  {{ isSaving ? 'Saving...' : 'Save Changes' }}
+                  {{ isUpdating ? 'Update...' : 'Update' }}
                 </button>
               </div>
             </form>
@@ -50,7 +50,7 @@ const props = defineProps<{
 const emits = defineEmits(['closeEditModal']);
 
 const formData = ref({ ...props.row });
-const isSaving = ref(false);
+const isUpdating = ref(false);
 
 // Watch for changes to `row` and update `formData` accordingly
 watch(() => props.row, (newRow) => {
@@ -58,11 +58,9 @@ watch(() => props.row, (newRow) => {
 }, { deep: true });
 
 const submitForm = async () => {
-  isSaving.value = true;
-  const itemId = props.row['id'];
-  const data = formData.value;
+  isUpdating.value = true;
 
-  const didUpdate = await dataStore.editStoreItem(itemId, data);
+  const didUpdate = await dataStore.editStoreItem(formData.value);
 
   if (didUpdate === true) {
     notify({
@@ -79,7 +77,7 @@ const submitForm = async () => {
   }
 
   emits('closeEditModal');
-  isSaving.value = false;
+  isUpdating.value = false;
 
 }
 </script>

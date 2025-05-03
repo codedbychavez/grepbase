@@ -2,7 +2,7 @@
   <div class="flex h-full items-center justify-center">
     <div>
       <Logo />
-      <Form v-slot="{ meta }" name="form" class="w-96 border border-gray-100 shadow p-4 bg-white rounded-sm my-4" @submit.prevent="handleSignup">
+      <Form v-slot="{ meta }" name="form" class="w-96 border border-gray-100 shadow p-4 bg-white rounded-sm my-4" @submit="handleSignup">
         <div class="form-group mt-8">
           <label for="key" class="form-label text-sm text-stone-700 block capitalize">Username</label>
           <Field name="username" v-model="formData.username" :rules="validateUsername" type="text"

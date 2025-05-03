@@ -1,15 +1,29 @@
 {
-  "Products": [
+  "booklist": [
+    {
+      "Name": "A single book",
+      "id": 1746129714584
+    },
+    {
+      "Name": "Birds",
+      "id": 1746229935705
+    }
+  ],
+  "Productz": [
     {
       "Name": "Bags",
       "Price": "$300",
       "id": 1746127965989
     }
   ],
-  "booklist": [
+  "Kites": [
     {
-      "Name": "A book",
-      "id": 1746129714584
+      "Name": "Big Kite",
+      "id": 1746232758816
+    },
+    {
+      "Name": "Small Kite",
+      "id": 1746232769875
     }
   ]
 }

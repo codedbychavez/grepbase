@@ -15,12 +15,12 @@
               <div class="mb-3">
                 <label for="storeName" class="form-label text-sm text-stone-700 block capitalize">Store
                   Name</label>
-                <input id="storeName" v-model="formData.newName" type="text"
+                <input name="storeName" v-model="newStoreName" type="text"
                   class="form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
                   placeholder="Enter store name" maxlength="30" />
               </div>
               <div class="text-right">
-                <button :disabled="isRenaming || formData.oldName === formData.newName" type="submit"
+                <button :disabled="isRenaming" type="submit"
                   class="mt-4 bg-green-500 cursor-pointer px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200">
                   {{ isRenaming ? 'Renaming...' : 'Rename Store' }}
                 </button>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, reactive, watch } from "vue";
+import { ref, defineProps, reactive, watch, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import Close from "@/components/Icons/Close.vue";
 
@@ -43,30 +43,26 @@ import { useDataStore } from "@/stores/dataStore";
 
 const dataStore = useDataStore();
 const { selectedStore } = storeToRefs(dataStore);
+const isRenaming = ref(false);
+
+const emits = defineEmits(['closeRenameStoreModal']);
 
 const props = defineProps<{
   show: boolean;
 }>();
 
-const emits = defineEmits(['closeRenameStoreModal']);
+const newStoreName = ref<string>(selectedStore.value);
 
-watch(() => selectedStore.value, (newSelectedStore) => {
-  formData.newName = newSelectedStore;
-  formData.oldName = newSelectedStore;
-}, { deep: true });
-
-const formData = reactive({
-  newName: selectedStore.value,
-  oldName: selectedStore.value,
-});
-
-const isRenaming = ref(false);
+watch(function () { return props.show }, function (show) {
+  if (show) {
+    newStoreName.value = selectedStore.value;
+  }
+})
 
 async function handleRenameStore() {
   isRenaming.value = true;
-  const data = formData;
 
-  const didRename = await dataStore.renameStore(data);
+  const didRename = await dataStore.renameStore(selectedStore.value, newStoreName.value);
 
   if (didRename === true) {
     notify({

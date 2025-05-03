@@ -99,21 +99,19 @@ const { appConfigs } = storeToRefs(appStore);
 const expandedId = ref<string | null>('');
 
 onMounted(async () => {
-  // Fetch all data stores
-  await dataStore.fetchStores();
-  // Fetch data for selected store
-  await dataStore.fetchMedia(selectedStore.value, selectedMediaType.value);
+  await dataStore.getStores();
+  await dataStore.getMediaItems(selectedStore.value, selectedMediaType.value);
 })
 
 watch(selectedStore, async (newSelectedStore) => {
-  await dataStore.fetchMedia(newSelectedStore, selectedMediaType.value);
+  await dataStore.getMediaItems(newSelectedStore, selectedMediaType.value);
   // Set the selected store
   selectedStore.value = newSelectedStore;
 })
 
 async function handleSelectMediaType(mediaType: EMediaType) {
   selectedMediaType.value = mediaType;
-  await dataStore.fetchMedia(selectedStore.value, selectedMediaType.value);
+  await dataStore.getMediaItems(selectedStore.value, selectedMediaType.value);
 }
 
 function toggleFileDetails(id: string) {

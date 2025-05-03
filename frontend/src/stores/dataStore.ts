@@ -21,7 +21,7 @@ export const useDataStore = defineStore("dataStore", () => {
     // ## STORE MANAGEMENT ##
 
     // Create a store
-    async function createStore(storeName: any): Promise<boolean> {
+    async function createStore(storeName: string): Promise<boolean> {
         const url = `${appConfigs.value.apiBaseUrl}/create-store/${storeName}`
         const { error } = await useFetch(url).post();
         if (error.value) {
@@ -86,17 +86,6 @@ export const useDataStore = defineStore("dataStore", () => {
         return true;
     }
 
-    // Create initial store item
-    async function createInitialStoreItem(item: any) {
-        const url = `${appConfigs.value.apiBaseUrl}/create-initial-store-item/${selectedStore.value}`;
-        const { error } = await useFetch(url).post(item);
-        if (error.value) {
-            return false;
-        }
-        await getStoreItems(selectedStore.value);
-        return true;
-    }
-
     // Edit store item
     async function editStoreItem(item: any): Promise<boolean> {
         const url = `${appConfigs.value.apiBaseUrl}/edit-store-item/${selectedStore.value}`
@@ -109,43 +98,35 @@ export const useDataStore = defineStore("dataStore", () => {
     }
 
     // Delete store item
-
     async function deleteStoreItem(itemId: string): Promise<boolean> {
-        const url = `${appConfigs.value.apiBaseUrl}/stores/${selectedStore.value}/${itemId}`
-
+        const url = `${appConfigs.value.apiBaseUrl}/delete-store-item/${selectedStore.value}/${itemId}`
         const { error } = await useFetch(url).delete(itemId);
-
         if (error.value) {
             return false;
         }
-
-        await fetchStoreData(selectedStore.value);
-
+        await getStoreItems(selectedStore.value);
         return true;
     }
 
-    async function uploadMedia(store: string, file: File, mediaType: string): Promise<boolean> {
-        const url = `${appConfigs.value.apiBaseUrl}/${store}/upload`
+    // ## MEDIA ITEM MANAGEMENT ##
 
+    // Upload media item
+    async function uploadMediaItem(storeName: string, file: File, mediaType: string): Promise<boolean> {
+        const url = `${appConfigs.value.apiBaseUrl}/upload-media-item/${storeName}`
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('mediaType', mediaType);
-
         const { error } = await useFetch(url).post(formData);
-
         if (error.value) {
             return false;
         }
-
         return true;
-
     }
 
-    async function fetchMedia(store: string, mediaType: string) {
-        const url = `${appConfigs.value.apiBaseUrl}/stores/${store}/${mediaType}`;
-
+    // Get media by type
+    async function getMediaItems(storeName: string, mediaType: string) {
+        const url = `${appConfigs.value.apiBaseUrl}/get-media-items/${storeName}/${mediaType}`;
         const { data, error } = await useFetch(url).json();
-
         if (error.value) {
             return;
         } else {
@@ -153,9 +134,9 @@ export const useDataStore = defineStore("dataStore", () => {
         }
     }
 
+    // Delete media item
     async function deleteMediaItem(mediaId: string): Promise<boolean> {
-        const modifiedMediaId = mediaId.replace(/\//g, '-');
-        const url = `${appConfigs.value.apiBaseUrl}/stores/${selectedStore.value}/media/${modifiedMediaId}`
+        const url = `${appConfigs.value.apiBaseUrl}/delete-media-item/${selectedStore.value}/${mediaId}`
 
         const { error } = await useFetch(url).delete(mediaId);
 
@@ -163,10 +144,10 @@ export const useDataStore = defineStore("dataStore", () => {
             return false;
         }
 
-        await fetchMedia(selectedStore.value, selectedMediaType.value);
+        await getMediaItems(selectedStore.value, selectedMediaType.value);
 
         return true;
     }
 
-    return { stores, storeData, selectedStore, fetchStores, fetchStoreData, editStoreItem, deleteStoreItem, createStoreItem, createStore, editStoreData, deleteStore, renameStore, uploadMedia, fetchMedia, selectedMediaType, deleteMediaItem, createInitialStoreItem }
+    return { stores, storeData, selectedStore, getStores, getStoreItems, editStoreItem, deleteStoreItem, createStoreItem, createStore, deleteStore, renameStore, uploadMediaItem, getMediaItems, selectedMediaType, deleteMediaItem }
 })

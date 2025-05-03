@@ -78,7 +78,6 @@ class JSONDatabase {
     }
 
     renameStore(oldName, newName) {
-        console.log('here')
         if (!this.data[oldName]) {
             console.error(`Store "${oldName}" does not exist.`);
             return false;

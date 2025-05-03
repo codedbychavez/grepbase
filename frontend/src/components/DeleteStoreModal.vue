@@ -11,13 +11,13 @@
             </button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="submitForm">
+            <form @submit.prevent="handleDeleteStore">
               <div class="mb-3">
                 <label for="storeName" class="form-label text-sm text-stone-700 block capitalize">Store
                   Name</label>
                 <input id="storeName" :value="selectedStore" type="text"
                   class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-md"
-                  disabled />
+                  disabled readonly />
               </div>
               <div class="text-right">
                 <button :disabled="isDeleting" type="submit"
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, reactive } from "vue";
+import { ref, defineProps } from "vue";
 import Close from "@/components/Icons/Close.vue";
 
 import { notify } from "@kyvg/vue3-notification";
@@ -52,13 +52,10 @@ const props = defineProps<{
 const emits = defineEmits(['closeDeleteStoreModal']);
 const isDeleting = ref(false);
 
-const submitForm = async () => {
+const handleDeleteStore = async () => {
   isDeleting.value = true;
-  const data = {
-    name: selectedStore.value
-  };
 
-  const didDelete = await dataStore.deleteStore(data);
+  const didDelete = await dataStore.deleteStore(selectedStore.value);
 
   if (didDelete === true) {
     notify({
