@@ -88,7 +88,6 @@ const showRenameStoreModal = ref<boolean>(false);
 const keyValuePairs = ref([{ key: '', value: '' }]);
 
 onMounted(async () => {
-  // Get stores
   await dataStore.getStores();
 })
 

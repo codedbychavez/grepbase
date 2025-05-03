@@ -31,8 +31,8 @@
       <div class="w-1/2 bg-white p-4 rounded-sm">
         <h1 class="text-purple-500 text-lg font-semibold">Media Viewer</h1>
         <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-auto">
-          <div v-if="storeData.length > 0">
-            <div v-for="item in storeData" :key="item.id"
+          <div v-if="storeItems.length > 0">
+            <div v-for="item in storeItems" :key="item.id"
               class="flex items-center gap-2 justify-between px-4 py-2 rounded border border-gray-200 text-sm not-[last-child]:mb-2">
               <div>
                 <div @click="toggleFileDetails(item.id)"
@@ -93,19 +93,16 @@ import { notify } from "@kyvg/vue3-notification";
 
 const dataStore = useDataStore();
 const appStore = useAppStore();
-const { selectedStore, stores, storeData, selectedMediaType } = storeToRefs(dataStore);
+const { selectedStore, stores, storeItems, selectedMediaType } = storeToRefs(dataStore);
 const { appConfigs } = storeToRefs(appStore);
 
 const expandedId = ref<string | null>('');
 
 onMounted(async () => {
   await dataStore.getStores();
-  await dataStore.getMediaItems(selectedStore.value, selectedMediaType.value);
 })
 
 watch(selectedStore, async (newSelectedStore) => {
-  await dataStore.getMediaItems(newSelectedStore, selectedMediaType.value);
-  // Set the selected store
   selectedStore.value = newSelectedStore;
 })
 
@@ -119,21 +116,7 @@ function toggleFileDetails(id: string) {
 }
 
 async function handleDeleteMedia(mediaId: string) {
-  const didDelete = await dataStore.deleteMediaItem(mediaId);
-
-  if (didDelete === true) {
-    notify({
-      type: 'success',
-      title: 'Media item deleted',
-      text: 'Media item was deleted successfully.'
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Delete failed',
-      text: 'There was an error.'
-    })
-  }
+  await dataStore.deleteMediaItem(mediaId);
 }
 
 function handleCopyToClipboard(path: string) {
