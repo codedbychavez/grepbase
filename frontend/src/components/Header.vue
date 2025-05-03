@@ -22,7 +22,7 @@
         </ul>
 
         <div class="user-buttons">
-          <button v-if="user" @click="handleSignout" class="bg-blue-500 px-3 py-2 rounded text-gray-50 cursor-pointer">
+          <button v-if="user" @click="handleSignout" class="border border-gray-500 px-2 py-1 rounded text-gray-700 text-sm cursor-pointer hover:border-gray-700">
             Logout
           </button>
         </div>

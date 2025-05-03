@@ -15,14 +15,14 @@
 
         <div class="quick-actions flex gap-2 ml-auto">
           <button type="button" @click="handleCreateStore()"
-            class="cursor-pointer bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200 flex gap-1 items-center">
+            class="cursor-pointer px-2 py-1 border border-gray-500 hover:border-gray-700 rounded-sm text-sm text-gray-700 disabled:bg-gray-200 flex gap-1 items-center">
             Create Store</button>
           <button v-if="stores.length > 0" type="button" @click="handleDeleteStore()"
-            class="cursor-pointer px-2 py-1 bg-rose-500 hover:bg-rose-600 rounded-md text-gray-50 disabled:bg-gray-200 flex gap-1 items-center">
+            class="cursor-pointer px-2 py-1 border border-gray-500 hover:border-gray-700 rounded-sm text-sm text-gray-700 disabled:bg-gray-200 flex gap-1 items-center">
             Delete
             Store</button>
           <button v-if="stores.length > 0" type="button" @click="handleRenameStore()"
-            class="cursor-pointer bg-yellow-500 hover:bg-yellow-600 px-2 py-1 rounded-md text-gray-50 disabled:bg-gray-200 flex gap-1">
+            class="cursor-pointer px-2 py-1 border border-gray-500 hover:border-gray-700 rounded-sm text-sm text-gray-700 disabled:bg-gray-200 flex gap-1">
             Rename
             Store</button>
         </div>
@@ -32,7 +32,7 @@
     <div v-else>
       <div v-if="stores.length > 0" class="w-3/4 mt-4 border border-gray-100 p-4 rounded-sm shadow-sm bg-white">
         <p class="text-sm text-gray-500 w-max">
-          No store data. Create your first store item below.
+          Create your first store item
         </p>
 
         <h5 class="modal-title text-2xl mt-4">Create Item</h5>
