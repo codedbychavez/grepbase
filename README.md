@@ -78,48 +78,263 @@ The data you defined in a store must be strings/texts. Each item added to a stor
 }
 ```
 
-#### View your store
+## GrepBase API
 
-1. [Build and run the backend](#running-docker) using Docker.
+The API provides user authentication, media upload, and JSON-based key-value storage using local files. Below is a list of available API routes grouped by functionality.
 
-2. Using your browser or [Postman](https://www.postman.com/), make a GET request to `http://localhost:3000/stores/staff`. The response should be:
+### 🔐 Authentication
+
+`GET /check-session`
+
+Check if a user is currently authenticated.
+
+*Response*:
 
 ```json
-[
- {
-    "id": "1",
-    "First Name": "Joe",
-    "Last Name": "Fisher",
-    "Date of Birth": "10th June 2001",
-    "Company": "Acme Inc.",
-    "Salary": "75,0000",
-    "Date Started": "April 03 2023",
-    "Date Ended": "-",
-    "Employee Score": "78/100"
- }
-]
+200 OK: { user }
+
+401 Unauthorized: { error }
 ```
 
-#### Adding data to your store
+`POST /sign-in`
 
-An easy way to add data to your store is to use the front end.
+Sign in using a username and password.
 
-##### Adding data via the HTML form
+*Request body*:
 
-1. [Build and run the frontend](#running-docker) using Docker.
+```json
+{
+  "username": "user",
+  "password": "pass"
+}
+```
 
-2. In your browser, navigate to `http://localhost:8080`.
+*Response*:
 
-3. Sign up as a new user then log in using your credentials.
+```json
+200 OK: { message, user }
 
-4. On the dashboard, select the store, then click the "+" button to open the form for adding a new item.
+401 Unauthorized: { error }
+```
 
-### Managing Data
+`GET /sign-out`
 
-In addition to adding new items to your store, the UI is capable of updating and deleting items.
-The UI also allows you to create stores, delete stores, and rename stores.
+Sign out the current user.
 
-## Running Docker
+*Response*:
+
+```json
+200 OK: { message }
+
+401 Unauthorized: { error }
+```
+
+`POST /sign-up`
+
+Register a new user.
+
+*Request body*:
+
+```json
+{
+  "username": "user",
+  "password": "pass"
+}
+```
+
+*Response*:
+
+```json
+200 OK: { message }
+
+409 Conflict: { error }
+
+500 Internal Server Error: { error }
+```
+
+### 🏪 Store Management
+
+`POST /create-store/:storeName`
+
+Create a new store with the specified name.
+
+*Response*:
+
+```json
+200 OK: { message }
+
+500 Internal Server Error: { error }
+```
+
+`GET /get-stores`
+
+Get the list of all store names.
+
+*Response*:
+
+```json
+200 OK: [ "store1", "store2" ]
+
+500 Internal Server Error: { error }
+```
+
+`PATCH /rename-store/:oldStoreName/:newStoreName`
+
+Rename an existing store.
+
+*Response*:
+
+```json
+200 OK: { message }
+
+500 Internal Server Error: { error }
+```
+
+`DELETE /delete-store/:storeName`
+
+Delete a store by name.
+
+*Response*:
+
+```json
+200 OK: { message }
+
+500 Internal Server Error: { error }
+```
+
+### 📦 Store Item Management
+
+`POST /create-store-item/:storeName`
+
+Add an item to a store.
+Request body: JSON object with arbitrary fields
+
+*Response*:
+
+```json
+    201 Created: { message }
+
+    404 Not Found: { error }
+```
+
+`GET /get-store-items/:storeName`
+
+Get items in a store with a mediaType key.
+
+*Response*:
+
+```json
+200 OK: [ item1, item2 ]
+
+404 Not Found: { error }
+```
+
+`PATCH /edit-store-item/:storeName`
+
+Edit a store item (by id).
+Request body: Full updated item object
+
+*Response*:
+
+```json
+201 Created: { message }
+
+404 Not Found: { error }
+```
+
+`DELETE /delete-store-item/:storeName/:itemId`
+
+Delete an item from a store by ID.
+
+*Response*:
+
+```json
+200 OK: { message }
+
+404 Not Found: { error }
+```
+
+### 🎞 Media Management
+
+`POST /upload-media-item/:storeName`
+
+Upload a media file to a store.
+
+Form Data:
+
+- file: File (required)
+
+- mediaType: string (e.g., "image")
+
+*Response*:
+
+```json
+201 Created: { message }
+
+400 Bad Request: { error }
+```
+
+`GET /get-media-items/:storeName/:mediaType`
+
+Get media items by type from a store.
+
+*Response*:
+
+```json
+200 OK: [ mediaItem1, mediaItem2 ]
+
+400 Bad Request: { error }
+```
+
+`DELETE /delete-media-item/:storeName/:mediaId`
+
+Delete a media item by ID and remove the file.
+
+*Response*:
+
+```json
+    200 OK: { message, deletedMedia }
+
+    404 Not Found: { error }
+
+    500 Internal Server Error: { error }
+```
+
+### 🗂 File Hosting
+
+`GET /uploads/:filename`
+
+Static file serving for uploaded media.
+Usage:
+Access uploaded files at /uploads/filename.ext
+
+### 🛠 Notes
+
+- Express session uses SQLite for persistence.
+
+- Authentication is handled via Passport.js with a local strategy.
+
+- JSON-based store is saved and read using local file I/O.
+
+## Running Locally
+
+### Frontend
+
+```shell
+cd frontend
+
+npm run dev
+```
+
+### Backend
+
+```shell
+cd backend
+
+npm run dev
+```
+
+## Running with Docker
 
 1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/). This will install docker on your system.
 
