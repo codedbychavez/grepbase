@@ -11,13 +11,11 @@
 
 <script setup lang="ts">
 import { useTemplateRef, ref, computed, watch } from 'vue';
-import { useDataStore } from '@/stores/dataStore';
+import { useMediaStore } from '@/stores/mediaStore';
 import { storeToRefs } from 'pinia';
-import { EMediaType } from '@/stores/dataStore';
+import { EMediaType } from '@/stores/mediaStore';
 
-const dataStore = useDataStore();
-
-const { selectedStore } = storeToRefs(dataStore);
+const mediaStore = useMediaStore();
 
 const theFile = useTemplateRef<HTMLInputElement>('theFile');
 const theForm = useTemplateRef<HTMLFormElement>('theForm');
@@ -61,11 +59,11 @@ async function handleUploadMedia() {
   if (theFile.value?.files) {
     const file = theFile.value?.files[0];
     if (file) {
-      await dataStore.uploadMediaItem(selectedStore.value, file, props.selectedMediaType);
+      await mediaStore.uploadMediaItem(file, props.selectedMediaType);
     }
     else return;
   }
-  await dataStore.getMediaItems(selectedStore.value, props.selectedMediaType);
+  await mediaStore.getMediaItems(props.selectedMediaType);
 }
 
 </script>
