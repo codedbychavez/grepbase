@@ -1,6 +1,6 @@
 # GrepBase
 
-grepbase is a simple JSON file database with an express backend and a Vue.js frontend. It is handy for adding dummy data to test your apps during development.
+GrepBase is a simple JSON file database with an express backend and a Vue.js frontend. It is handy for adding dummy data to test your apps during development.
 
 Here is an example of the database file (`backend/data.json`) with data added:
 
