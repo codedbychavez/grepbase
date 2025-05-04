@@ -5,7 +5,7 @@
       <Form v-slot="{ meta }" class="w-96 border border-gray-100 shadow-sm p-4 bg-white rounded my-4" @submit="handleSignin">
         <div class="form-group mt-8">
           <label for="key" class="form-label text-sm text-stone-700 block capitalize">Username</label>
-          <Field name="username" v-model="formData.username" :rules="validateUsername" type="text"
+          <Field name="username" v-model="formData.username" :rules="validateRequired" type="text"
             class="my-1 bg-white w-full p-2 border border-gray-200 rounded-sm" placeholder="Enter Username" />
           <ErrorMessage name="username" class="text-sm text-red-500" />
         </div>
@@ -38,18 +38,15 @@
 
 import { reactive, ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
-import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { notify } from '@kyvg/vue3-notification';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import Eye from '@/components/Icons/Eye.vue';
 import EyeOff from '@/components/Icons/EyeOff.vue';
 import Logo from '@/components/Logo.vue';
+import { validateRequired, validatePassword } from '@/utils/formValidations.ts';
 
 const router = useRouter();
 const authStore = useAuthStore();
-
-const { user } = storeToRefs(authStore);
 
 const hidePassword = ref<boolean>(true);
 
@@ -62,53 +59,9 @@ function togglePasswordVisibility() {
   hidePassword.value = !hidePassword.value;
 }
 
-function validateUsername(value: any) {
-  if (!value) {
-    return 'This field is required';
-  }
-
-  return true;
-}
-
-function validatePassword(value: any) {
-  if (!value) {
-    return 'This field is required'
-  }
-
-  if (value.length < 8) {
-    return 'Password must be at least 8 characters'
-  }
-
-  return true;
-}
-
 async function handleSignin() {
-
   await authStore.signin(formData);
-
-  if (user.value) {
-    notify({
-      type: 'success',
-      title: "Login Successful",
-      text: "Welcome to grepbase"
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Login Failed',
-      text: 'Incorrect username or password'
-    })
-  }
-
   router.push({ path: '/' });
 }
 
 </script>
-
-<style scoped>
-
-.signin {
-  /* background-image: url(../assets/auth-bg.jpg); */
-}
-
-</style>

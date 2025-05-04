@@ -9,12 +9,6 @@
       "id": 1746232769875
     },
     {
-      "id": "1746359289883-auth-bg.jpg",
-      "path": "/uploads/1746359289883-auth-bg.jpg",
-      "name": "auth-bg.jpg",
-      "mediaType": "image"
-    },
-    {
       "Name": "Zack",
       "id": 1746361503068
     }
@@ -44,10 +38,5 @@
       "id": 1746300259283
     }
   ],
-  "joes": [
-    {
-      "Name": "Zack",
-      "id": 1746361736322
-    }
-  ]
+  "joes": []
 }
