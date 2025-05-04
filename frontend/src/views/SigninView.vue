@@ -16,7 +16,10 @@
               :type="hidePassword ? 'password' : 'text'"
               class="disabled:bg-gray-200 disabled:cursor-not-allowed form-control my-1 bg-white w-full p-2 border border-gray-200 rounded-sm"
               placeholder="Enter Password" />
-            <component @click="togglePasswordVisibility" class="cursor-pointer" :is="hidePassword ? EyeClosed : Eye" />
+
+              <button type="button" @click="togglePasswordVisibility" class="cursor-pointer bg-gray-200 p-2 hover:bg-gray-300 rounded">
+                <component :is="hidePassword ? EyeOff : Eye" />
+              </button>
           </div>
           <ErrorMessage name="password" class="text-sm text-red-500" />
         </div>
@@ -40,7 +43,7 @@ import { useRouter } from 'vue-router';
 import { notify } from '@kyvg/vue3-notification';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import Eye from '@/components/Icons/Eye.vue';
-import EyeClosed from '@/components/Icons/EyeClosed.vue';
+import EyeOff from '@/components/Icons/EyeOff.vue';
 import Logo from '@/components/Logo.vue';
 
 const router = useRouter();
