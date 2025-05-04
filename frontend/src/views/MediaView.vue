@@ -3,12 +3,7 @@
     <h1 class="text-3xl">Media Bucket</h1>
     <p class="mt-4">Manage your images, videos and audio</p>
     <div class="flex items-center mt-8">
-      <div class="select-wrapper">
-        <label for="key" class="block mb-5">1. Select your store</label>
-        <select name="key" v-model="selectedStore" class="bg-gray-200 px-4 py-2 rounded-sm">
-          <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
-        </select>
-      </div>
+      <StoreSelector />
       <div class="media-types ml-16">
         <label for="key" class="block mb-4">2. Select your media type</label>
         <ul class="flex gap-6">
@@ -81,10 +76,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useDataStore } from "@/stores/dataStore";
 import { useAppStore } from "@/stores/appStore";
 import { storeToRefs } from "pinia";
+import StoreSelector from "@/components/StoreSelector.vue";
+
 import MediaUploader from "@/components/MediaUploader.vue";
 import Trash from "@/components/Icons/Trash.vue";
 import Copy from "@/components/Icons/Copy.vue";
@@ -93,17 +90,15 @@ import { notify } from "@kyvg/vue3-notification";
 
 const dataStore = useDataStore();
 const appStore = useAppStore();
-const { selectedStore, stores, storeItems, selectedMediaType } = storeToRefs(dataStore);
+const { selectedStore, storeItems, selectedMediaType } = storeToRefs(dataStore);
 const { appConfigs } = storeToRefs(appStore);
 
 const expandedId = ref<string | null>('');
 
-onMounted(async () => {
-  await dataStore.getStores();
-})
-
-watch(selectedStore, async (newSelectedStore) => {
-  selectedStore.value = newSelectedStore;
+dataStore.$subscribe((mutation, state) => {
+  if (mutation.type === 'direct' && state.selectedStore) {
+    dataStore.getMediaItems(state.selectedStore, state.selectedMediaType);
+  }
 })
 
 async function handleSelectMediaType(mediaType: EMediaType) {

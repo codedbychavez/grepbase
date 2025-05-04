@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from "pinia";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useFetch } from '@vueuse/core'
 import { useAppStore } from "./appStore";
 import { notify } from "@kyvg/vue3-notification";
@@ -18,13 +18,6 @@ export const useDataStore = defineStore("dataStore", () => {
     const selectedStore = ref<string>('');
     const selectedMediaType = ref<EMediaType>(EMediaType.image);
     const stores = ref<string[]>([]);
-
-    // When a store is selected we fetch the items for that store automatically
-    watch(() => selectedStore.value, (newValue) => {
-        if (selectedStore.value) {
-            getStoreItems(newValue)
-        }
-    })
 
     // ## STORE MANAGEMENT ##
 
@@ -125,7 +118,6 @@ export const useDataStore = defineStore("dataStore", () => {
     async function createStoreItem(item: any): Promise<void> {
         const url = `${appConfigs.value.apiBaseUrl}/create-store-item/${selectedStore.value}`
         const { data, error } = await useFetch(url).post(item);
-        console.log(data.value, error.value)
 
         if (data.value) {
             notify({
