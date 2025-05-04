@@ -1,7 +1,7 @@
 <template>
   <main class="py-16">
-    <h1 class="text-3xl">Media Bucket</h1>
-    <p class="mt-4">Manage your images, videos and audio</p>
+    <h1 class="text-3xl">Media Stores</h1>
+    <p class="mt-4 text-gray-700">Manage images, videos and audio</p>
     <div class="flex items-center mt-8">
       <StoreSelector />
       <div class="media-types ml-16">

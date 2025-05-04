@@ -5,7 +5,7 @@
       <Form v-slot="{ meta }" name="form" class="w-96 border border-gray-100 shadow p-4 bg-white rounded-sm my-4" @submit="handleSignup">
         <div class="form-group mt-8">
           <label for="key" class="form-label text-sm text-stone-700 block capitalize">Username</label>
-          <Field name="username" v-model="formData.username" :rules="validateUsername" type="text"
+          <Field name="username" v-model="formData.username" :rules="validateRequired" type="text"
             class="my-1 bg-white w-full p-2 border border-gray-200 rounded-sm" placeholder="Enter Username" />
           <ErrorMessage name="username" class="text-sm text-red-500" />
         </div>
@@ -40,43 +40,18 @@
 import { reactive } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'vue-router';
-import { notify } from '@kyvg/vue3-notification';
-import { Form, Field, ErrorMessage, useForm } from 'vee-validate';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 import Logo from '@/components/Logo.vue';
+import { validateRequired, validatePassword } from '@/utils/formValidations';
 
 const router = useRouter();
 const authStore = useAuthStore();
-
-const form = reactive(useForm({
-  name: 'form'
-}))
 
 const formData = reactive({
   username: "",
   password: "",
   confirmPassword: ""
 })
-
-function validateUsername(value: any) {
-  if (!value) {
-    return 'This field is required';
-  }
-
-  return true;
-}
-
-function validatePassword(value: any) {
-
-  if (!value) {
-    return 'This field is required'
-  }
-
-  if (value.length < 8) {
-    return 'Password must be at least 8 characters'
-  }
-
-  return true;
-}
 
 function validateConfirmPassword(value: any) {
 
@@ -97,21 +72,7 @@ function validateConfirmPassword(value: any) {
 
 async function handleSignup() {
 
-  const didSignup = await authStore.signup(formData);
-
-  if (didSignup) {
-    notify({
-      type: 'success',
-      title: "Signup Successful",
-      text: "Welcome to grepbase"
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Signup Failed',
-      text: 'Failed to signup user'
-    })
-  }
+  await authStore.signup(formData);
 
   router.push('/');
 
