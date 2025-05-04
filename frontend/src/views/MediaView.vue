@@ -3,12 +3,7 @@
     <h1 class="text-3xl">Media Bucket</h1>
     <p class="mt-4">Manage your images, videos and audio</p>
     <div class="flex items-center mt-8">
-      <div class="select-wrapper">
-        <label for="key" class="block mb-5">1. Select your store</label>
-        <select name="key" v-model="selectedStore" class="bg-gray-200 px-4 py-2 rounded-sm">
-          <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
-        </select>
-      </div>
+      <StoreSelector />
       <div class="media-types ml-16">
         <label for="key" class="block mb-4">2. Select your media type</label>
         <ul class="flex gap-6">
@@ -31,8 +26,8 @@
       <div class="w-1/2 bg-white p-4 rounded-sm">
         <h1 class="text-purple-500 text-lg font-semibold">Media Viewer</h1>
         <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-auto">
-          <div v-if="storeData.length > 0">
-            <div v-for="item in storeData" :key="item.id"
+          <div v-if="storeItems.length > 0">
+            <div v-for="item in storeItems" :key="item.id"
               class="flex items-center gap-2 justify-between px-4 py-2 rounded border border-gray-200 text-sm not-[last-child]:mb-2">
               <div>
                 <div @click="toggleFileDetails(item.id)"
@@ -81,10 +76,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useDataStore } from "@/stores/dataStore";
 import { useAppStore } from "@/stores/appStore";
 import { storeToRefs } from "pinia";
+import StoreSelector from "@/components/StoreSelector.vue";
+
 import MediaUploader from "@/components/MediaUploader.vue";
 import Trash from "@/components/Icons/Trash.vue";
 import Copy from "@/components/Icons/Copy.vue";
@@ -93,20 +90,15 @@ import { notify } from "@kyvg/vue3-notification";
 
 const dataStore = useDataStore();
 const appStore = useAppStore();
-const { selectedStore, stores, storeData, selectedMediaType } = storeToRefs(dataStore);
+const { selectedStore, storeItems, selectedMediaType } = storeToRefs(dataStore);
 const { appConfigs } = storeToRefs(appStore);
 
 const expandedId = ref<string | null>('');
 
-onMounted(async () => {
-  await dataStore.getStores();
-  await dataStore.getMediaItems(selectedStore.value, selectedMediaType.value);
-})
-
-watch(selectedStore, async (newSelectedStore) => {
-  await dataStore.getMediaItems(newSelectedStore, selectedMediaType.value);
-  // Set the selected store
-  selectedStore.value = newSelectedStore;
+dataStore.$subscribe((mutation, state) => {
+  if (mutation.type === 'direct' && state.selectedStore) {
+    dataStore.getMediaItems(state.selectedStore, state.selectedMediaType);
+  }
 })
 
 async function handleSelectMediaType(mediaType: EMediaType) {
@@ -119,21 +111,7 @@ function toggleFileDetails(id: string) {
 }
 
 async function handleDeleteMedia(mediaId: string) {
-  const didDelete = await dataStore.deleteMediaItem(mediaId);
-
-  if (didDelete === true) {
-    notify({
-      type: 'success',
-      title: 'Media item deleted',
-      text: 'Media item was deleted successfully.'
-    })
-  } else {
-    notify({
-      type: 'error',
-      title: 'Delete failed',
-      text: 'There was an error.'
-    })
-  }
+  await dataStore.deleteMediaItem(mediaId);
 }
 
 function handleCopyToClipboard(path: string) {

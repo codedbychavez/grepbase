@@ -6,12 +6,7 @@
     <h1 class="text-3xl">Data Stores</h1>
     <div class="my-8">
       <div class="my-8 flex gap-8 items-end">
-        <div v-if="stores.length > 0" class="select-wrapper">
-          <label for="key" class="block">Select your store</label>
-          <select name="key" v-model="selectedStore" class="mt-2 bg-gray-200 px-4 py-2 rounded-sm">
-            <option v-for="store in stores" :key="store" :value="store" class="p-1">{{ store }}</option>
-          </select>
-        </div>
+        <StoreSelector />
 
         <div class="quick-actions flex gap-2 ml-auto">
           <button type="button" @click="handleCreateStore()"
@@ -67,7 +62,7 @@
 </template>
 <script setup lang="ts">
 
-import { onMounted, watch, ref } from "vue";
+import { ref } from "vue";
 import { useDataStore } from '@/stores/dataStore';
 import DataTable from "@/components/DataTable.vue";
 import CreateStoreModal from "@/components/CreateStoreModal.vue";
@@ -77,24 +72,16 @@ import { storeToRefs } from "pinia";
 import { Form, Field } from 'vee-validate';
 import Trash from "@/components/Icons/Trash.vue";
 import { validateRequired } from "@/utils/formValidations.ts";
+import StoreSelector from "@/components/StoreSelector.vue";
 
 const dataStore = useDataStore();
-const { selectedStore, storeItems, stores } = storeToRefs(dataStore);
+const { storeItems, stores } = storeToRefs(dataStore);
 
 const showCreateStoreModal = ref<boolean>(false);
 const showDeleteStoreModal = ref<boolean>(false);
 const showRenameStoreModal = ref<boolean>(false);
 
 const keyValuePairs = ref([{ key: '', value: '' }]);
-
-onMounted(async () => {
-  // Get stores
-  await dataStore.getStores();
-})
-
-watch(selectedStore, async (newSelectedStore) => {
-  selectedStore.value = newSelectedStore;
-})
 
 async function handleCreateStore() {
   showCreateStoreModal.value = true;

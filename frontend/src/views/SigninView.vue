@@ -97,7 +97,7 @@ async function handleSignin() {
     })
   }
 
-  router.push({ name: 'home' });
+  router.push({ path: '/' });
 }
 
 </script>

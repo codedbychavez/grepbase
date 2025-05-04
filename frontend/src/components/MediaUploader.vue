@@ -1,6 +1,6 @@
 <template>
   <div class="media-uploader">
-    <form ref="theForm" @submit.prevent="handleSubmit" enctype="multipart/form-data">
+    <form ref="theForm" @submit.prevent="handleUploadMedia" enctype="multipart/form-data">
       <input @change="handleFileInputChange" :accept="acceptFiles" ref="theFile" type="file" name="fileInput"
         id="fileInput" multiple="false" required class="border border-green-500 border-dashed p-8 cursor-pointer" />
       <button :disabled="!canUpload" type="submit"
@@ -13,7 +13,6 @@
 import { useTemplateRef, ref, computed, watch } from 'vue';
 import { useDataStore } from '@/stores/dataStore';
 import { storeToRefs } from 'pinia';
-import { notify } from '@kyvg/vue3-notification';
 import { EMediaType } from '@/stores/dataStore';
 
 const dataStore = useDataStore();
@@ -22,7 +21,6 @@ const { selectedStore } = storeToRefs(dataStore);
 
 const theFile = useTemplateRef<HTMLInputElement>('theFile');
 const theForm = useTemplateRef<HTMLFormElement>('theForm');
-const isUploading = ref<boolean>(false);
 const canUpload = ref<boolean>(false);
 
 const props = defineProps<{
@@ -59,28 +57,11 @@ function handleFileInputChange() {
   }
 }
 
-async function handleSubmit() {
-  isUploading.value = true;
+async function handleUploadMedia() {
   if (theFile.value?.files) {
     const file = theFile.value?.files[0];
     if (file) {
-      const isUploaded = await dataStore.uploadMediaItem(selectedStore.value, file, props.selectedMediaType);
-
-      if (isUploaded) {
-        notify({
-          type: 'success',
-          title: 'Media uploaded',
-          text: 'Media uploaded successfully'
-        })
-        isUploading.value = false;
-      } else {
-        notify({
-          type: 'success',
-          title: 'Media uploaded',
-          text: 'Media uploaded successfully'
-        })
-        isUploading.value = false;
-      }
+      await dataStore.uploadMediaItem(selectedStore.value, file, props.selectedMediaType);
     }
     else return;
   }

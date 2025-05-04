@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from "pinia";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useFetch } from '@vueuse/core'
 import { useAppStore } from "./appStore";
 import { notify } from "@kyvg/vue3-notification";
@@ -18,13 +18,6 @@ export const useDataStore = defineStore("dataStore", () => {
     const selectedStore = ref<string>('');
     const selectedMediaType = ref<EMediaType>(EMediaType.image);
     const stores = ref<string[]>([]);
-
-    // When a store is selected we fetch the items for that store automatically
-    watch(() => selectedStore.value, (newValue) => {
-        if (selectedStore.value) {
-            getStoreItems(newValue)
-        }
-    })
 
     // ## STORE MANAGEMENT ##
 
@@ -125,7 +118,6 @@ export const useDataStore = defineStore("dataStore", () => {
     async function createStoreItem(item: any): Promise<void> {
         const url = `${appConfigs.value.apiBaseUrl}/create-store-item/${selectedStore.value}`
         const { data, error } = await useFetch(url).post(item);
-        console.log(data.value, error.value)
 
         if (data.value) {
             notify({
@@ -195,20 +187,30 @@ export const useDataStore = defineStore("dataStore", () => {
     // ## MEDIA ITEM MANAGEMENT ##
 
     // Upload media item
-    async function uploadMediaItem(storeName: string, file: File, mediaType: string): Promise<boolean> {
+    async function uploadMediaItem(storeName: string, file: File, mediaType: string): Promise<void> {
         const url = `${appConfigs.value.apiBaseUrl}/upload-media-item/${storeName}`
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('mediaType', mediaType);
-        const { error } = await useFetch(url).post(formData);
-        if (error.value) {
-            return false;
+        const { data, error } = await useFetch(url).post(formData);
+        if (data.value) {
+            notify({
+                type: 'success',
+                title: 'Media uploaded',
+                text: 'Media uploaded successfully'
+            })
         }
-        return true;
+        if (error.value) {
+            notify({
+                type: 'success',
+                title: 'Media uploaded',
+                text: 'Media uploaded successfully'
+            })
+        }
     }
 
     // Get media by type
-    async function getMediaItems(storeName: string, mediaType: string) {
+    async function getMediaItems(storeName: string, mediaType: string): Promise<void> {
         const url = `${appConfigs.value.apiBaseUrl}/get-media-items/${storeName}/${mediaType}`;
         const { data, error } = await useFetch(url).json();
         if (error.value) {
@@ -219,18 +221,24 @@ export const useDataStore = defineStore("dataStore", () => {
     }
 
     // Delete media item
-    async function deleteMediaItem(mediaId: string): Promise<boolean> {
+    async function deleteMediaItem(mediaId: string): Promise<void> {
         const url = `${appConfigs.value.apiBaseUrl}/delete-media-item/${selectedStore.value}/${mediaId}`
-
-        const { error } = await useFetch(url).delete(mediaId);
-
-        if (error.value) {
-            return false;
+        const { data, error } = await useFetch(url).delete(mediaId);
+        if (data.value) {
+            notify({
+                type: 'success',
+                title: 'Media item deleted',
+                text: 'Media item was deleted successfully.'
+            })
         }
-
+        if (error.value) {
+            notify({
+                type: 'error',
+                title: 'Delete failed',
+                text: 'There was an error.'
+            })
+        }
         await getMediaItems(selectedStore.value, selectedMediaType.value);
-
-        return true;
     }
 
     return { stores, storeItems, selectedStore, getStores, getStoreItems, editStoreItem, deleteStoreItem, createStoreItem, createStore, deleteStore, renameStore, uploadMediaItem, getMediaItems, selectedMediaType, deleteMediaItem }
