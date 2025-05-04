@@ -26,8 +26,8 @@
       <div class="w-1/2 bg-white p-4 rounded-sm">
         <h1 class="text-purple-500 text-lg font-semibold">Media Viewer</h1>
         <div class="mt-4 p-8 border-1 border-gray-100 shadow rounded h-8/12 overflow-auto">
-          <div v-if="storeItems.length > 0">
-            <div v-for="item in storeItems" :key="item.id"
+          <div v-if="mediaItems.length > 0">
+            <div v-for="item in mediaItems" :key="item.id"
               class="flex items-center gap-2 justify-between px-4 py-2 rounded border border-gray-200 text-sm not-[last-child]:mb-2">
               <div>
                 <div @click="toggleFileDetails(item.id)"
@@ -76,7 +76,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
+import { useMediaStore } from "@/stores/mediaStore";
 import { useDataStore } from "@/stores/dataStore";
 import { useAppStore } from "@/stores/appStore";
 import { storeToRefs } from "pinia";
@@ -85,25 +86,26 @@ import StoreSelector from "@/components/StoreSelector.vue";
 import MediaUploader from "@/components/MediaUploader.vue";
 import Trash from "@/components/Icons/Trash.vue";
 import Copy from "@/components/Icons/Copy.vue";
-import { EMediaType } from "@/stores/dataStore";
+import { EMediaType } from "@/stores/mediaStore";
 import { notify } from "@kyvg/vue3-notification";
 
-const dataStore = useDataStore();
+const mediaStore = useMediaStore();
 const appStore = useAppStore();
-const { selectedStore, storeItems, selectedMediaType } = storeToRefs(dataStore);
+const dataStore = useDataStore();
+const { mediaItems, selectedMediaType } = storeToRefs(mediaStore);
 const { appConfigs } = storeToRefs(appStore);
 
 const expandedId = ref<string | null>('');
 
 dataStore.$subscribe((mutation, state) => {
   if (mutation.type === 'direct' && state.selectedStore) {
-    dataStore.getMediaItems(state.selectedStore, state.selectedMediaType);
+    mediaStore.getMediaItems(selectedMediaType.value);
   }
 })
 
 async function handleSelectMediaType(mediaType: EMediaType) {
   selectedMediaType.value = mediaType;
-  await dataStore.getMediaItems(selectedStore.value, selectedMediaType.value);
+  await mediaStore.getMediaItems(selectedMediaType.value);
 }
 
 function toggleFileDetails(id: string) {
@@ -111,7 +113,7 @@ function toggleFileDetails(id: string) {
 }
 
 async function handleDeleteMedia(mediaId: string) {
-  await dataStore.deleteMediaItem(mediaId);
+  await mediaStore.deleteMediaItem(mediaId);
 }
 
 function handleCopyToClipboard(path: string) {

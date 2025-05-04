@@ -83,6 +83,12 @@ const showRenameStoreModal = ref<boolean>(false);
 
 const keyValuePairs = ref([{ key: '', value: '' }]);
 
+dataStore.$subscribe((mutation, state) => {
+  if (mutation.type === 'direct' && state.selectedStore) {
+    dataStore.getStoreItems(state.selectedStore);
+  }
+})
+
 async function handleCreateStore() {
   showCreateStoreModal.value = true;
 }
