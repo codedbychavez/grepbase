@@ -38,5 +38,12 @@
       "id": 1746300259283
     }
   ],
-  "joes": []
+  "joes": [
+    {
+      "id": "1746363490339-sample-6s.mp3",
+      "path": "/uploads/1746363490339-sample-6s.mp3",
+      "name": "sample-6s.mp3",
+      "mediaType": "audio"
+    }
+  ]
 }
