@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+html, body, #app {
+  height: 100vh;
+  font-size: 16px;
+}
